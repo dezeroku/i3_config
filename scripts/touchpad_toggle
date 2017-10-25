@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+state=0
+xinput --list-props "ETPS/2 Elantech Touchpad" | grep -q 'Device Enabled.*1$' && state=1  || state=0
+
+if [ $state == '1' ];then
+  xinput set-prop "ETPS/2 Elantech Touchpad" 141 0
+else
+  xinput set-prop "ETPS/2 Elantech Touchpad" 141 1
+fi
