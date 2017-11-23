@@ -1,15 +1,14 @@
 import sys,os
 from pathlib import Path
 #ADD BETTER TOGGLE SUPPORT
-#touchpad toggle is now python only code
 
-touchpad_name="\'ETPS/2 Elantech Touchpad\'" #write you touchpad device identifier in that field, remember to edit ./touchpad_toggle also
+touchpad_name="\'ETPS/2 Elantech Touchpad\'" #write you touchpad device identifier in that field
 home_directory=str(Path.home())
-path=home_directory+"/.config/i3/scripts/"
+path=home_directory+"/.config/i3/scripts/temp/"
 
 if len(sys.argv)<2:
-    print("See help") # you should write that help by the way xD
-    #exit program
+    print("See help") # I should write that help by the way :P 
+    sys.exit(1)
 
 if sys.argv[1]=="turn_on":
     os.system("xinput enable "+touchpad_name)
@@ -19,7 +18,7 @@ if sys.argv[1]=="turn_off":
 
 state=False
 
-if len(sys.argv)==0 or sys.argv[1]=="toggle":
+if sys.argv[1]=="toggle":
     with open(path+"state.txt","r") as state_file:
         if state_file.read()=="enabled":
             state=True

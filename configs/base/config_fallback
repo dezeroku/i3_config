@@ -1,10 +1,10 @@
-#This file should containt device or resolution specific fonts, configs or key bindings 1280x800
+#This file contains basic FALLBACK config entries
 
 #quite nice for not so big screens
 font pango:monospace 8 
 
 # start a terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec i3-sensible-terminal
 
 bindsym XF86Launch1 exec  terminator -e "echo KOCHAM && echo AKISO  && sleep 6 && echo MOCNO && sleep 3 "
 

@@ -1,5 +1,8 @@
 import pygame, time,  sys
 from pathlib import Path
+#Well, it needs to be rewritten in better way, it is just too slow, no real-time interaction, turned off for now
+
+sys.exit(0)
 
 home_directory=str(Path.home()) #this is potentially dangerous
 

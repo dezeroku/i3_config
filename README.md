@@ -17,6 +17,14 @@ All of this scripts are written by myself, and for myself, therefore some of the
 
 
 
+TODO:
+
+ create one main file, and connect it with resolution ones -> DONE
+
+ add screenshot sound
+
+
+Now, full config consists of a base and resolution specific one.
 
 
 First, for full functionality you need to install:
