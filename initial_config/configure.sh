@@ -46,3 +46,6 @@ xdg-mime default xarchiver.desktop application/x-rar-compressed
 xdg-mime default xarchiver.desktop application/octet-stream
 #windows-stuff
 xdg-mime default wine.desktop application/octet-stream
+
+#copy urxvt config
+cp ~/.config/i3/initial_config/files/urxvt_config ~/.Xdefaults
