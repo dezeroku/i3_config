@@ -1,4 +1,4 @@
-# This file is your base config, put here all the stuff, which should be available on all devices (are not device-sepecific) It is good place for e.g. key bindings
+# This file is your base config, put here all the stuff, which should be available on all devices (are not device-sepecific) It is good place for e.g. key bindings, default window opening locations and so on
 
 # If you specify same things in base and device specific config, device specific overrides base
 
