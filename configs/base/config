@@ -2,6 +2,8 @@
 
 # If you specify same things in base and device specific config, device specific overrides base
 
+# IF YOU WANT TO RELOAD YOUR CONFIG, THE EASIEST OPTION IS TO RESTART X SERVER (turn off and on)
+
 # Set main button to Win
 set $mod Mod4
 
@@ -199,3 +201,28 @@ bindsym $mod+l exec "python3 ~/.config/i3/scripts/resolution.py lock_screen"
 
 # lock screen and suspend
 bindsym $mod+Control+l exec "python3 ~/.config/i3/scripts/resolution.py lock_screen_and_suspend"
+
+
+# assign programs to workspaces
+
+	#Workspace id's:
+	# $ws1
+	# $ws2 
+	# and so on...
+	# till $ws10
+    # Get class using xprop, run it in terminal and click on window, you want to get class from 
+	
+    assign [class="(?i)Firefox"] $ws2
+    assign [class="(?i)Steam"] $ws8
+    assign [class="(?i)Spotify"] $ws5
+    assign [class="(?i)jetbrains-idea"] $ws3
+    assign [class="(?i)VirtualBox Managerk"] $ws6
+
+    # CS GO, and probably more OpenGL games
+    assign [class="(?i)Linux"] $ws9 
+   
+    # Stardew Valley 
+    assign [class="(?i)StardewValley"] $ws9
+
+
+    for_window [class="(?i)spotify"] move to workspace $ws5
