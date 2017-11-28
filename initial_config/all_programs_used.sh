@@ -84,3 +84,6 @@ sudo pacman -S deluge
 #ruby
 #jdk9-openjdk #(java 9 jdk)
 sudo pacman -S python3 ruby jdk9-openjdk
+
+#ntfs non root permissions
+sudo pacman -S ntfs-3g fuse
