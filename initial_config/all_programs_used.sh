@@ -54,7 +54,9 @@ sudo pacman -S ranger pcmanfm
 #evince
 #libreoffice
 #vim
-sudo pacman -S vim evince libreoffice
+#zathura (lightweight and highly customizable document viewer)
+#zathura-pdf-mupdf (plugin for pdf)
+sudo pacman -S vim evince libreoffice zathura zathura-pdf-mupdf
 #sublime_text (needs new repo)
     
 curl -O https://download.sublimetext.com/sublimehq-pub.gpg && sudo pacman-key --add sublimehq-pub.gpg && sudo pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg

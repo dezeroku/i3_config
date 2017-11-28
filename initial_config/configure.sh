@@ -22,7 +22,7 @@ xdg-mime default libreoffice-writer.desktop application/rtf
 xdg-mime default libreoffice-writer.desktop application/msword
 xdg-mime default libreoffice-impress.desktop application/vnd.ms-powerpoint
 xdg-mime default libreoffice-calc.desktop application/vnd.ms-excel
-xdg-mime default evince.desktop application/pdf
+xdg-mime default zathura.desktop application/pdf
 #video
 xdg-mime default vlc.desktop video/msvideo
 xdg-mime default vlc.desktop video/avi
