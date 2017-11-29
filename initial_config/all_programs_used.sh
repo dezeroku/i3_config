@@ -82,12 +82,17 @@ sudo pacman -S eclipse
 # torrents
 #deluge #(optional)
 sudo pacman -S deluge
-# languages
+# languages and stuff
 #python3
 #python
 #ruby
 #jdk9-openjdk #(java 9 jdk)
-sudo pacman -S python3 ruby jdk9-openjdk
+#docker (i find it useful quite often) (it is NOT enabled by default, you need to 
+#sudo systemctl start docker
+#sudo systemctl enable docker
+# if you want to have it enabled)
+sudo pacman -S python3 ruby jdk9-openjdk docker
+sudo usermod -aG docker $USER
 
 #ntfs non root permissions
 sudo pacman -S ntfs-3g fuse
