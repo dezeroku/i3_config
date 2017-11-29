@@ -15,7 +15,7 @@ INFO:
 
 All of this scripts are written by myself, and for myself, therefore some of them probably won't work for you, feel free to edit them to your needs. I plan to release Docs in near future.
 
-
+initial_config folder stores files which can be used to get your arch up in short time, you should read them and use if you want
 
 TODO:
 
