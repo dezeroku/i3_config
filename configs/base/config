@@ -45,10 +45,10 @@ bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-# bindsym $mod+k focus down
-# bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -57,10 +57,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move right
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move down
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+l move right
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+j move down
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -69,10 +69,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+b split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+Shift+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -197,7 +197,7 @@ bindsym $mod+Shift+Tab exec python3 ~/.config/i3/scripts/next_workspace.py
 exec "python3 ~/.config/i3/scripts/resolution.py set_lock_screen"
 
 # lock screen 
-bindsym $mod+l exec "python3 ~/.config/i3/scripts/resolution.py lock_screen"
+bindsym $mod+Alt+l exec "python3 ~/.config/i3/scripts/resolution.py lock_screen"
 
 # lock screen and suspend
 bindsym $mod+Control+l exec "python3 ~/.config/i3/scripts/resolution.py lock_screen_and_suspend"
