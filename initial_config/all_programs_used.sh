@@ -38,7 +38,9 @@ sudo pacman -S  --noconfirm firefox
 #qt4 #(GUI fo VLC)
 #deadbeef
 #vlc
+#MellowPlayer
 sudo pacman -S  --noconfirm vlc deadbeef qt4
+pacaur -S mellowPlayer pepper-flash qt5-webengine-widevine
 # images
 #sxiv
 #gimp
