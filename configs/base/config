@@ -215,6 +215,7 @@ bindsym $mod+Control+l exec "python3 ~/.config/i3/scripts/resolution.py lock_scr
     assign [class="(?i)Firefox"] $ws2
     assign [class="(?i)Steam"] $ws8
     assign [class="(?i)Spotify"] $ws5
+    assign [class="(?i)MellowPlayer"] $ws5
     assign [class="(?i)jetbrains-idea"] $ws3
     assign [class="(?i)VirtualBox Managerk"] $ws6
 
