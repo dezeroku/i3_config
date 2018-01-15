@@ -99,3 +99,6 @@ sudo usermod -aG docker $USER
 
 #ntfs non root permissions
 sudo pacman -S  --noconfirm ntfs-3g fuse
+
+#notifications
+sudo pacman -S dunst
