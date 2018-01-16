@@ -102,3 +102,6 @@ sudo pacman -S  --noconfirm ntfs-3g fuse
 
 #notifications
 sudo pacman -S dunst
+
+#redshift
+sudo pacman -S redshift 
