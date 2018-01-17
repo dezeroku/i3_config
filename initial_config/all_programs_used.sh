@@ -15,6 +15,13 @@ sudo pacman -S --noconfirm networkmanager
 #i3
 sudo pacman -S  --noconfirm i3
 
+
+#xorg
+sudo pacman -S --noconfirm xorg xorg-xinit
+
+#audio
+sudo pacman -S --noconfirm alsa-utils pulseaudio pavucontrol pulseaudio-bluetooth pulseaudio-equalizer pulseaudio-jack 
+
 #i3 specific stuff
 #playerctl #music control
 #dmenu #menu support
@@ -25,7 +32,8 @@ sudo pacman -S  --noconfirm i3
 #feh #only if you want ot use wallpapers
 #nvidia-smi #if you want to display nvidia graphic card temperature
 #pygame #install it using pip, it enables sounds in UI
-sudo pacman -S  --noconfirm playerctl dmenu pamixer py3status feh 
+sudo pacman -S  --noconfirm playerctl dmenu pamixer feh 
+pacaur -S py3status
 sudo pip3 install pygame
 pacaur -S  --noconfirm xss-lock-git ttf-font-icons 
 
@@ -40,7 +48,7 @@ sudo pacman -S  --noconfirm firefox
 #vlc
 #MellowPlayer
 sudo pacman -S  --noconfirm vlc deadbeef qt4
-pacaur -S mellowPlayer pepper-flash qt5-webengine-widevine
+pacaur -S --noconfirm mellowplayer pepper-flash qt5-webengine-widevine
 # images
 #sxiv
 #gimp
@@ -66,12 +74,13 @@ sudo pacman -S  --noconfirm vim evince libreoffice zathura zathura-pdf-mupdf
 #echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | sudo tee -a /etc/pacman.conf
 #sudo pacman -Syu sublime-text
 #alternative way
-pacaur -S sublime-text
+pacaur -S --noconfirm sublime-text-dev
 # windows files support (optional), virtualbox
 #wine 
 #winetricks
-#virtualbox
+#virtualbox, qemu
 sudo pacman -S  --noconfirm wine winetricks virtualbox
+sudo pacman -S --noconfirm qemu qemu-arch-extra
 # fonts
 #ttf-hack
 sudo pacman -S  --noconfirm ttf-hack
@@ -101,7 +110,7 @@ sudo usermod -aG docker $USER
 sudo pacman -S  --noconfirm ntfs-3g fuse
 
 #notifications
-sudo pacman -S dunst
+sudo pacman -S --noconfirm dunst
 
 #redshift
-sudo pacman -S redshift 
+sudo pacman -S --noconfirm redshift 

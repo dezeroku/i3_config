@@ -4,13 +4,14 @@
 #reboot
 #VOILA
 
-sudo ./pacaur_install.sh
+./pacaur_install.sh
 ./all_programs_used.sh
 #set new mime types, for freshly install programs
 ./configure.sh
 
 #copy urxvt settings
-cp ./files/.Xdefaults ~/
+cp ~/.config/i3/initial_config/files/.Xdefaults ~/
+cp ./.config/i3/initial_config/files/.xinitrc ~/
 
 #copy sublime config (TO DO IN FUTURE)
 
