@@ -5,9 +5,9 @@
 #VOILA
 
 ./pacaur_install.sh
-./all_programs_used.sh
+./install_programs.sh
 #set new mime types, for freshly install programs
-./configure.sh
+./configure_mime.sh
 
 #copy urxvt settings
 cp ~/.config/i3/initial_config/files/.Xdefaults ~/

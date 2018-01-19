@@ -114,3 +114,6 @@ sudo pacman -S --noconfirm dunst
 
 #redshift
 sudo pacman -S --noconfirm redshift 
+
+#qnapi
+pacaur -S --noconfirm qnapi
