@@ -11,7 +11,8 @@
 
 #copy urxvt settings
 cp ~/.config/i3/initial_config/files/.Xdefaults ~/
+#copy Xorg startx settings
 cp ./.config/i3/initial_config/files/.xinitrc ~/
 
-#copy sublime config (TO DO IN FUTURE)
+#copy sublime config (TODO IN FUTURE)
 
