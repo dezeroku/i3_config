@@ -5,9 +5,6 @@ sudo pacman -Sy
 #upgrade system (optional, but recommended)
 sudo pacman -Syu
 
-# network config
-sudo pacman -S --noconfirm networkmanager
-
 #install pacaur (optional, but recommended, it is just faster to install packages from AUR), enabled in install_stuff by default
 #sudo ./pacaur_install
 
@@ -117,3 +114,9 @@ sudo pacman -S --noconfirm redshift
 
 #qnapi
 pacaur -S --noconfirm qnapi
+
+# network config
+sudo pacman -S --noconfirm networkmanager
+
+#network manager applet
+sudo pacman -S --noconfirm network-manager-applet
