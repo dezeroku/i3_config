@@ -157,7 +157,7 @@ if sys.argv[1]=="run_i3":
                 current_config.write(specific_config.read())
                 current_config.write("\n")
 
-        os.system("i3 -c "+config_current_path)
+        os.system("i3 -c "+current_config_path)
         print("Fallback")
 
 if sys.argv[1]=="py3status":
