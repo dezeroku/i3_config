@@ -40,18 +40,26 @@ if sys.argv[1] == "set_lock_screen" :
         if os.path.exists(path+str(sys.argv[2])+"_lock.png"):
             lock_number=int(sys.argv[2])
         else:
+            lock_number=-1
             print("FALLBACK")
-
-    os.system("xss-lock -- i3lock -c 000000 -i " + path + str(lock_number)+"_lock.png" + " &")
+    if lock_number!=-1:
+        os.system("xss-lock -- i3lock -c 000000 -i " + path + str(lock_number)+"_lock.png" + " &")
+    else:
+        os.system("xss-lock -- i3lock -c 000000" + " &")
 
 if sys.argv[1] == "lock_screen":
     if len(sys.argv)>2:
         if os.path.exists(path+str(sys.argv[2])+"_lock.png"):
             lock_number=int(sys.argv[2])
         else:
+            lock_number=-1
             print("FALLBACK")
+    
+    if lock_number!=-1:
+        os.system("i3lock -c 000000 -i " + path + str(lock_number)+"_lock.png")
+    else:
+        os.system("i3lock -c 000000")
 
-    os.system("i3lock -c 000000 -i " + path + str(lock_number)+"_lock.png")
     os.system("xset dpms force standby") #blanks screen
     os.system("xset s off -dpms ") #this prevents screen from going black
 
