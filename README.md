@@ -37,7 +37,7 @@ playerctl (for music control)
 
 dmenu (menu start app for i3)
 
-pamixer (for volume changes)
+#pamixer (for volume changes) REPLACED BY ponymix
 
 xss-lock-git ( normal version has CPU problems, available in AUR) 
 

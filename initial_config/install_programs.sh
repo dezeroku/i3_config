@@ -22,14 +22,14 @@ sudo pacman -S --noconfirm alsa-utils pulseaudio pavucontrol pulseaudio-bluetoot
 #i3 specific stuff
 #playerctl #music control
 #dmenu #menu support
-#pamixer #volume changes
+#ponymix #volume changes
 #xss-lock-git # for lid close and screen timeout support (non-git version has cpu problems)
 #ttf-font-icons #workspace icons
 #py3status #better i3status
 #feh #only if you want ot use wallpapers
 #nvidia-smi #if you want to display nvidia graphic card temperature
 #pygame #install it using pip, it enables sounds in UI
-sudo pacman -S  --noconfirm playerctl dmenu pamixer feh 
+sudo pacman -S  --noconfirm playerctl dmenu ponymix feh 
 pacaur -S py3status
 sudo pip3 install pygame
 pacaur -S  --noconfirm xss-lock-git ttf-font-icons 
