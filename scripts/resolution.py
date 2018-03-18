@@ -48,6 +48,10 @@ if sys.argv[1] == "set_lock_screen" :
         os.system("xss-lock -- i3lock -c 000000" + " &")
 
 if sys.argv[1] == "lock_screen":
+    #TODO: running only "xset dpms force standby" locks the screen itself, check behaviour
+
+    #however running first "xset s activate" is probably better practice
+
     if len(sys.argv)>2:
         if os.path.exists(path+str(sys.argv[2])+"_lock.png"):
             lock_number=int(sys.argv[2])
@@ -61,7 +65,7 @@ if sys.argv[1] == "lock_screen":
         os.system("i3lock -c 000000")
 
     os.system("xset dpms force standby") #blanks screen
-    os.system("xset s off -dpms ") #this prevents screen from going black
+    #os.system("xset s off -dpms ") #this prevents screen from going black
 
 if sys.argv[1]== "lock_screen__stay_on":
     if len(sys.argv)>2:

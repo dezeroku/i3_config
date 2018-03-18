@@ -1,13 +1,12 @@
-#!/usr/bin/bash
+#!/bin/bash
 #Arch install base base-devel
 #that script
 #reboot
 #VOILA
 
-./pacaur_install.sh
-./install_programs.sh
+./install_program_gentoo.sh
 #set new mime types, for freshly install programs
-./configure_mime.sh
+./configure_mime_gentoo.sh
 
 #copy urxvt settings
 cp ~/.config/i3/initial_config/files/.Xdefaults ~/
