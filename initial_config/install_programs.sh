@@ -76,6 +76,12 @@ pacaur -S --noconfirm sublime-text-dev
 #wine 
 #winetricks
 #virtualbox, qemu
+
+#finding disk usage
+sudo pacman -S --noconfirm ncdu
+
+#latex, latex languages
+sudo pacman -S --noconfirm texlive-most texlive-lang
 sudo pacman -S  --noconfirm wine winetricks virtualbox
 sudo pacman -S --noconfirm qemu qemu-arch-extra
 # fonts
