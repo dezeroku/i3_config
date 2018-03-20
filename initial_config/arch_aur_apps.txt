@@ -1,0 +1,10 @@
+py3status
+
+xss-lock-git 
+ttf-font-icons 
+
+vimb
+
+qnapi
+
+icecat-bin

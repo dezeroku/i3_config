@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#Dependencies: libreoffice, sxiv, sublime-text, evince, vlc, deadbeef, xarchiver, p7zip
+#Dependencies: libreoffice, sxiv, sublime-text, evince, vlc, qmmp, xarchiver, p7zip
 #images
 xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/jpg
@@ -30,12 +30,12 @@ xdg-mime default vlc.desktop video/x-msvideo
 xdg-mime default vlc.desktop video/quicktime
 xdg-mime default vlc.desktop video/mpeg
 #audio
-xdg-mime default deadbeef.desktop audio/basic
-xdg-mime default deadbeef.desktop audio/vorbis
-xdg-mime default deadbeef.desktop audio/wav
-xdg-mime default deadbeef.desktop audio/x-wav
-xdg-mime default deadbeef.desktop application/ogg
-xdg-mime default deadbeef.desktop audio/mpeg
+xdg-mime default qmmp.desktop audio/basic
+xdg-mime default qmmp.desktop audio/vorbis
+xdg-mime default qmmp.desktop audio/wav
+xdg-mime default qmmp.desktop audio/x-wav
+xdg-mime default qmmp.desktop application/ogg
+xdg-mime default qmmp.desktop audio/mpeg
 #archives
 xdg-mime default xarchiver.desktop application/x-bzip2
 xdg-mime default xarchiver.desktop application/x-compressed-zip

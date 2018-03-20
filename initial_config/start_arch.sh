@@ -5,8 +5,11 @@
 #VOILA
 
 ./pacaur_install.sh
-./install_programs_arch.sh
-#set new mime types, for freshly install programs
+sudo pacman -Syu
+sudo pacman -S - < arch_repo_apps.txt
+pacaur -S - < arch_aur_apps.txt
+#./install_programs_arch.sh
+#set new mime types, for new programs
 ./configure_mime_arch.sh
 
 #copy urxvt settings
