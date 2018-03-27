@@ -8,3 +8,5 @@ vimb
 qnapi
 
 icecat-bin
+
+teamspeak3

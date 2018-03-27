@@ -18,4 +18,4 @@ cp ~/.config/i3/initial_config/files/.Xdefaults ~/
 cp ~/.config/i3/initial_config/files/.xinitrc ~/
 
 #copy sublime config (TODO IN FUTURE)
-
+echo FINISHED
