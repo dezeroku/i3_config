@@ -70,3 +70,5 @@ dunst
 redshift  
 networkmanager 
 network-manager-applet 
+
+thefuck
