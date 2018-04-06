@@ -30,7 +30,12 @@ xarchiver
 ranger 
 pcmanfm 
 
-vim 
+gvim
+vim-spell-en
+vim-spell-pl
+vim-spell-de
+vim-jedi
+ 
 libreoffice 
 zathura 
 zathura-pdf-mupdf 
