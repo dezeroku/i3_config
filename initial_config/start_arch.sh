@@ -1,7 +1,8 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Install Arch Linux (base base-devel)
-# Run that script.
+# Run that script. IMPORTANT: This script should be done as normal user, not root! Also the user pwd should be this folder.
+# Also this script requires user input (e.g. accepting pacman installations).
 # Reboot.
 # Your computer should be configured now.
 

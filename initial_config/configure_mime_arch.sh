@@ -1,5 +1,6 @@
-#!/usr/bin/bash
-#Dependencies: libreoffice, sxiv, sublime-text, evince, vlc, qmmp, xarchiver, p7zip
+#!/bin/bash
+
+#Dependencies: libreoffice, sxiv, sublime-text, vlc, qmmp, xarchiver, p7zip
 #images
 xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/jpg
