@@ -34,7 +34,6 @@ gvim
 vim-spell-en
 vim-spell-pl
 vim-spell-de
-vim-jedi
  
 libreoffice 
 zathura 
@@ -61,9 +60,13 @@ eclipse
 
 deluge 
 
+clang
 python3 
 ruby 
 jdk9-openjdk
+node
+npm
+go
 
 docker 
 
