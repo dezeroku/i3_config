@@ -1,28 +1,10 @@
-
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2017 Sep 20
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
-
-" When started as "evim", evim.vim will already have done these settings.
-
-
 " Vundle
- set nocompatible              " required
+set nocompatible              " required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -40,23 +22,16 @@ Plugin 'altercation/vim-colors-solarized'
 " This two can cause too long writes, turn off if this happens
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
-"
 
 " Pretty status bar TODO: does not work at the moment!
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-Bundle 'Valloric/YouCompleteMe'
-" add all your plugins here (note older versions of Vundle
-" used Bundle instead of Plugin)
-
-" ...
+Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 " End of Vundle
-
-
 
 if v:progname =~? "evim"
   finish

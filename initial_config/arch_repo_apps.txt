@@ -64,7 +64,7 @@ clang
 python3 
 ruby 
 jdk9-openjdk
-node
+nodejs
 npm
 go
 
