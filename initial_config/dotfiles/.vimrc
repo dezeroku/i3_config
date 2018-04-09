@@ -19,6 +19,8 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 
+" Latex live preview
+Plugin 'xuhdev/vim-latex-live-preview'
 " This two can cause too long writes, turn off if this happens
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
@@ -157,4 +159,7 @@ else
 endif
 " Lines numbering
 set nu
-" Indentation plugin, how to use it?
+" TODO: Indentation plugin, how to use it?
+" Latex live preview default pdf opener -> zathura
+let g:livepreview_previewer = 'zathura'
+
