@@ -97,25 +97,25 @@ bindsym $mod+a focus parent
 
 # set workspaces names
 	#monitor F30A
-		set $ws1 "1:main" 
+		set $ws1 "main" 
 	#web F376	
-		set $ws2 "2:web"
+		set $ws2 "web"
 	#notepad F227 
-		set $ws3 "3:work"
+		set $ws3 "work"
 	#hash F319 
-		set $ws4 "4:term"
+		set $ws4 "term"
 	#note F30C 
-		set $ws5 "5:media"
+		set $ws5 "media"
 	#coffee cup F372 
-		set $ws6 "6:vm"
+		set $ws6 "vm"
 	#dots F23F 
-		set $ws7 "7:misc"
+		set $ws7 "misc"
 	#trashbin  F352 
-		set $ws8 "8:trash"
+		set $ws8 "trash"
 	#steam icon F40B OR F23B gamepad icon 
-		set $ws9 "9:games"
+		set $ws9 "games"
 	#windows F24E 
-		set $ws10 "10:stuff" 
+		set $ws10 "stuff" 
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -215,6 +215,7 @@ bindsym $mod+Control+l exec "python3 ~/.config/i3/scripts/resolution.py lock_scr
     # Get class using xprop, run it in terminal and click on window, you want to get class from 
 	
     assign [class="(?i)Firefox"] $ws2
+    assign [class="(?i)qutebrowser"] $ws2
     assign [class="(?i)Steam"] $ws8
     assign [class="(?i)Spotify"] $ws5
     assign [class="(?i)MellowPlayer"] $ws5
