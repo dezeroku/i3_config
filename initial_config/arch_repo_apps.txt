@@ -16,6 +16,7 @@ ponymix
 feh 
 
 firefox 
+qutebrowser
 
 vlc 
 qt4 
@@ -55,8 +56,6 @@ ttf-hack
 
 terminator 
 rxvt-unicode 
-
-eclipse 
 
 deluge 
 
