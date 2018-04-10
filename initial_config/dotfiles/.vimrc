@@ -24,8 +24,9 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
 
-" Pretty status bar TODO: does not work at the moment!
+" Pretty status bar 
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Autocompleting
 Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line

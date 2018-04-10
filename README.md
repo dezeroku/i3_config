@@ -19,13 +19,8 @@ initial_config folder stores files which can be used to get your arch up in shor
 
 TODO:
 
- create one main file, and connect it with resolution ones -> DONE
-
  add screenshot sound 
 
- add urxvt config with auto copy -> DONE
-
- add ranger config with auto copy -> In Progress
 
 
 Now, full config consists of a base and resolution specific one.
