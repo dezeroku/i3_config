@@ -14,13 +14,12 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'davidhalter/jedi-vim'
 " Indents for python
 Plugin 'vim-scripts/indentpython.vim'
-
+" Vim LaTeX support
+Plugin 'lervag/vimtex'
 " Colors
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 
-" Latex live preview
-Plugin 'xuhdev/vim-latex-live-preview'
 " This two can cause too long writes, turn off if this happens
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
@@ -161,5 +160,4 @@ endif
 set nu
 " TODO: Indentation plugin, how to use it?
 " Latex live preview default pdf opener -> zathura
-let g:livepreview_previewer = 'zathura'
-
+let g:vimtex_view_general_viewer = 'zathura'
