@@ -16,6 +16,8 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'vim-scripts/indentpython.vim'
 " Vim LaTeX support
 Plugin 'lervag/vimtex'
+" Vim Go support
+Plugin 'fatih/vim-go'
 " Colors
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
@@ -51,35 +53,7 @@ else
   endif
 endif
 
-if &t_Co > 2 || has("gui_running")
-  " Switch on highlighting the last used search pattern.
-  set hlsearch
-endif
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
-
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
-
-  augroup END
-
-else
-
-  set autoindent		" always set autoindenting on
-
-endif " has("autocmd")
-
-" Add optional packages.
-"
-" The matchit plugin makes the % command work better, but it is not backwards
-" compatible.
-" The ! means the package won't be loaded right away but when plugins are
-" loaded during initialization.
+" Better % matching
 if has('syntax') && has('eval')
   packadd! matchit
 endif
@@ -162,3 +136,30 @@ set nu
 " TODO: Indentation plugin, how to use it?
 " Latex live preview default pdf opener -> zathura
 let g:vimtex_view_general_viewer = 'zathura'
+
+" Python highlight
+let python_highlight_all=1
+syntax on
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+" use goimports for formatting
+let g:go_fmt_command = "goimports"
+
+" turn highlighting on
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" Go syntax checkers
+let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
