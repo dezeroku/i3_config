@@ -7,6 +7,9 @@
 # Reboot.
 # Your computer should be configured now.
 
+# TODO: add $EDITOR=vim to .bashrc
+echo "export EDITOR=vim" >> ~/.bashrc
+
 # Install AUR manager.
 ./pacaur_install.sh
 
@@ -37,14 +40,21 @@ sudo pacman -S $(echo $(cat arch_repo_apps.txt))
 # Install apps from AUR.
 pacaur -S $(echo $(cat arch_aur_apps.txt))
 
+# Link important configs (existing files are moved to backup folder).
+./link_dotfiles.sh
+
 # Set correct mime types for programs (default programs).
 ./configure_mime_arch.sh
 
-# Link important configs (overrides existing files by default).
-./link_dotfiles.sh
-
 # Configure VIM.
 ./configure_vim.sh
+
+# Configure tmux.
+./configure_tmux.sh
+
+# Install go and python packages
+./go_packages.sh
+./python_packages.sh
 
 # Configure thefuck (copy alias).
 fuck
