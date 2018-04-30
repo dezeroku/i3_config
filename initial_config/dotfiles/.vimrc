@@ -21,6 +21,8 @@ Plugin 'fatih/vim-go'
 " Colors
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
+" Sessions
+Plugin 'tpope/vim-obsession'
 
 " This two can cause too long writes, turn off if this happens
 Plugin 'vim-syntastic/syntastic'
