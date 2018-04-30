@@ -10,6 +10,7 @@ pulseaudio-bluetooth
 pulseaudio-equalizer 
 pulseaudio-jack 
 
+fbida
 playerctl 
 dmenu 
 ponymix 
