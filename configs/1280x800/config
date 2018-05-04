@@ -14,4 +14,5 @@ bar {
 		font pango:monospace 1, Icons 11
         status_command python3 ~/.config/i3/scripts/resolution.py py3status
         position top
+        strip_workspace_numbers yes
 }
