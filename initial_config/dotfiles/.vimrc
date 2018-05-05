@@ -23,6 +23,8 @@ Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 " Sessions
 Plugin 'tpope/vim-obsession'
+" Beautify
+Plugin 'Chiel92/vim-autoformat'
 
 " This two can cause too long writes, turn off if this happens
 Plugin 'vim-syntastic/syntastic'
@@ -165,3 +167,6 @@ let g:go_highlight_build_constraints = 1
 
 " Go syntax checkers
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+
+" Beautify shortcut
+noremap <F3> :Autoformat<CR>
