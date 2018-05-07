@@ -39,8 +39,12 @@ sudo pacman -S $(echo $(cat arch_repo_apps.txt))
 # Install apps from AUR.
 pacaur -S $(echo $(cat arch_aur_apps.txt))
 
-# TODO: change default permissions of npm so it could be run without sudo?
-#
+# Make npm runnable without sudo, and store it config in home directory.
+mkdir ~/npm_global
+
+npm config set prefix '~/npm_global'
+
+echo "export PATH=~/npm_global/bin:$PATH" >> ~/.bashrc
 
 # Link important configs (existing files are moved to backup folder).
 ./link_dotfiles.sh
