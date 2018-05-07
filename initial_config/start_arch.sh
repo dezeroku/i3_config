@@ -7,7 +7,6 @@
 # Reboot.
 # Your computer should be configured now.
 
-# TODO: add $EDITOR=vim to .bashrc
 echo "export EDITOR=vim" >> ~/.bashrc
 
 # Install AUR manager.
@@ -34,11 +33,14 @@ rm mirrorlist
 # Run system upgrade.
 sudo pacman -Syu
 
-# Install all official repos apps. TODO: ERROR WITH - mark
+# Install all official repos apps.
 sudo pacman -S $(echo $(cat arch_repo_apps.txt))
 
 # Install apps from AUR.
 pacaur -S $(echo $(cat arch_aur_apps.txt))
+
+# TODO: change default permissions of npm so it could be run without sudo?
+#
 
 # Link important configs (existing files are moved to backup folder).
 ./link_dotfiles.sh
@@ -52,9 +54,10 @@ pacaur -S $(echo $(cat arch_aur_apps.txt))
 # Configure tmux.
 ./configure_tmux.sh
 
-# Install go and python packages
+# Install go, python and js packages
 ./go_packages.sh
 ./python_packages.sh
+./js_packages.sh
 
 # Configure thefuck (copy alias).
 fuck

@@ -10,5 +10,3 @@ qnapi
 icecat-bin
 
 teamspeak3
-
-vim-youcompleteme-git
