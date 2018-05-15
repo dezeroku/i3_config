@@ -81,3 +81,6 @@ networkmanager
 network-manager-applet 
 
 thefuck
+
+git
+hub
