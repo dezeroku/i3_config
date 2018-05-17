@@ -170,3 +170,6 @@ let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
 
 " Beautify shortcut
 noremap <F3> :Autoformat<CR>
+
+" Set encoding
+set encoding=utf-8
