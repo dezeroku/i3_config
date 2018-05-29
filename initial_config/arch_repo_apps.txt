@@ -84,3 +84,5 @@ thefuck
 
 git
 hub
+
+pacman-contrib
