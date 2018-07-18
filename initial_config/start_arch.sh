@@ -10,7 +10,7 @@
 echo "export EDITOR=vim" >> ~/.bashrc
 
 # Install AUR manager.
-./pacaur_install.sh
+./yay_install.sh
 
 # Add sublime text repository.
 curl -O https://download.sublimetext.com/sublimehq-pub.gpg && sudo pacman-key --add sublimehq-pub.gpg && sudo pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg
@@ -37,7 +37,7 @@ sudo pacman -Syu
 sudo pacman -S $(echo $(cat arch_repo_apps.txt))
 
 # Install apps from AUR.
-pacaur -S $(echo $(cat arch_aur_apps.txt))
+yay -S $(echo $(cat arch_aur_apps.txt))
 
 # Make npm runnable without sudo, and store it config in home directory.
 mkdir ~/npm_global
