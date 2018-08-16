@@ -5,6 +5,7 @@ echo '[multilib]' | sudo tee --append /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' | sudo tee --append /etc/pacman.conf
 
 # Find fastest servers and use them with pacman.
+sudo pacman -S pacman-contrib
 rankmirrors -n 15 /etc/pacman.d/mirrorlist > mirrorlist
 sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist_backup
 sudo mv mirrorlist /etc/pacman.d/mirrorlist

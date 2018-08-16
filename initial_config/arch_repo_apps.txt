@@ -64,7 +64,7 @@ deluge
 clang
 python3 
 ruby 
-jdk9-openjdk
+jdk10-openjdk
 nodejs
 npm
 go

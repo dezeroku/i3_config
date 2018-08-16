@@ -6,7 +6,7 @@
 
 mkdir ~/.config
 mkdir ~/.config/i3
-mv ../../i3_config/* ~/.config/i3/ -r
+mv ../../i3_config/* ~/.config/i3/ 
 cd ~/.config/i3
 
 # Set up pacman source files.
