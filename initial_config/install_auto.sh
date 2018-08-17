@@ -46,5 +46,8 @@ fuck
 # Add aliases (bash only version).
 ./source_shell_files.sh
 
+# Add go bin PATH.
+echo 'export PATH="$PATH:~/go/bin"' >> ~/.bashrc
+
 #copy sublime config (TODO IN FUTURE)
 echo FINISHED
