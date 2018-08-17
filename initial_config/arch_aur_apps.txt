@@ -4,9 +4,11 @@ xss-lock-git
 ttf-font-icons 
 
 vimb
+spotify
 
 qnapi
 
 icecat-bin
 
 teamspeak3
+discord

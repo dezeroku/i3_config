@@ -37,6 +37,7 @@ gvim
 vim-spell-en
 vim-spell-pl
 vim-spell-de
+tmux
  
 libreoffice 
 zathura 
@@ -63,8 +64,9 @@ deluge
 
 clang
 python3 
+python-pip
 ruby 
-jdk9-openjdk
+jdk10-openjdk
 nodejs
 npm
 go
