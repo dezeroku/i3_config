@@ -46,6 +46,11 @@ fuck
 # Add aliases (bash only version).
 ./source_shell_files.sh
 
+# Control net usage.
+sudo pacman -S vnstat
+sudo systemctl start vnstat
+sudo systemctl enable vnstat
+
 # Add go bin PATH.
 echo 'export PATH="$PATH:~/go/bin"' >> ~/.bashrc
 
