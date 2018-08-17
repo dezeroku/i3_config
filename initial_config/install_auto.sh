@@ -43,5 +43,8 @@ echo "export PATH=~/npm_global/bin:$PATH" >> ~/.bashrc
 fuck
 fuck
 
+# Add aliases (bash only version).
+./source_shell_files.sh
+
 #copy sublime config (TODO IN FUTURE)
 echo FINISHED
