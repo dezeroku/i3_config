@@ -12,3 +12,5 @@ icecat-bin
 
 teamspeak3
 discord
+
+cower

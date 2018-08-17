@@ -70,6 +70,7 @@ jdk10-openjdk
 nodejs
 npm
 go
+ghc
 
 docker 
 
@@ -88,3 +89,5 @@ git
 hub
 
 pacman-contrib
+
+steam
