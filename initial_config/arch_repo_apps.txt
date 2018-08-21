@@ -96,3 +96,5 @@ steam
 
 postgresql
 scrot
+
+openssh
