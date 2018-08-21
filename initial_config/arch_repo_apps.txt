@@ -71,6 +71,7 @@ nodejs
 npm
 go
 ghc
+php
 
 docker 
 
