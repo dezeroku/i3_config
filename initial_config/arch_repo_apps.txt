@@ -98,3 +98,6 @@ postgresql
 scrot
 
 openssh
+
+udiskie
+autofs
