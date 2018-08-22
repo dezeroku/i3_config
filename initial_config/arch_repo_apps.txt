@@ -100,4 +100,3 @@ scrot
 openssh
 
 udiskie
-autofs
