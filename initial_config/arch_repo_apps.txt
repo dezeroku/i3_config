@@ -100,3 +100,4 @@ scrot
 openssh
 
 udiskie
+imagemagick
