@@ -101,3 +101,5 @@ openssh
 
 udiskie
 imagemagick
+
+w3m
