@@ -8,9 +8,11 @@ mv ~/.config/ranger/rc.conf ~/backup_dotfiles
 mv ~/.tmux.conf ~/backup_dotfiles
 mv ~/.config/dunst/dunstrc ~/backup_dotfiles
 mv ~/.config/rofi/config ~/backup_dotfiles
+mv ~/.config/qutebrowser/config.py ~/backup_dotfiles
 
 mkdir ~/.config/dunst
 mkdir ~/.config/rofi
+mkdir ~/.config/qutebrowser
 
 echo "Your original files are backed up in ~/backup_dotfiles folder."
 
@@ -23,3 +25,4 @@ ln -f ~/.config/i3/initial_config/dotfiles/.Xresources ~/.Xresources
 ln -f ~/.config/i3/initial_config/dotfiles/.tmux.conf ~/.tmux.conf
 ln -f ~/.config/i3/initial_config/dotfiles/dunstrc ~/.config/dunst/dunstrc
 ln -f ~/.config/i3/initial_config/dotfiles/rofi_config ~/.config/rofi/config
+ln -f ~/.config/i3/initial_config/dotfiles/qute_config.py ~/.config/qutebrowser/config.py
