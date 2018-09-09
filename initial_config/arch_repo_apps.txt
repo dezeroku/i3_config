@@ -105,3 +105,4 @@ imagemagick
 youtube-dl
 mpv
 w3m
+neofetch
