@@ -1,8 +1,11 @@
-# This file is your base config, put here all the stuff, which should be available on all devices (are not device-sepecific) It is good place for e.g. key bindings, default window opening locations and so on
-
+# This is base config file, put here all settings that are shared between all devices you use.
 # If you specify same things in base and device specific config, device specific overrides base
 
-# IF YOU WANT TO RELOAD YOUR CONFIG, THE EASIEST OPTION IS TO RESTART X SERVER (turn off and on)
+# There are some special variables that you can use here and are not defined in i3.
+# These will be parsed by resolution.py and replaced with correct values.
+# You can put them inside of strings, mid-text etc. they will all be parsed before config will be read by i3.
+#
+# $$BASE$$ - points to root directory of i3_config e.g. /home/d0ku/i3_config or /home/d0ku/.config/i3_config
 
 # Set main button to Win
 set $mod Mod4
@@ -14,10 +17,10 @@ floating_modifier $mod
 bindsym $mod+x layout toggle
 
 # volume control up 
-bindsym XF86AudioRaiseVolume exec "ponymix increase 5 && python3 ~/.config/i3/scripts/play_sound.py volume_change.wav "
+bindsym XF86AudioRaiseVolume exec "ponymix increase 5 && python3 $$BASE$$scripts/play_sound.py volume_change.wav "
 
 # volume control down 
-bindsym XF86AudioLowerVolume exec "ponymix decrease 5 && python3 ~/.config/i3/scripts/play_sound.py volume_change.wav "
+bindsym XF86AudioLowerVolume exec "ponymix decrease 5 && python3 $$BASE$$scripts/play_sound.py volume_change.wav "
 
 # volume mute
 bindsym XF86AudioMute exec "ponymix toggle"
@@ -144,7 +147,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r exec "resolution.py run --restart-i3-config"
+bindsym $mod+Shift+r exec "$$BASE$$scripts/resolution.py run --restart-i3-config"
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -197,10 +200,10 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab exec "i3_next_workspace.py "
 
 # set lock screen
-exec "resolution.py lock --set-up-locker --lock-image-number 1"
+exec $$BASE$$scripts/resolution.py lock --set-up-locker --lock-image-number 1"
 
 # lock screen 
-bindsym $mod+Control+l exec "resolution.py lock --lock-screen --lock-image-number 1"
+bindsym $mod+Control+l exec $$BASE$$scripts/resolution.py lock --lock-screen --lock-image-number 1"
 
 # assign programs to workspaces
 

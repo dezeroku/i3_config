@@ -26,6 +26,7 @@ import argparse
 import sys
 import os
 import time
+import re
 from pathlib import Path
 
 def get_resolution():
@@ -100,9 +101,17 @@ class Runner:
     considering files located in self.config_folder_path."""
 
     def __init__(self, config_folder_path):
-        self.config_folder_path = config_folder_path
+        # config_folder_path should point to root i3_config directory
+
+        # Here we add ending to path.
+        self.config_folder_path = config_folder_path + "configs/"
         self.resolution = get_resolution()
         self.set_up_files()
+
+        # Dictionary, it maps $$VARIABLE$$ alike words to values to be written
+        # in final config.
+        self.words_to_parse = {}
+        self.words_to_parse['BASE'] = config_folder_path
 
 
     def set_up_files(self):
@@ -194,26 +203,53 @@ class Runner:
 
             with open(self.base_config_file, "r") as base_config:
                 for line in base_config:
-                    current_config.write(line)
+                    current_config.write(self.parse_line(line))
 
             current_config.write("\n\n\n")
 
             if self.parse_resolution_file:
                 with open(self.resolution_config_file, "r") as res_config:
                     for line in res_config:
-                        current_config.write(line)
+                        current_config.write(self.parse_line(line))
             else:
                 with open(self.config_fallback_file, "r") as fall_config:
                     for line in fall_config:
-                        current_config.write(line)
+                        current_config.write(self.parse_line(line))
 
             print("Successfully written current config: " +
                   self.current_config_file, file=sys.stderr)
+
+    def parse_line(self, line):
+        """Parses line of i3 config replacing all $$VARIABLE$$ alike words with
+        object dictionary value."""
+        # TODO: write some tests for this method.
+        reg_str = "\$\$.*\$\$"
+        reg = re.compile(reg_str)
+
+        variables = reg.findall(line)
+
+        for variable in variables:
+            var = variable[2:-2]
+            try:
+                line = line.replace(variable, self.words_to_parse[var])
+            except KeyError:
+                print("Could not match " + variable +" with any variable.",
+                      file=sys.stderr)
+                sys.exit(1)
+
+        return line
 
     def start_i3(self):
         """Start i3wm accordingly to parameters in config_folder_path"""
         self._create_config()
         os.system("i3 -c " + self.current_config_file)
+
+    def start_i3_debug(self):
+        """Start i3wm accordingly to parameters in config_folder_path (with
+        debug options)."""
+        self._create_config()
+        os.system("i3 -c " + self.current_config_file +
+                  " --shmlog-size=26214400")
 
     def restart_i3_config(self):
         """Recreate temporal config and force i3wm to use it."""
@@ -275,6 +311,9 @@ def get_parser_runner(parser):
     exclusive.add_argument("--start-i3", help="Starts i3wm with \
                            provided parameters.", action="store_true",
                            default=False)
+    exclusive.add_argument("--start-i3-debug", help="Starts i3wm with \
+                           provided parameters (debug mode).",
+                           action="store_true", default=False)
     exclusive.add_argument("--restart-i3-config", help="Recreates the\
                            config file and forces i3 refresh to use it.",
                            action="store_true", default=False)
@@ -283,7 +322,7 @@ def get_parser_runner(parser):
 
     parser.add_argument("--config-path", help="Root path of folder\
                         containing config subfolders and files (absolute)",
-                        default=home_directory + "/i3_config/configs/")
+                        default=(home_directory + "/i3_config/"))
 
 def get_parser_misc(parser):
     """Fill parser for 'misc' subcommand."""
@@ -322,6 +361,8 @@ def runner(args):
     runner = Runner(args.config_path)
 
     if args.start_i3:
+        runner.start_i3()
+    if args.start_i3_debug:
         runner.start_i3()
     elif args.restart_i3_config:
         runner.restart_i3_config()
