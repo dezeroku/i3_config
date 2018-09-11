@@ -30,6 +30,10 @@ import re
 import getpass
 from pathlib import Path
 
+class CouldNotParseException(BaseException):
+    """Is thrown when $$variable$$ can't be parsed in config file."""
+    pass
+
 def get_root_folder():
     """Returns root i3_config folder path, basing on resolution.py (this file)
     script location."""
@@ -209,23 +213,26 @@ class Runner:
                                      log and fix that. Using fallback base\
                                      config for now.\n")
 
-            with open(self.base_config_file, "r") as base_config:
-                for line in base_config:
-                    current_config.write(self.parse_line(line))
-
-            current_config.write("\n\n\n")
-
-            if self.parse_resolution_file:
-                with open(self.resolution_config_file, "r") as res_config:
-                    for line in res_config:
-                        current_config.write(self.parse_line(line))
-            else:
-                with open(self.config_fallback_file, "r") as fall_config:
-                    for line in fall_config:
+            try:
+                with open(self.base_config_file, "r") as base_config:
+                    for line in base_config:
                         current_config.write(self.parse_line(line))
 
-            print("Successfully written current config: " +
-                  self.current_config_file, file=sys.stderr)
+                current_config.write("\n\n\n")
+
+                if self.parse_resolution_file:
+                    with open(self.resolution_config_file, "r") as res_config:
+                        for line in res_config:
+                            current_config.write(self.parse_line(line))
+                else:
+                    with open(self.config_fallback_file, "r") as fall_config:
+                        for line in fall_config:
+                            current_config.write(self.parse_line(line))
+
+                print("Successfully written current config: " +
+                      self.current_config_file, file=sys.stderr)
+            except CouldNotParseException:
+                sys.exit(1)
 
     def parse_line(self, line):
         """Parses line of i3 config replacing all $$VARIABLE$$ alike words with
@@ -235,7 +242,7 @@ class Runner:
         if line[0] == "#":
             return line
 
-        reg_str = "\$\$.*\$\$"
+        reg_str = "\$\$[^\$]*\$\$"
         reg = re.compile(reg_str)
 
         variables = reg.findall(line)
@@ -247,7 +254,8 @@ class Runner:
             except KeyError:
                 print("Could not match " + variable +" with any variable.",
                       file=sys.stderr)
-                sys.exit(1)
+                raise CouldNotParseException("Could not match " + variable +
+                                             " with any variable.")
 
         return line
 
