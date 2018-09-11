@@ -1,56 +1,28 @@
-This is my customized i3 environment with some additional scripts and changes.
-It is quite easy to notice that it was done on Arch Linux (all the AUR packages), I don't know whether this packages are available on other distributions, but I strongly recommend to try Arch ;)
+## About
+That repository contains scripts and files that I use to set up new Arch Linux installs.
 
-Main concept standing behind those files is to made independent config for resolutions (well, it was made on a 1920x1080 PC and 1280x800 laptop), which are kind of ID for device (I know it is weak ;).
+It contains:
 
-For that concept to work you should add this "python3 ~/.config/i3/scripts/resolution.py run_i3" to your .xinit line or replace your i3 starting routine with that line.
++ i3 config files (base and resolution specific)
++ 'dotfiles' for:
+  1. tmux
+  2. vim
+  3. ranger
+  4. qutebrowser
+  5. URxvt (.Xresources)
+  6. dunst
+  7. rofi
++ 2 lockscreen wallpapers
++ 1 desktop wallpaper
 
-For brightness keys to work with my script , you should add NOPASSWD entry in /etc/sudoers to work properly (you have to give NOPASSWD sudo access to change_brightness file)
+### Installation
+There is an 'install\_auto.sh' script in 'initial\_config' folder and I use it to set everything up.
 
-By default all files should be stored in ~/.config/i3/ , otherwise it won't work.
+Refactoring it and automating installation process even more is one of the top priorities TODOs.
 
-i3status.conf i3 config and some more files are stored in ~/.config/i3/configs/your_resolution/ and should be edited there
+If you do not want to install all the stuff I do, you should read resolution.py script in 'scripts' folder and change configs/base and configs/{resolution} to suit your needs.
 
-INFO: 
-
-Most of this scripts are written by myself, and for myself, therefore some of them probably won't work for you, feel free to edit them to your needs. I plan to release Docs in near future.
-
-THANKS:
-
-My tmux config is based and mainly consists of work done by [@gpakosz]. I strongly recommend visiting his repo.
-
-[@gpakosz]: https://github.com/gpakosz/.tmux
-
-
-initial_config folder stores files which can be used to get your arch up in short time, you should read them and use if you want
-
-TODO:
-
- add screenshot sound 
-
-
-
-Now, full config consists of a base and resolution specific one.
-
-
-First, for full functionality you need to install:
-
-playerctl (for music control)
-
-dmenu (menu start app for i3)
-
-#pamixer (for volume changes) REPLACED BY ponymix
-
-xss-lock-git ( normal version has CPU problems, available in AUR) 
-
-ttf-font-icons (pretty workspace icons, available in AUR) 
-
-python3 (well, you really SHOULD have it installed)  
-
-py3status (better i3status, available in AUR)
-
-feh (only if you want to use wallpapers)
-
-nvidia-smi (nvidia graphics temperature only)
-
-pygame (python3 library, install it using pip, for all kind of sounds played in UI)
+### Credits
+- wallpaper\_0.png, lock\_0.png - [Damian Lickindorf](https://www.instagram.com/lickindorf_fotografia/)
+- lock\_1.png -  Photo by [Markus Spiske](https://unsplash.com/@markusspiske) on Unsplash
+- Tmux config is very much based on work of [@gpakosz](https://github.com/gpakosz/). I recommend visiting repo with his [config for tmux ](https://github.com/gpakosz/.tmux).
