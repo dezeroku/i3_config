@@ -1,40 +1,68 @@
-#This file is responsible for loading specific files for each resolution, It was created to easy maintain two layouts, one for laptop (1280x800), and one for PC (1920x1080), but it was made to work with other resolutions also
-#Config base file now serves as a fallback config
+"""
+Purpose:
+    This file does everything needed to merge config files for specific
+resolutions and run i3/py3status etc. with provided options. It is named
+resolution.py for historical reasons (I don't want to change it just now.).
+
+Why:
+    The whole reason why this setup is created: I had 2 computers at the time of
+writing, one bigger laptop with 17 in. screen and 1920x1080 resolution and
+smaller netbook 13 in. screen and 1280x800 resolution. Both were running i3 at
+the time and I really wanted to have similar experience on them, so changing
+config on one of them would automatically change config on second. I ended up
+having one base config that contains settings shared between systems and
+computer-specific configs which are chosen on runtime basing on resolution. (I
+know it's not the best option out there, but until it's enough for my needs I
+will probably just stick with it.) The program creates temporary config which
+consists of base and resolution dependent config and then runs i3 on top of it.
+
+Started 2017
+Big clean up 2018
+By d0ku"""
+
 import subprocess
 import argparse
 import sys
 import os
+import time
 from pathlib import Path
 
 def get_resolution():
+    """Return resolution of main monitor as a string. Example outputs:
+        1280x800
+        1920x1080
+        1024x768
+        """
+    # TODO: This must be possible to be done easier.
     command = "xrandr  | grep \* | cut -d' ' -f4"
     result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    for line in result.stdout.readlines():  # read and store result in log file
-        pass
-        #print(line)
+    res = None
+    for line in result.stdout.readlines():
+        res = line
+        break
 
-    temp = line.decode("utf-8")
+    if res is None:
+        print("Could not get resolution!", file=sys.stderr)
+        sys.exit(1)
+
+    temp = res.decode("utf-8")
 
     resolution = ""
-    for x in temp:
-        if x != "\n":
-            resolution += x
+    for character in temp:
+        if character != "\n":
+            resolution += character
 
-    if resolution is None:
-        print("Could not get resolution!")
-        sys.exit(1)
     return resolution
 
-def file_exists(path):
-    pass
 
-def convertToNumber(number):
-    try:
-        number = int(number)
-    except: #TODO: specify exception
-        print("Could not convert to a number: "+number)
-        sys.exit(2)
-    return number
+def set_wallpaper(image_path):
+    """Set image at provided path as a wallpaper (requires feh to run)."""
+    if os.path.exists(image_path):
+        os.system("feh --bg-scale " + image_path)
+    else:
+        print("Could not find image at " + image_path, file=sys.stderr)
+        sys.exit(1)
+
 
 class Locker:
     """All methods arguments should be already parsed ints."""
@@ -42,13 +70,13 @@ class Locker:
 
     def __init__(self, lock_images_path):
         self.lock_images_path = lock_images_path
-        pass
 
-    def lock_now(self,image_number=-1):
+    def lock_now(self, image_number=-1):
+        """Lock screen and blank display."""
         final_path = self.lock_images_path+str(image_number)+"_lock.png"
         print(final_path)
-        if (image_number!=-1 and
-            os.path.exists(final_path)):
+        if (image_number != -1 and
+                os.path.exists(final_path)):
             os.system("i3lock -c 000000 -i " + final_path)
         else:
             os.system("i3lock -c 000000")
@@ -56,32 +84,175 @@ class Locker:
         # Turn screen off.
         os.system("xset dpms force standby")
 
-    def enable_lock_daemon(self,image_number=-1):
-        if (image_number!=-1 and
-            os.path.exists(self.lock_images_path + str(image_number) +
-                           "_lock.png")):
-            os.system("xss-lock -- i3lock -c 000000 -i " +
-                      self.lock_images_path +
-                      str(lock_number)+"_lock.png" + " &")
+    def enable_lock_daemon(self, image_number=-1):
+        """Set screen to lock on user inactivity period or suspend."""
+        final_path = self.lock_images_path+str(image_number)+"_lock.png"
+        print(final_path)
+        if (image_number != -1 and
+                os.path.exists(final_path)):
+            os.system("xss-lock -- i3lock -c 000000 -i " + final_path + " &")
         else:
             os.system("xss-lock -- i3lock -c 000000" + " &")
 
 class Runner:
-    pass
+    """Manage starting and restarting i3wm and py3status configuration,
+    considering files located in self.config_folder_path."""
 
-class Wallpaper:
-    pass
+    def __init__(self, config_folder_path):
+        self.config_folder_path = config_folder_path
+        self.resolution = get_resolution()
+        self.set_up_files()
+
+
+    def set_up_files(self):
+        """Check for existence of all necessary files and add required
+        variables."""
+        if not os.path.exists(self.config_folder_path):
+            print("Provided config_folder_path does not exist in a\
+                  filesystem.", file=sys.stderr)
+
+        base_config_folder = self.config_folder_path + "base/"
+
+        if not os.path.exists(base_config_folder):
+            print("Could not found 'base' folder containing base\
+                            configuration in config_folder_path (" +
+                  self.config_folder_path + ") location.",
+                  file=sys.stderr)
+
+        self.base_config_file = base_config_folder + "config"
+
+        if not os.path.exists(self.base_config_file):
+            print("Could not found 'config' file containing base\
+                            configuration in config_folder_path/base/ (" +
+                  self.config_folder_path + ") location.",
+                  file=sys.stderr)
+
+
+        # Check for fallback config.
+        self.config_fallback_file = (self.config_folder_path +
+                                     "/base/config_fallback")
+        if not os.path.exists(self.config_fallback_file):
+            print("Exiting, could not find config fallback file at " +
+                  self.config_fallback_file, file=sys.stderr)
+            sys.exit(1)
+
+        resolution_config_folder = self.config_folder_path + self.resolution + "/"
+
+        self.parse_resolution_file = False
+
+        if not os.path.exists(resolution_config_folder):
+            print("Could not locate resolution based config folder in\
+                  config_folder_path (" + resolution_config_folder + ")\
+                  location.", file=sys.stderr)
+        else:
+            self.resolution_config_file = (resolution_config_folder +
+                                           "config")
+            if not os.path.exists(self.resolution_config_file):
+                print("Could not locate resolution based config file in\
+                    config_folder_path (" + self.resolution_config_file + ")\
+                    location.", file=sys.stderr)
+            else:
+                # Everything went fine.
+                self.parse_resolution_file = True
+
+
+    def set_up_files_current(self):
+        """Create current directory if not exists. Check for overwrite."""
+        current_config_path = self.config_folder_path + "current/"
+        if not os.path.exists(current_config_path):
+            print("Current config folder does not exist, creating as " +
+                  current_config_path, file=sys.stderr)
+            os.makedirs(current_config_path)
+
+        self.current_config_file = current_config_path + "config"
+        if os.path.exists(self.current_config_file):
+            print("Current config file does already exist, overwriting " +
+                  self.current_config_file, file=sys.stderr)
+
+    def _create_config(self):
+        """Merges config files basing on self.config_folder_path and resolution
+        detected by get_resolution."""
+
+        self.set_up_files_current()
+
+        current_time_str = time.strftime("%b %d %Y %H:%M:%S", time.gmtime())
+        with open(self.current_config_file, "w") as current_config:
+            current_config.write("# Config file automatically generated by\
+                                 Runner (" + current_time_str + ")\n")
+            current_config.write("# Don't edit this file, instead read\
+                                 documentation at\
+                                 https://github.com/d0ku/i3_config and edit\
+                                 files accordingly.\n")
+            if self.parse_resolution_file:
+                current_config.write("# Merging with resolution file (" +
+                                     self.resolution + ")\n")
+            else:
+                current_config.write("# Could not read resolution file. Read\
+                                     log and fix that. Using fallback base\
+                                     config for now.\n")
+
+            with open(self.base_config_file, "r") as base_config:
+                for line in base_config:
+                    current_config.write(line)
+
+            current_config.write("\n\n\n")
+
+            if self.parse_resolution_file:
+                with open(self.resolution_config_file, "r") as res_config:
+                    for line in res_config:
+                        current_config.write(line)
+            else:
+                with open(self.config_fallback_file, "r") as fall_config:
+                    for line in fall_config:
+                        current_config.write(line)
+
+            print("Successfully written current config: " +
+                  self.current_config_file, file=sys.stderr)
+
+    def start_i3(self):
+        """Start i3wm accordingly to parameters in config_folder_path"""
+        self._create_config()
+        os.system("i3 -c " + self.current_config_file)
+
+    def restart_i3_config(self):
+        """Recreate temporal config and force i3wm to use it."""
+        self._create_config()
+        os.system("i3-msg -t command restart")
+
+    def start_py3status(self):
+        """Start py3status status bar application, accordingly to parameters
+        in config_folder_path."""
+        success = False
+        status_config_folder = (self.config_folder_path + self.resolution +
+                                "/")
+        if os.path.exists(status_config_folder):
+            status_config_file = (status_config_folder +
+                                  "i3status.conf")
+            if os.path.exists(status_config_file):
+                print("Successfully found resolution i3status.conf",
+                      file=sys.stderr)
+                success = True
+
+        if not success:
+            print("Could not load or run resolution i3status.conf, falling\
+                  back to default config_path/base/i3status.conf",
+                  file=sys.stderr)
+            status_config_file = (self.config_folder_path + "base/i3status.conf")
+
+        os.system("py3status -c " + status_config_file)
+
 
 def get_parser_locker(parser):
-    home_directory=str(Path.home())
+    """Fill parser for 'lock' subcommand."""
+    home_directory = str(Path.home())
     locking = parser.add_mutually_exclusive_group()
     locking.add_argument("--lock-screen",
-                        help="Locks screen and blanks display.",
-                        action="store_true")
+                         help="Locks screen and blanks display.",
+                         action="store_true", default=False)
     locking.add_argument("--set-up-locker", help="Start process in \
                         background which checks whether screen has to be \
                         locked due to inactivity or system suspend.",
-                        action="store_true")
+                         action="store_true", default=False)
 
     parser.add_argument("--lock-images-path", help="Point to directory\
                         which contains correctly descripted images to use with\
@@ -96,24 +267,35 @@ def get_parser_locker(parser):
                         default=0)
 
 def get_parser_runner(parser):
-    home_directory=str(Path.home())
+    """Fill parser for 'run' subcommand."""
+    home_directory = str(Path.home())
     exclusive = parser.add_mutually_exclusive_group()
 
     exclusive.add_argument("--start-i3", help="Starts i3wm with \
-                           provided parameters.",action="store_true")
-    exclusive.add_argument("--reload-i3-config", help="Recreates the\
+                           provided parameters.", action="store_true",
+                           default=False)
+    exclusive.add_argument("--restart-i3-config", help="Recreates the\
                            config file and forces i3 refresh to use it.",
-                           action="store_true")
+                           action="store_true", default=False)
     exclusive.add_argument("--start-py3status", help="Starts status bar\
-                           manager.", action="store_true")
+                           manager.", action="store_true", default=False)
 
-    parser.add_argument("--config-base-path", help="Path where base config\
-                           file is located. (absolute path)",
-                           default=home_directory + "/.config/i3/configs/base/")
+    parser.add_argument("--config-path", help="Root path of folder\
+                        containing config subfolders and files (absolute)",
+                        default=home_directory + "/.config/i3/configs/")
+
+def get_parser_misc(parser):
+    """Fill parser for 'misc' subcommand."""
+    exclusive = parser.add_mutually_exclusive_group()
+
+    exclusive.add_argument("--set-wallpaper", help="Sets image at provided\
+                           path as a wallpaper.")
 
 
 def set_up_parsers():
+    """Return parser for all subcommands and main help."""
     parser = argparse.ArgumentParser("Main manager for system.")
+    parser.set_defaults(func=default_parser)
 
     parser_getter = parser.add_subparsers()
 
@@ -122,16 +304,31 @@ def set_up_parsers():
     get_parser_runner(parser_runner)
     parser_runner.set_defaults(func=runner)
 
-    parser_locker = parser_getter.add_parser("lock", help='Handle lock functionality')
+    parser_locker = parser_getter.add_parser("lock", help='Handle lock\
+                                             functionality')
     get_parser_locker(parser_locker)
     parser_locker.set_defaults(func=locker)
+
+    parser_misc = parser_getter.add_parser("misc", help='Miscellanous\
+                                          functionality')
+    get_parser_misc(parser_misc)
+    parser_misc.set_defaults(func=misc)
 
     return parser
 
 def runner(args):
-    pass
+    """That function is run, when 'run' subcommand was chosen."""
+    runner = Runner(args.config_path)
+
+    if args.start_i3:
+        runner.start_i3()
+    elif args.restart_i3_config:
+        runner.restart_i3_config()
+    elif args.start_py3status:
+        runner.start_py3status()
 
 def locker(args):
+    """That function is run, when 'lock' subcommand was chosen."""
     locker = Locker(args.lock_images_path)
     image_number = args.lock_image_number
 
@@ -140,179 +337,25 @@ def locker(args):
     elif args.set_up_locker:
         locker.enable_lock_daemon(image_number)
 
+def misc(args):
+    """That function is run, when 'misc' subcommand was chosen."""
+
+    if args.set_wallpaper:
+        set_wallpaper(args.set_wallpaper)
+
+def default_parser(args):
+    """That function is run, when no subcommand is provided."""
+
+    # TODO: Write better info.
+    print("Currently this program can only be run with subprogram options.")
+    print("Try to run 'python3 " + sys.argv[0] + " -h' to get some details.")
 
 def main():
+    """Run when script is called directly and not as a library."""
     parser = set_up_parsers()
 
     args = parser.parse_args()
     args.func(args)
-        # Do something with groups in argparse, so it's logical.
-
-
 
 if __name__ == "__main__":
     main()
-
-sys.exit(0)
-lock_number=0;
-wallpaper_number=0;
-path = home_directory+"/.config/i3/configs/"+resolution+"/wallpapers/" # e.g ~/.config/i3/configs/1280x800/wallpapers/
-config_path=home_directory+"/.config/i3/configs/"
-status_path=home_directory+"/.config/i3/configs/"
-current_config_path=home_directory+"/.config/i3/configs/current/config"
-config_base_path=home_directory+"/.config/i3/configs/base/config"
-config_fallback_path=home_directory+"/.config/i3/configs/base/config_fallback"
-current_folder_path=home_directory+"/.config/i3/configs/current/"
-fallback_status_path=home_directory+"/.config/i3/configs/base/i3status.conf"
-
-#path += resolution + "/"  # e.g ~/.config/i3/wallpapers/1280x800/
-config_path += resolution +"/"+"config" # e.g ~/.config/i3/configs/1280x800/
-status_path+= resolution +"/"+"i3status.conf" #e.g ~/.confid/i3/configs/1920x1080/i3status.conf
-
-if sys.argv[1] == "lock_screen_and_suspend":
-    if len(sys.argv)>2:
-        if os.path.exists(path+str(sys.argv[2])+"_lock.png"):
-            lock_number=int(sys.argv[2])
-        else:
-            print("FALLBACK")
-
-    os.system("i3lock -c 000000 -i " + path +str(lock_number)+
-              "_lock.png" + " && systemctl suspend")
-
-
-if sys.argv[1] == "set_lock_screen" :
-    if len(sys.argv)>2:
-        if os.path.exists(path+str(sys.argv[2])+"_lock.png"):
-            lock_number=int(sys.argv[2])
-        else:
-            lock_number=-1
-            print("FALLBACK")
-    if lock_number!=-1:
-        os.system("xss-lock -- i3lock -c 000000 -i " + path + str(lock_number)+"_lock.png" + " &")
-    else:
-        os.system("xss-lock -- i3lock -c 000000" + " &")
-
-if sys.argv[1] == "lock_screen":
-    #TODO: running only "xset dpms force standby" locks the screen itself, check behaviour
-
-    #however running first "xset s activate" is probably better practice
-
-    if len(sys.argv)>2:
-        if os.path.exists(path+str(sys.argv[2])+"_lock.png"):
-            lock_number=int(sys.argv[2])
-        else:
-            lock_number=-1
-            print("FALLBACK")
-
-    if lock_number!=-1:
-        os.system("i3lock -c 000000 -i " + path + str(lock_number)+"_lock.png")
-    else:
-        os.system("i3lock -c 000000")
-
-    os.system("xset dpms force standby") #blanks screen
-    #os.system("xset s off -dpms ") #this prevents screen from going black
-
-if sys.argv[1]== "lock_screen__stay_on":
-    if len(sys.argv)>2:
-        if os.path.exists(path+str(sys.argv[2])+"_lock.png"):
-            lock_number=int(sys.argv[2])
-        else:
-            print("FALLBACK")
-
-    os.system("i3lock -c 000000 -i " + path + str(lock_number)+"_lock.png")
-
-
-
-if sys.argv[1] == "reload_config":
-    if os.path.exists(config_path)==True:
-        if not os.path.exists(current_folder_path):
-            os.system("mkdir "+current_folder_path)
-        with open(current_config_path,"w") as current_config:
-            current_config.write("#DO NOT EDIT THIS FILE, IT IS AUTOMATICALLY GENERATED BY SCRIPT \n")
-            current_config.write("#IF YOU WANT TO CHANGE CONFIG, DO IT IN RESOLUTION SPECIFIC OR BASE FOLDER \n")
-            current_config.write("\n\n\n")
-            with open(config_base_path,"r") as base_config:
-                current_config.write("#BASE CONFIG PART\n")
-                current_config.write(base_config.read())
-                current_config.write("\n\n\n")
-
-            with open(config_path,"r") as specific_config:
-                current_config.write("#RESOLUTION SPECIFIC PART \n")
-                current_config.write(specific_config.read())
-                current_config.write("\n")
-
-        print("Config exists, now reload your config")
-    else:
-        with open(current_config_path,"w") as current_config:
-            current_config.write("#FALLBACK CONFIG USED, NO SUPPORTED RESOLUTION FOUND \n")
-            current_config.write("#DO NOT EDIT THIS FILE, IT IS AUTOMATICALLY GENERATED BY SCRIPT \n")
-            current_config.write("#IF YOU WANT TO CHANGE CONFIG, DO IT IN RESOLUTION SPECIFIC OR BASE FOLDER \n")
-            current_config.write("\n\n\n")
-            with open(config_base_path,"r") as base_config:
-                current_config.write("#BASE CONFIG PART\n")
-                current_config.write(base_config.read())
-                current_config.write("\n\n\n")
-
-            with open(config_fallback_path,"r") as specific_config:
-                current_config.write("#FALLBACK CONFIG USED \n")
-                current_config.write(specific_config.read())
-                current_config.write("\n")
-
-        print("Fallback, now reload your config")
-
-
-if sys.argv[1] == "set_wallpaper":
-    if len(sys.argv)>2:
-        if os.path.exists(path+str(sys.argv[2])+"_wallpaper.png"):
-            wallpaper_number=int(sys.argv[2])
-        else:
-            print("FALLBACK")
-
-    os.system("feh --bg-scale "+path+str(wallpaper_number)+"_wallpaper.png")
-
-if sys.argv[1]=="run_i3":
-    if os.path.exists(config_path)==True:
-        if not os.path.exists(current_folder_path):
-            os.system("mkdir "+current_folder_path)
-        with open(current_config_path,"w") as current_config:
-            current_config.write("#DO NOT EDIT THIS FILE, IT IS AUTOMATICALLY GENERATED BY SCRIPT \n")
-            current_config.write("#IF YOU WANT TO CHANGE CONFIG, DO IT IN RESOLUTION SPECIFIC OR BASE FOLDER \n")
-            current_config.write("\n\n\n")
-            with open(config_base_path,"r") as base_config:
-                current_config.write("#BASE CONFIG PART\n")
-                current_config.write(base_config.read())
-                current_config.write("\n\n\n")
-
-            with open(config_path,"r") as specific_config:
-                current_config.write("#RESOLUTION SPECIFIC PART \n")
-                current_config.write(specific_config.read())
-                current_config.write("\n")
-
-        os.system("i3 -c "+current_config_path)
-        print("Config exists")
-    else:
-        with open(current_config_path,"w") as current_config:
-            current_config.write("#FALLBACK CONFIG USED, NO SUPPORTED RESOLUTION FOUND \n")
-            current_config.write("#DO NOT EDIT THIS FILE, IT IS AUTOMATICALLY GENERATED BY SCRIPT \n")
-            current_config.write("#IF YOU WANT TO CHANGE CONFIG, DO IT IN RESOLUTION SPECIFIC OR BASE FOLDER \n")
-            current_config.write("\n\n\n")
-            with open(config_base_path,"r") as base_config:
-                current_config.write("#BASE CONFIG PART\n")
-                current_config.write(base_config.read())
-                current_config.write("\n\n\n")
-
-            with open(config_fallback_path,"r") as specific_config:
-                current_config.write("#FALLBACK CONFIG USED \n")
-                current_config.write(specific_config.read())
-                current_config.write("\n")
-
-        os.system("i3 -c "+current_config_path)
-        print("Fallback")
-
-if sys.argv[1]=="py3status":
-    if os.path.exists(status_path)==True:
-        os.system("py3status -c "+status_path)
-        print("Config exists")
-    else:
-        os.system("py3status -c "+fallback_status_path)
-        print("Fallback")
