@@ -200,10 +200,10 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab exec "i3_next_workspace.py "
 
 # set lock screen
-exec $$BASE$$scripts/resolution.py lock --set-up-locker --lock-image-number 1"
+exec "$$BASE$$scripts/resolution.py lock --set-up-locker --lock-image-number 1"
 
 # lock screen 
-bindsym $mod+Control+l exec $$BASE$$scripts/resolution.py lock --lock-screen --lock-image-number 1"
+bindsym $mod+Control+l exec "$$BASE$$scripts/resolution.py lock --lock-screen --lock-image-number 1"
 
 # assign programs to workspaces
 
