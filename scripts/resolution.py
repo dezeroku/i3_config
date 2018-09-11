@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Purpose:
     This file does everything needed to merge config files for specific
