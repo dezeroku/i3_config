@@ -30,6 +30,13 @@ import re
 import getpass
 from pathlib import Path
 
+def get_root_folder():
+    """Returns root i3_config folder path, basing on resolution.py (this file)
+    script location."""
+    # We need to go to parent of scripts folder and add slash at the end.
+    return (os.path.split(os.path.dirname(os.path.realpath(sys.argv[0])))[0] +
+            "/")
+
 def get_resolution():
     """Return resolution of main monitor as a string. Example outputs:
         1280x800
@@ -295,7 +302,7 @@ def get_parser_locker(parser):
     parser.add_argument("--lock-images-path", help="Point to directory\
                         which contains correctly descripted images to use with\
                         lockscreen. (absolute path)",
-                        default=home_directory + "/i3_config/configs/" +
+                        default=get_root_folder() + "/configs/" +
                         get_resolution() +
                         "/wallpapers/")
 
@@ -306,7 +313,6 @@ def get_parser_locker(parser):
 
 def get_parser_runner(parser):
     """Fill parser for 'run' subcommand."""
-    home_directory = str(Path.home())
     exclusive = parser.add_mutually_exclusive_group()
 
     exclusive.add_argument("--start-i3", help="Starts i3wm with \
@@ -323,7 +329,7 @@ def get_parser_runner(parser):
 
     parser.add_argument("--config-path", help="Root path of folder\
                         containing config subfolders and files (absolute)",
-                        default=(home_directory + "/i3_config/"))
+                        default=get_root_folder())
 
 def get_parser_misc(parser):
     """Fill parser for 'misc' subcommand."""

@@ -22,6 +22,9 @@ Refactoring it and automating installation process even more is one of the top p
 
 If you do not want to install all the stuff I do, you should read resolution.py script in 'scripts' folder and change configs/base and configs/{resolution} to suit your needs.
 
+### Usage
+The easiest option to not mess up with paths is to add absolute path to resolution.py to your .xinitrc file, add scripts folder to PATH variable and whenever you want to run the app just call resolution.py from terminal.
+
 ### Credits
 - wallpaper\_0.png, lock\_0.png - [Damian Lickindorf](https://www.instagram.com/lickindorf_fotografia/)
 - lock\_1.png -  Photo by [Markus Spiske](https://unsplash.com/@markusspiske) on Unsplash
