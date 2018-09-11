@@ -1,0 +1,4 @@
+# Add scripts folder of this repo.
+export PATH="$PATH:~/i3_config/scripts"
+export PATH="$PATH:~/go/bin"
+export PATH="$PATH:~/.local/bin"

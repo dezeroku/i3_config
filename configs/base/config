@@ -144,7 +144,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r exec "python3 ~/.config/i3/scripts/resolution.py run --restart-i3-config"
+bindsym $mod+Shift+r exec "resolution.py run --restart-i3-config"
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -194,13 +194,13 @@ workspace_auto_back_and_forth yes
 bindsym $mod+Tab workspace next
 
 #tab+shift move to next workspace 
-bindsym $mod+Shift+Tab exec python3 ~/.config/i3/scripts/next_workspace.py 
+bindsym $mod+Shift+Tab exec "i3_next_workspace.py "
 
 # set lock screen
-exec "python3 ~/.config/i3/scripts/resolution.py lock --set-up-locker --lock-image-number 1"
+exec "resolution.py lock --set-up-locker --lock-image-number 1"
 
 # lock screen 
-bindsym $mod+Control+l exec "python3 ~/.config/i3/scripts/resolution.py lock --lock-screen --lock-image-number 1"
+bindsym $mod+Control+l exec "resolution.py lock --lock-screen --lock-image-number 1"
 
 # assign programs to workspaces
 

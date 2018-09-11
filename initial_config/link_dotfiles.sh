@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mkdir ~/backup_dotfiles
+mkdir ~/.config
 mv ~/.vimrc ~/backup_dotfiles
 mv ~/.xinitrc ~/backup_dotfiles
 mv ~/.Xdefaults ~/backup_dotfiles

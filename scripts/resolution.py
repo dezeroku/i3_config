@@ -258,7 +258,7 @@ def get_parser_locker(parser):
     parser.add_argument("--lock-images-path", help="Point to directory\
                         which contains correctly descripted images to use with\
                         lockscreen. (absolute path)",
-                        default=home_directory + "/.config/i3/configs/" +
+                        default=home_directory + "/i3_config/configs/" +
                         get_resolution() +
                         "/wallpapers/")
 
@@ -283,7 +283,7 @@ def get_parser_runner(parser):
 
     parser.add_argument("--config-path", help="Root path of folder\
                         containing config subfolders and files (absolute)",
-                        default=home_directory + "/.config/i3/configs/")
+                        default=home_directory + "/i3_config/configs/")
 
 def get_parser_misc(parser):
     """Fill parser for 'misc' subcommand."""
