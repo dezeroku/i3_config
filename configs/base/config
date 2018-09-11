@@ -4,7 +4,13 @@
 # There are some special variables that you can use here and are not defined in i3.
 # These will be parsed by resolution.py and replaced with correct values.
 # You can put them inside of strings, mid-text etc. they will all be parsed before config will be read by i3.
+#
 # Variable names ARE CASE-SENSITIVE, so $$base$$ is not same as $$BASE$$.
+#
+# Variable names are NOT parsed in comments (lines starting with '#'), so you can write there whatever you want.
+#
+# If there is a variable that can't be parsed, e.g. $$LOCATION$$ and there is no LOCATION defined in resolution.py
+# program will return error and quit, you won't start i3 with incorrect config.
 #
 # $$BASE$$     - points to root directory of i3_config e.g. /home/d0ku/i3_config or /home/d0ku/.config/i3_config
 # $$USERNAME$$ - gets username that runs resolution.py
