@@ -27,6 +27,7 @@ import sys
 import os
 import time
 import re
+import getpass
 from pathlib import Path
 
 def get_resolution():
@@ -112,7 +113,7 @@ class Runner:
         # in final config.
         self.words_to_parse = {}
         self.words_to_parse['BASE'] = config_folder_path
-
+        self.words_to_parse['USERNAME'] = getpass.getuser()
 
     def set_up_files(self):
         """Check for existence of all necessary files and add required
