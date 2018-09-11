@@ -231,6 +231,10 @@ class Runner:
         """Parses line of i3 config replacing all $$VARIABLE$$ alike words with
         object dictionary value."""
         # TODO: write some tests for this method.
+        # If line is commented, don't parse it.
+        if line[0] == "#":
+            return line
+
         reg_str = "\$\$.*\$\$"
         reg = re.compile(reg_str)
 
