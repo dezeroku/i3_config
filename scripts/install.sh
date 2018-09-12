@@ -2,6 +2,9 @@
 
 # That is the file that should be run when you want to set up your shiny new Arch Linux install.
 # It takes care of installing python, setting up some repos and calls python installer in the end.
+# NOTICE: You should already have Arch Linux installed, so you can boot into it directly.
+# It is best to have installed at least base and base-devel.
+
 
 # Enable multilib pacman.
 echo '[multilib]' | sudo tee --append /etc/pacman.conf
@@ -16,8 +19,8 @@ sudo mv mirrorlist /etc/pacman.d/mirrorlist
 # Run system upgrade.
 sudo pacman -Syu
 
-# Install python3 so we can run setup.py (isn't it already installed?)
-sudo pacman -S python3
+# Install python3 and git so we can run setup.py (isn't python3 already installed?)
+sudo pacman -S python3 git
 
 # Let the python do the hard work.
 python3 setup.py
