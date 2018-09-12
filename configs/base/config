@@ -205,7 +205,7 @@ workspace_auto_back_and_forth yes
 bindsym $mod+Tab workspace next
 
 #tab+shift move to next workspace 
-bindsym $mod+Shift+Tab exec "i3_next_workspace.py "
+bindsym $mod+Shift+Tab exec "python3 $$BASE$$scripts/i3/i3_next_workspace.py "
 
 # set lock screen
 exec "$$BASE$$scripts/resolution.py lock --set-up-locker --lock-image-number 1"

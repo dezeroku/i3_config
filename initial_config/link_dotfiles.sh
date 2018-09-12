@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: rewrite with path checking in python.
+
 mkdir ~/backup_dotfiles
 mkdir ~/.config
 mv ~/.vimrc ~/backup_dotfiles
