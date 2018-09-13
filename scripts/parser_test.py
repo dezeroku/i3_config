@@ -15,24 +15,46 @@ def list_group(group):
         print("|" + app.name + "|")
         print("|" + str(app.description) + "|")
 
-def test_parse_apps_one_empty_group_incorrect_not_closed_name():
+def test_parse_apps_one_empty_group_incorrect_not_closed_name(tmpdir):
     with pytest.raises(parser.AppsGroupDoesNotExistAppAddedError):
-        result = parser.parse_apps_list("test_files/one_empty_group_incorrect_not_closed_name")
+        p = tmpdir.join("temp")
+        p.write(
+"""$$base
+??""")
+        result = parser.parse_apps_list(p)
+#        result = parser.parse_apps_list("test_files/one_empty_group_incorrect_not_closed_name")
 
-def test_parse_apps_one_empty_group_incorrect_not_started_name():
+def test_parse_apps_one_empty_group_incorrect_not_started_name(tmpdir):
     with pytest.raises(parser.AppsGroupDoesNotExistAppAddedError):
-        result = parser.parse_apps_list("test_files/one_empty_group_incorrect_not_started_name")
+        p = tmpdir.join("temp")
+        p.write(
+"""base$$
+??""")
+        result = parser.parse_apps_list(p)
 
-def test_parse_apps_one_empty_group_incorrect_not_closed_group():
+def test_parse_apps_one_empty_group_incorrect_not_closed_group(tmpdir):
     with pytest.raises(parser.AppsGroupNotClosedError):
-        result = parser.parse_apps_list("test_files/one_empty_group_incorrect_not_closed_group")
+        p = tmpdir.join("temp")
+        p.write(
+"""$$base$$
+""")
+        result = parser.parse_apps_list(p)
 
-def test_parse_apps_one_empty_group_incorrect_group_closed_not_started():
+def test_parse_apps_one_empty_group_incorrect_group_closed_not_started(tmpdir):
     with pytest.raises(parser.AppsGroupClosedNotStartedError):
-        result = parser.parse_apps_list("test_files/one_empty_group_incorrect_closed_not_started")
+        p = tmpdir.join("temp")
+        p.write(
+            """??""")
 
-def test_parse_apps_one_empty_group_correct():
-    result = parser.parse_apps_list("test_files/one_empty_group_correct")
+        result = parser.parse_apps_list(p)
+
+def test_parse_apps_one_empty_group_correct(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$empty$$
+??""")
+
+    result = parser.parse_apps_list(p)
     assert len(result) == 1
     group = result[0]
 
@@ -42,8 +64,15 @@ def test_parse_apps_one_empty_group_correct():
     assert not group.accepted
     assert not group.applications
 
-def test_parse_apps_two_empty_groups_correct():
-    result = parser.parse_apps_list("test_files/two_empty_groups_correct")
+def test_parse_apps_two_empty_groups_correct(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$empty$$
+??
+$$empty2$$
+??""")
+
+    result = parser.parse_apps_list(p)
 
     assert len(result) == 2
     group_one = result[0]
@@ -63,8 +92,15 @@ def test_parse_apps_two_empty_groups_correct():
 
 # Disabling this test enable next one to pass?
 #@pytest.mark.skip()
-def test_parse_apps_one_group_one_app():
-    result = parser.parse_apps_list("test_files/one_group_correct_one_app")
+def test_parse_apps_one_group_one_app(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$example$$
+lambda
+??""")
+
+    result = parser.parse_apps_list(p)
+
     assert len(result) == 1
     group = result[0]
 
@@ -77,12 +113,22 @@ def test_parse_apps_one_group_one_app():
     app = parser.App("lambda")
     assert app == group.applications[0]
 
-def test_parse_apps_one_group_two_apps_one_description():
-    result = parser.parse_apps_list("test_files/normal_apps_list_one_group")
+def test_parse_apps_one_group_two_apps_one_description(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$GUI$$
+i3
+xorg-server **are you sure?**
+??""")
+
+    result = parser.parse_apps_list(p)
+
     assert len(result) == 1
     apps_are = result[0]
 
     list_group(apps_are)
+
+    assert apps_are.name == "GUI"
 
     assert len(apps_are.applications) == 2
     first_app = parser.App("i3")
