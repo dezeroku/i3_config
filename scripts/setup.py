@@ -5,8 +5,8 @@ Steps:
     Install AUR helper (yay currently) Ok
     Install stuff Ok
     Install AUR stuff Ok
-    Some setup for npm
-    Link dotfiles
+    Some setup for npm Ok
+    Link dotfiles (symlinking mimeapps.list) Ok
     Set up apps configs
     Install language packages (go, python, js etc.)
     Configure MIME and let apps update their plugins or whatever
@@ -28,7 +28,7 @@ from base import get_root_folder
 
 def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
     """Symlink all files belows to correct locations (backing up previous
-    entries in backup_dir)."""
+    entries in backup_dir). Also symlinks MIME settings file."""
 
     dotfiles_dir = os.path.abspath(dotfiles_dir) + "/"
     backup_dir = os.path.expanduser(backup_dir)
@@ -42,7 +42,8 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
              ".tmux.conf":"~/.tmux.conf",
              "dunstrc":"~/.config/dunst/dunstrc",
              "rofi_config":"~/.config/rofi/config",
-             "qute_config.py":"~/.config/qutebrowser/config.py"}
+             "qute_config.py":"~/.config/qutebrowser/config.py",
+             "mimeapps.list":"~/.config/mimeapps.list"}
 
     for replace, original in files.items():
         original = os.path.expanduser(original)
