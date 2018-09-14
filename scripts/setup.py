@@ -23,7 +23,6 @@ import file_parser
 # We are going to use it for linking.
 from base import get_root_folder
 
-
 def install_yay():
     """Installs yay AUR helper."""
     result = subprocess.run(["sh", "setup/install_yay.sh"])
@@ -56,6 +55,11 @@ def get_argparser_installer(parser=argparse.ArgumentParser()):
     group.add_argument("--package-manager", help="Package manager name.\
                         That's the first argument of shell call to\
                         install.",default="pacman")
+    group.add_argument("--do-not-reinstall", help="Adds --needed options to\
+                       program call, so pacman does not reinstall already\
+                       installed packages. (Should be used only with\
+                       pacman-compatible package managers.)",
+                       action="store_true")
 
     exsclusive.add_argument("--install-aur-helper", help="Installs AUR helper\
                             basing on provided string.")
@@ -102,6 +106,9 @@ def install_func(args):
         package_manager = args.package_manager
         install_command = "-" + args.install_command
         to_install_apps = []
+        command = [package_manager, install_command]
+        if args.do_not_reinstall:
+            command.append("--needed")
         for group in groups:
             group.process_all()
             to_install_apps += group.accepted
@@ -114,12 +121,15 @@ def install_func(args):
 
         to_install_str = [app.name for app in to_install_apps]
 
-        command = package_manager + " " + install_command + " "
+        command_str = ""
+        for temp in command:
+            command_str += temp
+            command_str += " "
         for app in to_install_str:
-            command += app
-            command += " "
+            command_str += app
+            command_str += " "
 
-        print("Running: " + command)
+        print("Running: " + command_str)
 
         result = subprocess.run([package_manager, install_command] + to_install_str,
                                 stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr)

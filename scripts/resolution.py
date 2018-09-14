@@ -203,7 +203,7 @@ class Runner:
         if line[0] == "#":
             return line
 
-        reg_str = "\$\$[^\$]*\$\$"
+        reg_str = "\\$\\$[^\\$]*\\$\\$"
         reg = re.compile(reg_str)
 
         variables = reg.findall(line)

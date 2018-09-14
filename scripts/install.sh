@@ -1,9 +1,10 @@
 #!/bin/sh
 
 # That is the file that should be run when you want to set up your shiny new Arch Linux install.
+# NOTICE: At this point you should be booted into Arch Linux directly, and have sudo set up and working.
 # It takes care of installing python, setting up some repos and calls python installer in the end.
-# NOTICE: You should already have Arch Linux installed, so you can boot into it directly.
 # It is best to have installed at least base and base-devel.
+
 
 
 # Enable multilib pacman.
@@ -26,7 +27,7 @@ sudo pacman -S python3 git
 
 # Install yay.
 python3 setup.py install --install-aur-helper yay
-# Install official repo packages.
-python3 setup.py install --install-from-file ./apps_list/arch_repo_apps --install-command S
+# Install official repo packages. (We run it with sudo to get necessary privileges for pacman.)
+sudo python3 setup.py install --install-from-file ./apps_list/arch_repo_apps --install-command S --do-not-reinstall
 # Install AUR packages.
-python3 setup.py install --install-from-file ./apps_list/arch_aur_apps --install-command S --package-manager yay
+python3 setup.py install --install-from-file ./apps_list/arch_aur_apps --install-command S --package-manager yay --do-not-reinstall
