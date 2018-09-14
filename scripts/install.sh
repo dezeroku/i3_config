@@ -47,7 +47,7 @@ sh ./setup/configure_tmux.sh
 sh ./setup/go_packages.sh
 sh ./setup/js_packages.sh
 sh ./setup/python_packages.sh
-# TODO: change directories
+# TODO: don't use hardcoded directories
 sh ./setup/source_shell_files.sh
 
 # Configure thefuck.
