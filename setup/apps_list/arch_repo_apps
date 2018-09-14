@@ -1,0 +1,148 @@
+$$GUI$$
+xorg 
+xorg-xinit
+i3
+dunst 
+scrot **screenshot utility**
+rofi **runner**
+ponymix **volume control**
+playerctl **playback control**
+feh  **wallpapers and stuff**
+redshift  
+??
+
+$$AUDIO$$ 
+alsa-utils
+pulseaudio 
+pavucontrol 
+pulseaudio-bluetooth 
+pulseaudio-equalizer 
+pulseaudio-jack 
+??
+
+$$TERMINAL ONLY$$
+vlock **simple lock**
+fbida **display image in framebuffer**
+??
+
+$$BROWSERS$$
+firefox 
+qutebrowser
+w3m
+??
+
+$$VIDEO$$
+vlc 
+qt4 
+qmmp 
+mpv
+??
+
+$$IMAGE STUFF$$
+gimp 
+imagemagick
+sxiv 
+??
+
+$$COMPRESSION$$
+p7zip
+xarchiver
+??
+
+$$FILE MANAGERS$$
+ranger 
+pcmanfm 
+??
+
+$$TEXT EDITORS$$
+gvim
+vim-spell-en
+vim-spell-pl
+vim-spell-de
+sublime-text 
+??
+
+$$OFFICE$$ 
+libreoffice 
+zathura 
+zathura-pdf-mupdf 
+??
+
+
+$$LATEX$$
+texlive-most 
+texlive-lang 
+??
+
+$$WIN COMPABILITY$$
+wine
+winetricks
+??
+
+$$VMs$$
+qemu 
+qemu-arch-extra 
+??
+
+$$TERMINALS$$
+ttf-hack 
+terminator 
+rxvt-unicode 
+??
+
+$$PEER-TO-PEER$$
+deluge 
+??
+
+$$PROGRAMMING STUFF$$
+clang
+git
+hub
+python3 
+python-pip
+ruby 
+jdk10-openjdk
+nodejs
+npm
+go
+ghc
+php
+docker 
+postgresql
+??
+
+$$SHOULD BE INSTALLED$$
+fuse 
+pacman-contrib
+thefuck
+udiskie
+ntfs-3g **write to NTFS**
+??
+
+
+
+
+$$UTILS$$
+openssh
+youtube-dl
+neofetch
+ncdu  **display disk usage by files/folder etc.**
+??
+
+$$MISC$$
+steam
+tmux
+??
+
+$$VPN$$
+easy-rsa
+openvpn
+networkmanager-openvpn
+??
+
+$$NETWORKING$$
+nmap
+vnstat **Monitor network usage**
+networkmanager 
+network-manager-applet 
+??

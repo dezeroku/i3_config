@@ -11,7 +11,9 @@ Plugin 'gmarik/Vundle.vim'
 " Folding
 Plugin 'tmhedberg/SimpylFold'
 " Is this even necessary if i use youcompleteme? TODO:
-Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
+" db interface
+Plugin 'dbext.vim'
 " Indents for python
 Plugin 'vim-scripts/indentpython.vim'
 " Vim LaTeX support
@@ -80,11 +82,11 @@ nnoremap <space> za
 let g:SimpylFold_docstring_preview=1
 
 " Disable python autocomplete on dot vim-jedi
-let g:jedi#popup_on_dot = 0
+" let g:jedi#popup_on_dot = 0
 " Disable vim-jedi for YouCompleteMe
 
 " YouCompleteMe configuration
-let g:ycm_autoclose_preview_window_after_completion=1
+"let g:ycm_autoclose_preview_window_after_completion=0
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " TODO: You will probably want to disable YCM always-on and use it with
@@ -93,7 +95,10 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " set showcmd
 let mapleader = " "
 
-let g:jedi#completions_enabled = 0
+" find python binary for ycm
+let g:ycm_python_binary_path = 'python'
+
+"let g:jedi#completions_enabled = 0
 " Python PEP8 standards
 au BufNewFile,BufRead *.py set tabstop=4
 au BufNewFile,BufRead *.py set softtabstop=4
@@ -115,14 +120,14 @@ au BufNewFile,BufRead *.js, *.html, *.css set softtabstop=2
 au BufNewFile,BufRead *.js, *.html, *.css set shiftwidth=2
 
 " VirtualEnv support for python
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
+"py << EOF
+"import os
+"import sys
+"if 'VIRTUAL_ENV' in os.environ:
+"  project_base_dir = os.environ['VIRTUAL_ENV']
+"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"  execfile(activate_this, dict(__file__=activate_this))
+"EOF
 
 " Syntax Python
 let python_highlight_all=1
@@ -140,10 +145,6 @@ set nu
 " TODO: Indentation plugin, how to use it?
 " Latex live preview default pdf opener -> zathura
 let g:vimtex_view_general_viewer = 'zathura'
-
-" Python highlight
-let python_highlight_all=1
-syntax on
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -173,3 +174,8 @@ noremap <F3> :Autoformat<CR>
 
 " Set encoding
 set encoding=utf-8
+
+" Start YCM in python after 2 chars
+let g:ycm_semantic_triggers = {
+	\   'python': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
+	\ }

@@ -1,56 +1,60 @@
-This is my customized i3 environment with some additional scripts and changes.
-It is quite easy to notice that it was done on Arch Linux (all the AUR packages), I don't know whether this packages are available on other distributions, but I strongly recommend to try Arch ;)
+## About
+That repository contains scripts and files that I use to set up new Arch Linux installs.
 
-Main concept standing behind those files is to made independent config for resolutions (well, it was made on a 1920x1080 PC and 1280x800 laptop), which are kind of ID for device (I know it is weak ;).
+It contains:
 
-For that concept to work you should add this "python3 ~/.config/i3/scripts/resolution.py run_i3" to your .xinit line or replace your i3 starting routine with that line.
++ i3 config files (base and resolution specific)
++ 'dotfiles' for:
+  1. tmux
+  2. vim
+  3. ranger
+  4. qutebrowser
+  5. URxvt (.Xresources)
+  6. dunst
+  7. rofi
++ 2 lockscreen wallpapers
++ 1 desktop wallpaper
 
-For brightness keys to work with my script , you should add NOPASSWD entry in /etc/sudoers to work properly (you have to give NOPASSWD sudo access to change_brightness file)
+### Directory tree
 
-By default all files should be stored in ~/.config/i3/ , otherwise it won't work.
++ configs
+1.     1280x800 -> Configuration files to use when resolution equals 1280x800
+2.     1920x1080 -> Configuration files to use when resolutin equals 1920x1080
+3.     base -> Configuration files that are base on which resolution-specific configs can build. Also contains config\_fallback which is merged when no resolution is matched
++ scripts -> Contains all logic of repository
+1.     i3
+*         next\_workspace.py -> Changes to next active i3 workspace when called.
+2.     setup.py -> Used to manage installation, install programs, configure mime, link dotfiles etc.
+3.     resolution.py -> Merging i3 configurations, locking screen etc.
+4.     hibernate -> turns off qutebrowser and hibernates computer, to be run from commandline
++ setup
+1.     dotfiles -> Configuration files for programs mentioned above
+2.     shell'_files -> Files that will be sourced to shell
+3.     apps_list -> Lists of applications to be installed.
++ README.MD
 
-i3status.conf i3 config and some more files are stored in ~/.config/i3/configs/your_resolution/ and should be edited there
+### Installation
+You should clone that repo, open scripts folder and run install.sh script. It should take care of everything.
 
-INFO: 
+The best bet at this moment is to keep cloned repo folder, named i3\_config in your home directory (I am working on removing hardcoded paths, but it will take some time.).
 
-Most of this scripts are written by myself, and for myself, therefore some of them probably won't work for you, feel free to edit them to your needs. I plan to release Docs in near future.
+After it finished you should add absolute path to resolution.py to your .xinitrc and call it to run i3.
 
-THANKS:
+It should look similar to this:
 
-My tmux config is based and mainly consists of work done by [@gpakosz]. I strongly recommend visiting his repo.
+`/home/d0ku/i3_config/scripts/resolution.py run --start-i3`
 
-[@gpakosz]: https://github.com/gpakosz/.tmux
+That't the most basic way to go.
 
+Of course you will have to decide what apps you want to install, press some Y's on pacman run etc. but most of the job should be done by the program itself. If you want to change defaults you should mess up with configuration files in /setup and /configs
 
-initial_config folder stores files which can be used to get your arch up in short time, you should read them and use if you want
+### Usage
+The easiest option to not mess up with paths is to add absolute path to resolution.py to your .xinitrc file, add scripts folder to PATH variable and whenever you want to run the app just call resolution.py from terminal.
 
-TODO:
+### Changes
+This repo had a big change 9/15/2018. If your repo master branch is older than that, easiest option to adapt is to remove your old stuff and work on new version directly.
 
- add screenshot sound 
-
-
-
-Now, full config consists of a base and resolution specific one.
-
-
-First, for full functionality you need to install:
-
-playerctl (for music control)
-
-dmenu (menu start app for i3)
-
-#pamixer (for volume changes) REPLACED BY ponymix
-
-xss-lock-git ( normal version has CPU problems, available in AUR) 
-
-ttf-font-icons (pretty workspace icons, available in AUR) 
-
-python3 (well, you really SHOULD have it installed)  
-
-py3status (better i3status, available in AUR)
-
-feh (only if you want to use wallpapers)
-
-nvidia-smi (nvidia graphics temperature only)
-
-pygame (python3 library, install it using pip, for all kind of sounds played in UI)
+### Credits
+- wallpaper\_0.png, lock\_0.png - [Damian Lickindorf](https://www.instagram.com/lickindorf_fotografia/)
+- lock\_1.png -  Photo by [Markus Spiske](https://unsplash.com/@markusspiske) on Unsplash
+- Tmux config is very much based on work of [@gpakosz](https://github.com/gpakosz/). I recommend visiting repo with his [config for tmux ](https://github.com/gpakosz/.tmux).
