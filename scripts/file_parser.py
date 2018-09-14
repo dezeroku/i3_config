@@ -226,3 +226,4 @@ def get_user_input_install():
             return True
         if temp in ("n", "N"):
             return False
+        print("You have to choose between Y|y and N|n !")

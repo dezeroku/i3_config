@@ -188,3 +188,37 @@ xorg-server **are you sure?**
     second_app = file_parser.App("xorg-server", "are you sure?")
     assert apps_are.applications[1] == second_app
     assert not apps_are.accepted
+
+def test_parse_apps_one_group_two_apps_two_descriptions(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$GUI$$
+i3 **simple description**
+xorg-server **are you sure?**
+??""")
+    result = file_parser.parse_apps_list(p)
+
+
+    assert len(result) == 1
+    apps_are = result[0]
+
+    list_group(apps_are)
+
+    assert apps_are.name == "GUI"
+
+    assert len(apps_are.applications) == 2
+    first_app = file_parser.App("i3", "simple description")
+    assert apps_are.applications[0] == first_app
+    second_app = file_parser.App("xorg-server", "are you sure?")
+    assert apps_are.applications[1] == second_app
+    assert not apps_are.accepted
+
+def test_parse_apps_one_group_incorrect_two_apps_two_descriptions(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$GUI
+i3 **simple description**
+xorg-server **are you sure?**
+??""")
+    with pytest.raises(file_parser.AppsGroupDoesNotExistAppAddedError):
+        result = file_parser.parse_apps_list(p)
