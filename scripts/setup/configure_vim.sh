@@ -2,7 +2,8 @@
 # Install Vundle (VIM plugins manager)
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-# .vimrc should be already linked, because link_dotfiles.sh was run before
+# Update if already installed.
+git pull ~/.vim/bundle/Vundle.vim
 
 # Install all plugins mentioned in .vimrc.
 vim -c "PluginInstall" -c "q" -c "q"

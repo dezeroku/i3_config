@@ -5,6 +5,8 @@
 # It takes care of installing python, setting up some repos and calls python installer in the end.
 # It is best to have installed at least base and base-devel.
 
+# !!! This file should be run from scripts folder directly (relative paths).
+
 
 # Enable multilib pacman.
 echo '[multilib]' | sudo tee --append /etc/pacman.conf
@@ -48,7 +50,7 @@ sh ./setup/go_packages.sh
 sh ./setup/js_packages.sh
 sh ./setup/python_packages.sh
 # TODO: don't use hardcoded directories
-sh ./setup/source_shell_files.sh
+python3 setup.py setup --source-shell-files ../setup/shell/ ~/.bash_profile
 
 # Configure thefuck.
 fuck

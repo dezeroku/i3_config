@@ -64,6 +64,16 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
             os.symlink(dotfiles_dir  + replace, original)
         print("Symlinked " + dotfiles_dir + replace + " to " + original)
 
+def source_shell_files(shell_files_dir, output_file="~/.bash_profile"):
+    """Write source 'script_name' for specific scripts in shell_files_dir to
+    output_file."""
+    file_names = ['path', 'aliases']
+    shell_files_dir = os.path.abspath(shell_files_dir)
+
+    with open(output_file, "a") as output:
+        for file_name in file_names:
+            output.write("source " + shell_files_dir + "/" + file_name + "\n")
+
 def setup_npm_stuff(dir_name):
     """Create directory in path provided by user and force npm to use it."""
     npm_dir = os.path.expanduser(dir_name)
@@ -134,9 +144,10 @@ def get_argparser_setup(parser=argparse.ArgumentParser()):
                            from dir provided in first argument, backing up\
                            original dotfiles in folder provided as\
                            second_argument.", nargs=2, metavar=('dotfiles_dir',
-                                                                'backup_dir'),
-                           default=["../initial_config/dotfiles/",
-                                    "~/backup_dotfiles"])
+                                                                'backup_dir'))
+    exclusive.add_argument("--source-shell-files", help="Sources specific\
+                           files from input_folder to output_file.", nargs=2,
+                           metavar=('input_folder', 'output_file'))
 
     parser.set_defaults(func=setup_func)
 
@@ -171,6 +182,9 @@ def setup_func(args):
         setup_npm_stuff(args.set_up_npm_dir)
     elif args.symlink_dotfiles:
         dotfiles_symlink(args.symlink_dotfiles[0], args.symlink_dotfiles[1])
+    elif args.source_shell_files:
+        source_shell_files(args.source_shell_files[0],
+                           args.source_shell_files[1])
 
 def parse_func(args):
     """Function that is called when 'parse' parser command was chosen."""
