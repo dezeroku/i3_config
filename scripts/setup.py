@@ -74,6 +74,13 @@ def source_shell_files(shell_files_dir, output_file="~/.bash_profile"):
         for file_name in file_names:
             output.write("source " + shell_files_dir + "/" + file_name + "\n")
 
+def add_to_path(path, output_file="~/.bash_profile"):
+    """Adds specified text to shell path configuration, first expanding it."""
+    path = os.path.abspath(path)
+    with open (output_file, "a") as output:
+        output.write('export PATH="$PATH:' + path + '"')
+
+
 def setup_npm_stuff(dir_name):
     """Create directory in path provided by user and force npm to use it."""
     npm_dir = os.path.expanduser(dir_name)
@@ -148,6 +155,9 @@ def get_argparser_setup(parser=argparse.ArgumentParser()):
     exclusive.add_argument("--source-shell-files", help="Sources specific\
                            files from input_folder to output_file.", nargs=2,
                            metavar=('input_folder', 'output_file'))
+    exclusive.add_argument("--add-to-path", help="Adds specified path to PATH\
+                           in specified file.", nargs=2,
+                           metavar=("path_to_add", "output_file"))
 
     parser.set_defaults(func=setup_func)
 
@@ -185,6 +195,8 @@ def setup_func(args):
     elif args.source_shell_files:
         source_shell_files(args.source_shell_files[0],
                            args.source_shell_files[1])
+    elif args.add_to_path:
+        add_to_path(args.add_to_path[0], args.add_to_path[1])
 
 def parse_func(args):
     """Function that is called when 'parse' parser command was chosen."""

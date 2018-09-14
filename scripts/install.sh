@@ -40,17 +40,20 @@ python3 setup.py setup --set-up-npm-dir ~/npm_global
 # Symlink dotfiles.
 python3 setup.py setup --symlink-dotfiles ../setup/dotfiles/ ~/backup_dotfiles
 
-# Install plugins for VIM. TODO: better error checking
+# Install plugins for VIM
 sh ./setup/configure_vim.sh
-# Install plugins for tmux. TODO: better error checking
+# Install plugins for tmux.
 sh ./setup/configure_tmux.sh
 
 # Install stuff for Go, Python, js.
 sh ./setup/go_packages.sh
 sh ./setup/js_packages.sh
 sh ./setup/python_packages.sh
-# TODO: don't use hardcoded directories
+
 python3 setup.py setup --source-shell-files ../setup/shell/ ~/.bash_profile
+
+# Add this scripts folder to PATH.
+python3 setup.py setup --add-to-path . ~/.bash_profile
 
 # Configure thefuck.
 fuck
