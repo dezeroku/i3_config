@@ -1,69 +1,103 @@
+$$GUI$$
 xorg 
 xorg-xinit
-
 i3
- 
+dunst 
+scrot **screenshot utility**
+rofi **runner**
+ponymix **volume control**
+playerctl **playback control**
+feh  **wallpapers and stuff**
+redshift  
+??
+
+$$AUDIO$$ 
 alsa-utils
 pulseaudio 
 pavucontrol 
 pulseaudio-bluetooth 
 pulseaudio-equalizer 
 pulseaudio-jack 
+??
 
-vlock
-fbida
-playerctl 
-dmenu 
-rofi
-ponymix 
-feh 
+$$TERMINAL ONLY$$
+vlock **simple lock**
+fbida **display image in framebuffer**
+??
 
+$$BROWSERS$$
 firefox 
 qutebrowser
+w3m
+??
 
+$$VIDEO$$
 vlc 
 qt4 
 qmmp 
+mpv
+??
 
+$$IMAGE STUFF$$
 gimp 
+imagemagick
 sxiv 
+??
 
-p7zip 
-xarchiver 
+$$COMPRESSION$$
+p7zip
+xarchiver
+??
 
+$$FILE MANAGERS$$
 ranger 
 pcmanfm 
+??
 
+$$TEXT EDITORS$$
 gvim
 vim-spell-en
 vim-spell-pl
 vim-spell-de
-tmux
- 
+sublime-text 
+??
+
+$$OFFICE$$ 
 libreoffice 
 zathura 
 zathura-pdf-mupdf 
-sublime-text 
+??
 
-ncdu 
 
+$$LATEX$$
 texlive-most 
 texlive-lang 
+??
 
-wine 
-winetricks 
+$$WIN COMPABILITY$$
+wine
+winetricks
+??
 
+$$VMs$$
 qemu 
 qemu-arch-extra 
+??
 
+$$TERMINALS$$
 ttf-hack 
-
 terminator 
 rxvt-unicode 
+??
 
+$$PEER-TO-PEER$$
 deluge 
+??
 
+$$PROGRAMMING STUFF$$
 clang
+git
+hub
 python3 
 python-pip
 ruby 
@@ -73,41 +107,41 @@ npm
 go
 ghc
 php
-
 docker 
-
-ntfs-3g 
-fuse 
-
-dunst 
-
-redshift  
-networkmanager 
-network-manager-applet 
-
-thefuck
-
-git
-hub
-
-pacman-contrib
-
-steam
-
 postgresql
-scrot
+??
 
-openssh
-
+$$SHOULD BE INSTALLED$$
+fuse 
+pacman-contrib
+thefuck
 udiskie
-imagemagick
+ntfs-3g **write to NTFS**
+??
 
+
+
+
+$$UTILS$$
+openssh
 youtube-dl
-mpv
-w3m
 neofetch
+ncdu  **display disk usage by files/folder etc.**
+??
 
+$$MISC$$
+steam
+tmux
+??
+
+$$VPN$$
 easy-rsa
 openvpn
 networkmanager-openvpn
+??
+
+$$NETWORKING$$
 nmap
+networkmanager 
+network-manager-applet 
+??

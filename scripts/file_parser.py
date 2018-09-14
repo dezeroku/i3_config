@@ -79,9 +79,12 @@ class AppsGroup:
                 print("    " + app.description)
         print("Apps in group: ")
         for app in self.applications:
-            print("- " + app.name)
+            print("- " + app.name, end="")
             if app.description:
-                print("    " + app.description)
+                print(" (" + app.description + ")")
+            else:
+                print("")
+        print("")
 
     def process_one(self):
         """Displays to user whether he wants to install first of the not yet
@@ -147,9 +150,9 @@ def parse_apps_list(file_name):
     installed. i3 also has description 'window manager'"""
     groups = []
 
-    group_start_str = "\\$\\$.*\\$\\$$"
-    group_end_str = "^\\?\\?$"
-    description_str = "\\*\\*.*\\*\\*$"
+    group_start_str = "\\$\\$.*\\$\\$[\\ ]*$"
+    group_end_str = "^\\?\\?[\\ ]*$"
+    description_str = "\\*\\*.*\\*\\*[\\ ]*$"
     just_app_name_str = "^[^\\$\\*\\?\\n\\ ]*"
     comment_or_empty_str = "(^[\\ ]*#|^[\\ ]*$)"
 
@@ -170,7 +173,8 @@ def parse_apps_list(file_name):
             match = group_start.search(line)
             if match:
                 if curr_group is not None:
-                    raise AppsGroupAlreadyOpenedError(str(counter), curr_group)
+                    raise AppsGroupAlreadyOpenedError(str(counter),
+                                                      curr_group.name)
                 # BUG: When new group is created here, it already contains one
                 # app.
 

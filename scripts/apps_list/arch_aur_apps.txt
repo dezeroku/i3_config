@@ -1,16 +1,23 @@
-py3status
+$$GUI$$
+py3status **better status bar for i3**
+xss-lock-git **lock screen on suspend,hibernate etc.**
+ttf-font-icons  **font used in i3**
+cower **simple AUR-helper, used for displaying updates count.**
+??
 
-xss-lock-git 
-ttf-font-icons 
-
-vimb
+$$MUSIC$$
 spotify
+??
 
-qnapi
+$$VIDEO$$
+qnapi **download subtitles**
+??
 
-icecat-bin
+$$BROWSERS$$
+icecat-bin **free, secure browser**
+??
 
+$$VOICE CHAT$$
 teamspeak3
 discord
-
-cower
+??

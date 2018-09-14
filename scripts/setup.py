@@ -16,6 +16,7 @@ By d0ku 2018"""
 
 import subprocess
 import argparse
+import sys
 
 # Parsing apps list files.
 import file_parser
@@ -37,20 +38,28 @@ def get_argparser_parser(parser=argparse.ArgumentParser()):
                         as an argument and pretty prints all groups.")
     parser.set_defaults(func=parse_conf)
 
+def get_parser_groups(file_name):
+    try:
+        groups = file_parser.parse_apps_list(file_name)
+    except file_parser.AppsListParserError as e:
+        print("There was an error on line: " + e.line_number)
+        print("Error name: " + e.__class__.__name__)
+        print("Error message: " + e.message)
+        sys.exit(1)
+    except FileNotFoundError as e:
+        print("There was an error on line: N/A")
+        print("Error name: " + e.__class__.__name__)
+        print("Error: Could not open file " + e.filename)
+        sys.exit(1)
+
+    return groups
+
+
 def parse_conf(args):
     if args.parse_app_file:
-        try:
-            groups = file_parser.parse_apps_list(args.parse_app_file)
-            for group in groups:
-                group.pretty_print()
-        except file_parser.AppsListParserError as e:
-            print("There was an error on line: " + e.line_number)
-            print("Error name: " + e.__class__.__name__)
-            print("Error message: " + e.message)
-        except FileNotFoundError as e:
-            print("There was an error on line: N/A")
-            print("Error name: " + e.__class__.__name__)
-            print("Error: Could not open file " + e.filename)
+        groups = get_parser_groups(args.parse_app_file)
+        for group in groups:
+            group.pretty_print()
 
 def main():
     """Function which is called, when script is executed directly and not used
