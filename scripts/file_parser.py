@@ -107,13 +107,14 @@ class AppsGroup:
 
     def process_all(self):
         """Processes all apps in group, using self.process_one."""
+        print("Processing group: " + self.name)
         while self.process_one():
             pass
         print("All apps from group processed.")
         if self.accepted:
             print("To be installed: ")
             for app in self.accepted:
-                print(app + " ")
+                print(app.name + " ")
             return True
 
         print("Nothing to be installed.")
@@ -224,8 +225,9 @@ def parse_apps_list(file_name):
 def get_user_input_install():
     """Display install dialog."""
     # That loop will surely end, so it's safe to use here.
+    print("")
     while True:
-        temp = input("Do you want to install? [Y]/n")
+        temp = input("Do you want to install? [Y]/n? ")
         if temp in ("", "Y", "y"):
             return True
         if temp in ("n", "N"):

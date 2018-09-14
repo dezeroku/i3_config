@@ -23,4 +23,10 @@ sudo pacman -Syu
 sudo pacman -S python3 git
 
 # Let the python do the hard work.
-python3 setup.py
+
+# Install yay.
+python3 setup.py install --install-aur-helper yay
+# Install official repo packages.
+python3 setup.py install --install-from-file ./apps_list/arch_repo_apps --install-command S
+# Install AUR packages.
+python3 setup.py install --install-from-file ./apps_list/arch_aur_apps --install-command S --package-manager yay
