@@ -18,19 +18,19 @@ It contains:
 ### Directory tree
 
 + configs
- 1. 1280x800 -> Configuration files to use when resolution equals 1280x800
- 2. 1920x1080 -> Configuration files to use when resolutin equals 1920x1080
- 3. base -> Configuration files that are base on which resolution-specific configs can build. Also contains config\_fallback which is merged when no resolution is matched
+1.     1280x800 -> Configuration files to use when resolution equals 1280x800
+2.     1920x1080 -> Configuration files to use when resolutin equals 1920x1080
+3.     base -> Configuration files that are base on which resolution-specific configs can build. Also contains config\_fallback which is merged when no resolution is matched
 + scripts -> Contains all logic of repository
- 1. i3
-  * next\_workspace.py -> Changes to next active i3 workspace when called.
- 2. setup.py -> Used to manage installation, install programs, configure mime, link dotfiles etc.
- 3. resolution.py -> Merging i3 configurations, locking screen etc.
- 4. hibernate -> turns off qutebrowser and hibernates computer, to be run from commandline
+1.     i3
+*         next\_workspace.py -> Changes to next active i3 workspace when called.
+2.     setup.py -> Used to manage installation, install programs, configure mime, link dotfiles etc.
+3.     resolution.py -> Merging i3 configurations, locking screen etc.
+4.     hibernate -> turns off qutebrowser and hibernates computer, to be run from commandline
 + setup
- 1. dotfiles -> Configuration files for programs mentioned above
- 2. shell'_files -> Files that will be sourced to shell
- 3. apps_list -> Lists of applications to be installed.
+1.     dotfiles -> Configuration files for programs mentioned above
+2.     shell'_files -> Files that will be sourced to shell
+3.     apps_list -> Lists of applications to be installed.
 + README.MD
 
 ### Installation
