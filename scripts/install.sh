@@ -57,3 +57,5 @@ fuck
 # Enable net usage.
 sudo systemctl start vnstat
 sudo systemctl enable vnstat
+
+echo "Now add absolute path to resolution.py to your .xinitrc in home folder."

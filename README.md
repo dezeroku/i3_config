@@ -15,12 +15,36 @@ It contains:
 + 2 lockscreen wallpapers
 + 1 desktop wallpaper
 
+### Directory tree
+
++ configs
+ - 1280x800 -> Configuration files to use when resolution equals 1280x800
+ - 1920x1080 -> Configuration files to use when resolutin equals 1920x1080
+ - base -> Configuration files that are base on which resolution-specific configs can build. Also contains config\_fallback which is merged when no resolution is matched
++ scripts -> Contains all logic of repository
+ - i3
+  * next\_workspace.py -> Changes to next active i3 workspace when called.
+ - setup.py -> Used to manage installation, install programs, configure mime, link dotfiles etc.
+ - resolution.py -> Merging i3 configurations, locking screen etc.
+ - hibernate -> turns off qutebrowser and hibernates computer, to be run from commandline
++ setup
+ - dotfiles -> Configuration files for programs mentioned above
+ - shell'_files -> Files that will be sourced to shell
+ - apps_list -> Lists of applications to be installed.
++ README.MD
+
 ### Installation
-There is an 'install\_auto.sh' script in 'initial\_config' folder and I use it to set everything up.
+You should clone that repo, open scripts folder and run install.sh script. It should take care of everything.
 
-Refactoring it and automating installation process even more is one of the top priorities TODOs.
+After it finished you should add absolute path to resolution.py to your .xinitrc and call it to run i3.
 
-If you do not want to install all the stuff I do, you should read resolution.py script in 'scripts' folder and change configs/base and configs/{resolution} to suit your needs.
+It should look similar to this:
+
+`/home/d0ku/i3_config/scripts/resolution.py run --start-i3`
+
+That't the most basic way to go.
+
+Of course you will have to decide what apps you want to install, press some Y's on pacman run etc. but most of the job should be done by the program itself. If you want to change defaults you should mess up with configuration files in /setup and /configs
 
 ### Usage
 The easiest option to not mess up with paths is to add absolute path to resolution.py to your .xinitrc file, add scripts folder to PATH variable and whenever you want to run the app just call resolution.py from terminal.
