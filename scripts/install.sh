@@ -31,3 +31,11 @@ python3 setup.py install --install-aur-helper yay
 sudo python3 setup.py install --install-from-file ./apps_list/arch_repo_apps --install-command S --do-not-reinstall
 # Install AUR packages.
 python3 setup.py install --install-from-file ./apps_list/arch_aur_apps --install-command S --package-manager yay --do-not-reinstall
+# Set up npm.
+python3 setup.py setup --set-up-npm-dir ~/npm_global
+# Symlink dotfiles.
+python3 setup.py setup --symlink-dotfiles ../initial_config/dotfiles/ ~/backup_dotfiles
+
+# Configure thefuck.
+fuck
+fuck

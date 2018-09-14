@@ -3,10 +3,11 @@ Should handle installing packages and linking up some dotfiles.
 
 Steps:
     Install AUR helper (yay currently) Ok
-    Install stuff Ok (parse file needs some improvement)
+    Install stuff Ok
     Install AUR stuff Ok
     Some setup for npm
     Link dotfiles
+    Set up apps configs
     Install language packages (go, python, js etc.)
     Configure MIME and let apps update their plugins or whatever
     Configure thefuck
@@ -17,11 +18,66 @@ By d0ku 2018"""
 import subprocess
 import argparse
 import sys
+import os
+import shutil
 
 # Parsing apps list files.
 import file_parser
 # We are going to use it for linking.
 from base import get_root_folder
+
+def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
+    """Symlink all files belows to correct locations (backing up previous
+    entries in backup_dir)."""
+
+    dotfiles_dir = os.path.abspath(dotfiles_dir) + "/"
+    backup_dir = os.path.expanduser(backup_dir)
+    # Create backup directory if one does not already exist.
+    if not os.path.exists(backup_dir):
+        os.makedirs(backup_dir)
+
+    files = {".Xresources":"~/.Xresources",
+             "rc.conf":"~/.config/ranger/rc.conf",
+             ".vimrc":"~/.vimrc",
+             ".tmux.conf":"~/.tmux.conf",
+             "dunstrc":"~/.config/dunst/dunstrc",
+             "rofi_config":"~/.config/rofi/config",
+             "qute_config.py":"~/.config/qutebrowser/config.py"}
+
+    for replace, original in files.items():
+        original = os.path.expanduser(original)
+        print(original)
+        if os.path.islink(original):
+            # If there is a symlink in final location, unlink it.
+            os.unlink(original)
+            #print("Delinking: " + original)
+        if os.path.exists(original):
+            # If there is a file in final location, back it up.
+            shutil.move(original, backup_dir + replace)
+            print("Backed up " + original + " in " + backup_dir + "/" + replace)
+        try:
+            os.symlink(dotfiles_dir  + replace, original)
+        except FileNotFoundError:
+            # If there is no parent directory, create it.
+            os.makedirs(os.path.dirname(original))
+            os.symlink(dotfiles_dir  + replace, original)
+        print("Symlinked " + dotfiles_dir + replace + " to " + original)
+
+def setup_npm_stuff(dir_name):
+    """Create directory in path provided by user and force npm to use it."""
+    npm_dir = os.path.expanduser(dir_name)
+    try:
+        os.makedirs(npm_dir)
+    except FileExistsError:
+        print("Could not set npm.")
+        print("Error: Directory already exists")
+        sys.exit(1)
+
+    result = subprocess.run(["npm", "config", "set", "prefix", npm_dir])
+
+    if result.returncode != 0:
+        print("Could not set up npm global config dir.")
+        sys.exit(1)
 
 def install_yay():
     """Installs yay AUR helper."""
@@ -68,6 +124,23 @@ def get_argparser_installer(parser=argparse.ArgumentParser()):
 
     return parser
 
+def get_argparser_setup(parser=argparse.ArgumentParser()):
+    exclusive = parser.add_mutually_exclusive_group()
+
+    exclusive.add_argument("--set-up-npm-dir", help="Creates dir at specified\
+                        location and tells npm to use it as global config dir.")
+    exclusive.add_argument("--symlink-dotfiles", help="Symlinks dotfiles\
+                           from dir provided in first argument, backing up\
+                           original dotfiles in folder provided as\
+                           second_argument.", nargs=2, metavar=('dotfiles_dir',
+                                                                'backup_dir'),
+                           default=["../initial_config/dotfiles/",
+                                    "~/backup_dotfiles"])
+
+    parser.set_defaults(func=setup_func)
+
+    return parser
+
 def get_parser_groups(file_name):
     try:
         groups = file_parser.parse_apps_list(file_name)
@@ -89,6 +162,14 @@ def main_func(args):
     subparser command."""
     print("This command should only be run with subcommand parameters.")
     print("Run 'python3 " + sys.argv[0] + " -h' to get more info.")
+
+def setup_func(args):
+    """That function is called when setup.py was run with 'setup' subparser
+    command."""
+    if args.set_up_npm_dir:
+        setup_npm_stuff(args.set_up_npm_dir)
+    elif args.symlink_dotfiles:
+        dotfiles_symlink(args.symlink_dotfiles[0], args.symlink_dotfiles[1])
 
 def parse_func(args):
     """Function that is called when 'parse' parser command was chosen."""
@@ -160,6 +241,8 @@ def main():
     get_argparser_parser(parser_parser)
     install_parser = subparsers.add_parser("install")
     get_argparser_installer(install_parser)
+    setup_parser = subparsers.add_parser("setup")
+    get_argparser_setup(setup_parser)
 
     args = main_parser.parse_args()
     args.func(args)

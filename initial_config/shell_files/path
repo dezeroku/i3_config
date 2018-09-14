@@ -2,3 +2,4 @@
 export PATH="$PATH:~/i3_config/scripts"
 export PATH="$PATH:~/go/bin"
 export PATH="$PATH:~/.local/bin"
+export PATH="$PATH:~/npm_global/bin:$PATH"
