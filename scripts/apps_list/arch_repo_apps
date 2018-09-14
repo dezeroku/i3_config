@@ -142,6 +142,7 @@ networkmanager-openvpn
 
 $$NETWORKING$$
 nmap
+vnstat **Monitor network usage**
 networkmanager 
 network-manager-applet 
 ??

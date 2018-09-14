@@ -39,3 +39,7 @@ python3 setup.py setup --symlink-dotfiles ../initial_config/dotfiles/ ~/backup_d
 # Configure thefuck.
 fuck
 fuck
+
+# Enable net usage.
+sudo systemctl start vnstat
+sudo systemctl enable vnstat
