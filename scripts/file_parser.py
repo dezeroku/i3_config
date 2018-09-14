@@ -7,7 +7,7 @@ By d0ku 2018"""
 import sys
 import re
 
-from setup import SetupError
+from base import SetupError
 
 class AppsListParserError(SetupError):
     """Thrown when there was error in parsing apps list."""
@@ -58,12 +58,11 @@ class AppsGroupAlreadyOpenedError(AppsListParserError):
 class AppsGroup:
     """Displays apps to user and checks whether he wants it to be installed or
     not."""
-    applications = []
-    accepted = []
-    name = ""
 
     def __init__(self, name):
         self.name = name
+        self.applications = []
+        self.accepted = []
 
     def add_application(self, app_name):
         """Adds application to list of apps that should be displayed to
@@ -134,6 +133,7 @@ def parse_apps_list(file_name):
     ** tags are a description of app functionality
     There should be one app/group tag per line.
     Lines starting with '#' are ignored.
+    Empty lines are allowed and ignored.
     If line contains a group name, it must end immediately after $$ (no
     whitespaces allowed).
     All description must fit in one line.
@@ -151,25 +151,32 @@ def parse_apps_list(file_name):
     group_end_str = "^\\?\\?$"
     description_str = "\\*\\*.*\\*\\*$"
     just_app_name_str = "^[^\\$\\*\\?\\n\\ ]*"
+    comment_or_empty_str = "(^[\\ ]*#|^[\\ ]*$)"
 
     group_start = re.compile(group_start_str)
     group_end = re.compile(group_end_str)
     description = re.compile(description_str)
     just_app_name = re.compile(just_app_name_str)
+    comment_str = re.compile(comment_or_empty_str)
 
     with open(file_name, "r") as app_list:
         curr_group = None
         counter = 0
         for line in app_list:
             counter += 1
-            if line[0] == "#":
-                # We don't care about commented out lines.
+            if comment_str.match(line):
+                # We don't care about commented out or empty lines.
                 continue
             match = group_start.search(line)
             if match:
                 if curr_group is not None:
-                    raise AppsGroupAlreadyOpenedError(str(counter))
+                    raise AppsGroupAlreadyOpenedError(str(counter), curr_group)
+                # BUG: When new group is created here, it already contains one
+                # app.
+
+                # Here curr_group is still None.
                 curr_group = AppsGroup(match.group()[2:-2])
+                # Here curr_group already has application.
                 continue
 
             match = group_end.search(line)
@@ -200,9 +207,11 @@ def parse_apps_list(file_name):
                 curr_group.add_application(app)
                 continue
 
-            print("Could not match any of the regex, check if line nr. " +
-                  str(counter) + " in file " + file_name + " is correct.",
-                  file=sys.stderr)
+            raise IncorrectAppsListError(str(counter), "N/A", "Could not match\
+                                         that line as either non-important,\
+                                         group start, group end or app. Check\
+                                         for any strange whitespaces.")
+
 
     if curr_group is not None:
         raise AppsGroupNotClosedError(str(counter), curr_group.name)

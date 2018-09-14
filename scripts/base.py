@@ -3,6 +3,10 @@ import os
 import sys
 import subprocess
 
+class SetupError(Exception):
+    """Base for all exceptions."""
+    pass
+
 def get_root_folder():
     """Returns root i3_config folder path, basing on resolution.py (this file)
     script location."""

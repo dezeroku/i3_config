@@ -1,6 +1,6 @@
-import parser
-
 import pytest
+
+import file_parser
 
 def list_group(group):
     """Used for debug displaying group content."""
@@ -10,43 +10,43 @@ def list_group(group):
     for app in group.applications:
         print("|" + app.name + "|")
         print("|" + str(app.description) + "|")
-    print("ACCEPTED")
+    print("ACCEPTED:")
     for app in group.accepted:
         print("|" + app.name + "|")
         print("|" + str(app.description) + "|")
 
 def test_parse_apps_one_empty_group_incorrect_not_closed_name(tmpdir):
-    with pytest.raises(parser.AppsGroupDoesNotExistAppAddedError):
+    with pytest.raises(file_parser.AppsGroupDoesNotExistAppAddedError):
         p = tmpdir.join("temp")
         p.write(
 """$$base
 ??""")
-        result = parser.parse_apps_list(p)
-#        result = parser.parse_apps_list("test_files/one_empty_group_incorrect_not_closed_name")
+        result = file_parser.parse_apps_list(p)
+#        result = file_parser.parse_apps_list("test_files/one_empty_group_incorrect_not_closed_name")
 
 def test_parse_apps_one_empty_group_incorrect_not_started_name(tmpdir):
-    with pytest.raises(parser.AppsGroupDoesNotExistAppAddedError):
+    with pytest.raises(file_parser.AppsGroupDoesNotExistAppAddedError):
         p = tmpdir.join("temp")
         p.write(
 """base$$
 ??""")
-        result = parser.parse_apps_list(p)
+        result = file_parser.parse_apps_list(p)
 
 def test_parse_apps_one_empty_group_incorrect_not_closed_group(tmpdir):
-    with pytest.raises(parser.AppsGroupNotClosedError):
+    with pytest.raises(file_parser.AppsGroupNotClosedError):
         p = tmpdir.join("temp")
         p.write(
 """$$base$$
 """)
-        result = parser.parse_apps_list(p)
+        result = file_parser.parse_apps_list(p)
 
 def test_parse_apps_one_empty_group_incorrect_group_closed_not_started(tmpdir):
-    with pytest.raises(parser.AppsGroupClosedNotStartedError):
+    with pytest.raises(file_parser.AppsGroupClosedNotStartedError):
         p = tmpdir.join("temp")
         p.write(
             """??""")
 
-        result = parser.parse_apps_list(p)
+        result = file_parser.parse_apps_list(p)
 
 def test_parse_apps_one_empty_group_correct(tmpdir):
     p = tmpdir.join("temp")
@@ -54,7 +54,7 @@ def test_parse_apps_one_empty_group_correct(tmpdir):
         """$$empty$$
 ??""")
 
-    result = parser.parse_apps_list(p)
+    result = file_parser.parse_apps_list(p)
     assert len(result) == 1
     group = result[0]
 
@@ -64,6 +64,58 @@ def test_parse_apps_one_empty_group_correct(tmpdir):
     assert not group.accepted
     assert not group.applications
 
+def test_parse_apps_one_empty_group_correct_comment(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$empty$$
+#
+??""")
+
+    result = file_parser.parse_apps_list(p)
+    assert len(result) == 1
+    group = result[0]
+
+    list_group(group)
+
+    assert group.name == "empty"
+    assert not group.accepted
+    assert not group.applications
+
+def test_parse_apps_one_empty_group_correct_space_comment(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$empty$$
+ #
+??""")
+
+    result = file_parser.parse_apps_list(p)
+    assert len(result) == 1
+    group = result[0]
+
+    list_group(group)
+
+    assert group.name == "empty"
+    assert not group.accepted
+    assert not group.applications
+
+def test_parse_apps_one_empty_group_correct_empty_line(tmpdir):
+    p = tmpdir.join("temp")
+    p.write(
+        """$$empty$$
+
+??""")
+
+    result = file_parser.parse_apps_list(p)
+    assert len(result) == 1
+    group = result[0]
+
+    list_group(group)
+
+    assert group.name == "empty"
+    assert not group.accepted
+    assert not group.applications
+
+
 def test_parse_apps_two_empty_groups_correct(tmpdir):
     p = tmpdir.join("temp")
     p.write(
@@ -72,7 +124,7 @@ def test_parse_apps_two_empty_groups_correct(tmpdir):
 $$empty2$$
 ??""")
 
-    result = parser.parse_apps_list(p)
+    result = file_parser.parse_apps_list(p)
 
     assert len(result) == 2
     group_one = result[0]
@@ -99,7 +151,7 @@ def test_parse_apps_one_group_one_app(tmpdir):
 lambda
 ??""")
 
-    result = parser.parse_apps_list(p)
+    result = file_parser.parse_apps_list(p)
 
     assert len(result) == 1
     group = result[0]
@@ -110,7 +162,7 @@ lambda
 
     assert not group.accepted
 
-    app = parser.App("lambda")
+    app = file_parser.App("lambda")
     assert app == group.applications[0]
 
 def test_parse_apps_one_group_two_apps_one_description(tmpdir):
@@ -120,8 +172,8 @@ def test_parse_apps_one_group_two_apps_one_description(tmpdir):
 i3
 xorg-server **are you sure?**
 ??""")
+    result = file_parser.parse_apps_list(p)
 
-    result = parser.parse_apps_list(p)
 
     assert len(result) == 1
     apps_are = result[0]
@@ -131,8 +183,8 @@ xorg-server **are you sure?**
     assert apps_are.name == "GUI"
 
     assert len(apps_are.applications) == 2
-    first_app = parser.App("i3")
+    first_app = file_parser.App("i3")
     assert apps_are.applications[0] == first_app
-    second_app = parser.App("xorg-server", "are you sure?")
+    second_app = file_parser.App("xorg-server", "are you sure?")
     assert apps_are.applications[1] == second_app
     assert not apps_are.accepted

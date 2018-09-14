@@ -18,14 +18,10 @@ import subprocess
 import argparse
 
 # Parsing apps list files.
-import parser
+import file_parser
 # We are going to use it for linking.
 from base import get_root_folder
 
-
-class SetupError(Exception):
-    """Base for all exceptions."""
-    pass
 
 def install_yay():
     """Installs yay AUR helper."""
@@ -34,7 +30,7 @@ def install_yay():
 def install_offical_repos_apps():
     """Display to user and install chosen apps from
     ./apps_list/arch_repo_apps.txt"""
-    groups = parser.parse_apps_list("apps_list/arch_repo_apps.txt")
+    groups = file_parser.parse_apps_list("apps_list/arch_repo_apps.txt")
 
 def get_argparser_parser(parser=argparse.ArgumentParser()):
     parser.add_argument("--parse-app-file", help="Parses file provided\
@@ -44,10 +40,10 @@ def get_argparser_parser(parser=argparse.ArgumentParser()):
 def parse_conf(args):
     if args.parse_app_file:
         try:
-            groups = parser.parse_apps_list(args.parse_app_file)
+            groups = file_parser.parse_apps_list(args.parse_app_file)
             for group in groups:
                 group.pretty_print()
-        except parser.AppsListParserError as e:
+        except file_parser.AppsListParserError as e:
             print("There was an error on line: " + e.line_number)
             print("Error name: " + e.__class__.__name__)
             print("Error message: " + e.message)
