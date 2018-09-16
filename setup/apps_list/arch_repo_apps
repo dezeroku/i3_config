@@ -144,3 +144,8 @@ vnstat **Monitor network usage**
 networkmanager 
 network-manager-applet 
 ??
+
+$$TOR$$ 
+tor
+arm *info about connection*
+??
