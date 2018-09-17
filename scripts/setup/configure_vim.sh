@@ -10,7 +10,8 @@ vim -c "PluginInstall" -c "q" -c "q"
 
 # Compile necessary YCM files.
 cd ~/.vim/bundle/YouCompleteMe
-./install.py --clang-completer --go-completer --js-completer --java-completer
+# We use system-libclang because of the libtinfo.so.5 problem.
+./install.py --all --system-libclang
 cd -
 # Install binaries for vim-go (debugging and stuff)
 vim -c "GoInstallBinaries" -c "q"
