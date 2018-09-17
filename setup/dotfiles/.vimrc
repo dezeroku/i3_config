@@ -115,9 +115,23 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 au BufNewFile,BufRead *.py set colorcolumn=79
 
 " Similar but for webdev
-au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2
-au BufNewFile,BufRead *.js, *.html, *.css set softtabstop=2
-au BufNewFile,BufRead *.js, *.html, *.css set shiftwidth=2
+au BufNewFile,BufRead *.js set tabstop=2
+au BufNewFile,BufRead *.ts set tabstop=2
+au BufNewFile,BufRead *.html set tabstop=2
+au BufNewFile,BufRead *.css set tabstop=2
+au BufNewFile,BufRead *.scss set tabstop=2
+
+au BufNewFile,BufRead *.js set softtabstop=2
+au BufNewFile,BufRead *.ts set softtabstop=2
+au BufNewFile,BufRead *.html set softtabstop=2
+au BufNewFile,BufRead *.css set softtabstop=2
+au BufNewFile,BufRead *.scss set softtabstop=2
+
+au BufNewFile,BufRead *.js set shiftwidth=2
+au BufNewFile,BufRead *.ts set shiftwidth=2
+au BufNewFile,BufRead *.html set shiftwidth=2
+au BufNewFile,BufRead *.css set shiftwidth=2
+au BufNewFile,BufRead *.scss set shiftwidth=2
 
 " VirtualEnv support for python
 "py << EOF

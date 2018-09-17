@@ -105,6 +105,7 @@ jdk10-openjdk
 nodejs
 npm
 go
+rust
 ghc
 php
 docker 
