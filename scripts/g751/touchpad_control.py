@@ -1,10 +1,11 @@
 import sys,os
 from pathlib import Path
+
 #ADD BETTER TOGGLE SUPPORT
 
 touchpad_name="\'ETPS/2 Elantech Touchpad\'" #write you touchpad device identifier in that field
-home_directory=str(Path.home())
-path=home_directory+"/.config/i3/scripts/temp/"
+path = (os.path.split(os.path.dirname(os.path.realpath(sys.argv[0])))[0] + "/" +
+        "temp/")
 
 if len(sys.argv)<2:
     print("See help") # I should write that help by the way :P 
