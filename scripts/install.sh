@@ -50,10 +50,10 @@ sh ./setup/go_packages.sh
 sh ./setup/js_packages.sh
 sh ./setup/python_packages.sh
 
-python3 setup.py setup --source-shell-files ../setup/shell/ ~/.bash_profile
+python3 setup.py setup --source-shell-files ../setup/shell/ ~/.bashrc
 
 # Add this scripts folder to PATH.
-python3 setup.py setup --add-to-path . ~/.bash_profile
+python3 setup.py setup --add-to-path . ~/.bashrc
 
 # Configure thefuck.
 fuck

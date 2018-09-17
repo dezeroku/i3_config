@@ -119,14 +119,12 @@ udiskie
 ntfs-3g **write to NTFS**
 ??
 
-
-
-
 $$UTILS$$
 openssh
 youtube-dl
 neofetch
 ncdu  **display disk usage by files/folder etc.**
+gparted
 ??
 
 $$MISC$$
@@ -145,4 +143,9 @@ nmap
 vnstat **Monitor network usage**
 networkmanager 
 network-manager-applet 
+??
+
+$$TOR$$ 
+tor
+arm *info about connection*
 ??

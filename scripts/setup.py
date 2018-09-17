@@ -217,9 +217,16 @@ def install_func(args):
         command = [package_manager, install_command]
         if args.do_not_reinstall:
             command.append("--needed")
-        for group in groups:
-            group.process_all()
-            to_install_apps += group.accepted
+        result = input("If you want to just install all apps, write 'AGREED',\
+                       otherwise all groups will be displayed.")
+
+        if result == 'AGREED':
+            for group in groups:
+                to_install_apps += group.applications
+        else:
+            for group in groups:
+                group.process_all()
+                to_install_apps += group.accepted
 
         print("To install: ", end=" ")
         for app in to_install_apps:
