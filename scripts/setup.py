@@ -54,7 +54,7 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
             #print("Delinking: " + original)
         if os.path.exists(original):
             # If there is a file in final location, back it up.
-            shutil.move(original, backup_dir + replace)
+            shutil.move(original, backup_dir + "/" + replace)
             print("Backed up " + original + " in " + backup_dir + "/" + replace)
         try:
             os.symlink(dotfiles_dir  + replace, original)

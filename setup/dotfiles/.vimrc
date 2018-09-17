@@ -10,8 +10,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 " Folding
 Plugin 'tmhedberg/SimpylFold'
-" Is this even necessary if i use youcompleteme? TODO:
-"Plugin 'davidhalter/jedi-vim'
 " db interface
 Plugin 'dbext.vim'
 " Indents for python
@@ -25,17 +23,14 @@ Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 " Sessions
 Plugin 'tpope/vim-obsession'
-" Beautify
-Plugin 'Chiel92/vim-autoformat'
-
-" This two can cause too long writes, turn off if this happens
+" Running checkers.
 Plugin 'vim-syntastic/syntastic'
-Plugin 'nvie/vim-flake8'
-
 " Pretty status bar 
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 " Autocompleting
 Plugin 'Valloric/YouCompleteMe'
+" Beautify on :Au.
+Plugin 'Chiel92/vim-autoformat'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -86,19 +81,17 @@ let g:SimpylFold_docstring_preview=1
 " Disable vim-jedi for YouCompleteMe
 
 " YouCompleteMe configuration
-"let g:ycm_autoclose_preview_window_after_completion=0
+let g:ycm_autoclose_preview_window_after_completion=1
+
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-" TODO: You will probably want to disable YCM always-on and use it with
-" shortcut
 
 " set showcmd
 let mapleader = " "
 
 " find python binary for ycm
-let g:ycm_python_binary_path = 'python'
+let g:ycm_python_binary_path = 'python3'
 
-"let g:jedi#completions_enabled = 0
 " Python PEP8 standards
 au BufNewFile,BufRead *.py set tabstop=4
 au BufNewFile,BufRead *.py set softtabstop=4
@@ -156,7 +149,6 @@ else
 endif
 " Lines numbering
 set nu
-" TODO: Indentation plugin, how to use it?
 " Latex live preview default pdf opener -> zathura
 let g:vimtex_view_general_viewer = 'zathura'
 
@@ -183,13 +175,20 @@ let g:go_highlight_build_constraints = 1
 " Go syntax checkers
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
 
+" Python syntax checkers
+let g:syntastic_python_checkers = ['mypy', 'pylint', 'flake8']
+
 " Beautify shortcut
 noremap <F3> :Autoformat<CR>
+
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Set encoding
 set encoding=utf-8
 
 " Start YCM in python after 2 chars
 let g:ycm_semantic_triggers = {
-	\   'python': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
-	\ }
+            \   'python': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
+            \'go': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
+            \ }
+
