@@ -59,6 +59,9 @@ if has('syntax') && has('eval')
   packadd! matchit
 endif
 
+" Set encoding
+set encoding=utf-8
+
 " Add tab = 4 spaces (for ALL, some overwrites later)
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
@@ -71,20 +74,12 @@ nnoremap <C-H> <C-W><C-H>
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
+
 " Enable folding with the spacebar
 nnoremap <space> za
+
 " Docstring for folded code
 let g:SimpylFold_docstring_preview=1
-
-" Disable python autocomplete on dot vim-jedi
-" let g:jedi#popup_on_dot = 0
-" Disable vim-jedi for YouCompleteMe
-
-" YouCompleteMe configuration
-let g:ycm_autoclose_preview_window_after_completion=1
-
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
 
 " set showcmd
 let mapleader = " "
@@ -104,6 +99,7 @@ au BufNewFile,BufRead *.py set fileformat=unix
 " Define BadWhitespace and mark as darkred in py files
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
 " Red line at 79-th line in .py files
 au BufNewFile,BufRead *.py set colorcolumn=79
 
@@ -126,16 +122,6 @@ au BufNewFile,BufRead *.html set shiftwidth=2
 au BufNewFile,BufRead *.css set shiftwidth=2
 au BufNewFile,BufRead *.scss set shiftwidth=2
 
-" VirtualEnv support for python
-"py << EOF
-"import os
-"import sys
-"if 'VIRTUAL_ENV' in os.environ:
-"  project_base_dir = os.environ['VIRTUAL_ENV']
-"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"  execfile(activate_this, dict(__file__=activate_this))
-"EOF
-
 " Syntax Python
 let python_highlight_all=1
 syntax on
@@ -147,8 +133,10 @@ if has('gui_running')
 else
   colorscheme zenburn
 endif
+
 " Lines numbering
 set nu
+
 " Latex live preview default pdf opener -> zathura
 let g:vimtex_view_general_viewer = 'zathura'
 
@@ -161,6 +149,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+
+" vim-go setup
 
 " use goimports for formatting
 let g:go_fmt_command = "goimports"
@@ -181,14 +171,18 @@ let g:syntastic_python_checkers = ['mypy', 'pylint', 'flake8']
 " Beautify shortcut
 noremap <F3> :Autoformat<CR>
 
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+" YouCompleteMe configuration
 
-" Set encoding
-set encoding=utf-8
+" Autoclose preview after match.
+let g:ycm_autoclose_preview_window_after_completion=1
 
-" Start YCM in python after 2 chars
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" Start YCM in python and go after 2 chars
 let g:ycm_semantic_triggers = {
             \   'python': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
             \'go': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
             \ }
 
+" Set global config file for YCM.
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'

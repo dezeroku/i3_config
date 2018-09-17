@@ -36,14 +36,15 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
     if not os.path.exists(backup_dir):
         os.makedirs(backup_dir)
 
-    files = {".Xresources":"~/.Xresources",
+    files = {"Xresources":"~/.Xresources",
              "rc.conf":"~/.config/ranger/rc.conf",
-             ".vimrc":"~/.vimrc",
-             ".tmux.conf":"~/.tmux.conf",
+             "vimrc":"~/.vimrc",
+             "tmux.conf":"~/.tmux.conf",
              "dunstrc":"~/.config/dunst/dunstrc",
              "rofi_config":"~/.config/rofi/config",
              "qute_config.py":"~/.config/qutebrowser/config.py",
-             "mimeapps.list":"~/.config/mimeapps.list"}
+             "mimeapps.list":"~/.config/mimeapps.list",
+             "ycm_extra_conf.py":"~/.ycm_extra_conf.py"}
 
     for replace, original in files.items():
         original = os.path.expanduser(original)
