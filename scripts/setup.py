@@ -43,7 +43,8 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
              "qute_config.py":"~/.config/qutebrowser/config.py",
              "mimeapps.list":"~/.config/mimeapps.list",
              "ycm_extra_conf.py":"~/.ycm_extra_conf.py",
-             "zshrc":"~/.zshrc"}
+             "zshrc":"~/.zshrc",
+             "tern-config":"~/.tern-config"}
 
     for replace, original in files.items():
         original = os.path.expanduser(original)

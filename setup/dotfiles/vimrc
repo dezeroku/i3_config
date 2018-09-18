@@ -162,11 +162,21 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
+" Syntastic
+
+" Display all checkers errors.
+" let g:syntastic_aggregate_errors = 1
+
 " Go syntax checkers
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
 
 " Python syntax checkers
 let g:syntastic_python_checkers = ['mypy', 'pylint', 'flake8']
+
+" Javascript syntac checkers
+let g:syntastic_javascript_checkers = ['jslint']
+
+let g:syntastic_javascript_jslint_args = "--browser"
 
 " Beautify shortcut
 noremap <F3> :Autoformat<CR>
@@ -181,8 +191,10 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " Start YCM in python and go after 2 chars
 let g:ycm_semantic_triggers = {
             \   'python': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
-            \'go': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
+            \   'go': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
+            \   'javascript': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
             \ }
 
 " Set global config file for YCM.
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+
