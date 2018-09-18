@@ -83,7 +83,7 @@ def add_to_path(path, output_file="~/.bash_profile"):
 
 def setup_npm_stuff(dir_name):
     """Create directory in path provided by user and force npm to use it."""
-    npm_dir = os.path.expanduser(dir_name)
+    npm_dir = os.path.abspath(os.path.expanduser(dir_name))
     try:
         os.makedirs(npm_dir)
     except FileExistsError:
