@@ -37,8 +37,6 @@ sudo python3 setup.py install --install-from-file ../setup/apps_list/arch_repo_a
 python3 setup.py install --install-from-file ../setup/apps_list/arch_aur_apps --install-command S --package-manager yay --do-not-reinstall
 # Set up npm.
 python3 setup.py setup --set-up-npm-dir ~/npm_global
-# Symlink dotfiles.
-python3 setup.py setup --symlink-dotfiles ../setup/dotfiles/ ~/backup_dotfiles
 
 # Change shell to ZSH.
 chsh -s /usr/bin/zsh
@@ -65,6 +63,9 @@ python3 setup.py setup --source-shell-files ../setup/shell/ ~/.zprofile
 
 # Add this scripts folder to PATH.
 python3 setup.py setup --add-to-path . ~/.zprofile
+
+# Symlink dotfiles.
+python3 setup.py setup --symlink-dotfiles ../setup/dotfiles/ ~/backup_dotfiles
 
 # Configure thefuck.
 fuck

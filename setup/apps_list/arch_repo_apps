@@ -129,8 +129,13 @@ ncdu  **display disk usage by files/folder etc.**
 gparted
 ??
 
+
+$$STEAM$$
+steam *To ensure correct startup, all programs from this group have to be installed.*
+ttf-liberation *Arial font substitute*
+??
+
 $$MISC$$
-steam
 tmux
 ??
 
