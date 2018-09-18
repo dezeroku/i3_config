@@ -17,3 +17,11 @@ setopt nomatch
 unsetopt appendhistory autocd beep extendedglob notify
 bindkey -v
 # End of lines configured by zsh-newuser-install
+
+# Prompt config
+
+autoload colors
+colors
+export PS1="%~ %{%(#~$fg[red]~$fg[blue])%}%#%{$fg[default]%} "
+export PS2=">"
+export PROMPT="$PS1$PS2 "
