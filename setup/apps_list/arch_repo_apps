@@ -118,6 +118,7 @@ pacman-contrib
 thefuck
 udiskie
 ntfs-3g **write to NTFS**
+zsh
 ??
 
 $$UTILS$$

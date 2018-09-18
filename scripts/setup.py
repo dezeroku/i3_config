@@ -23,8 +23,6 @@ import shutil
 
 # Parsing apps list files.
 import file_parser
-# We are going to use it for linking.
-from base import get_root_folder
 
 def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
     """Symlink all files belows to correct locations (backing up previous
@@ -44,7 +42,8 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
              "rofi_config":"~/.config/rofi/config",
              "qute_config.py":"~/.config/qutebrowser/config.py",
              "mimeapps.list":"~/.config/mimeapps.list",
-             "ycm_extra_conf.py":"~/.ycm_extra_conf.py"}
+             "ycm_extra_conf.py":"~/.ycm_extra_conf.py",
+             "zshrc":"~/.zshrc"}
 
     for replace, original in files.items():
         original = os.path.expanduser(original)

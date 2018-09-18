@@ -40,6 +40,9 @@ python3 setup.py setup --set-up-npm-dir ~/npm_global
 # Symlink dotfiles.
 python3 setup.py setup --symlink-dotfiles ../setup/dotfiles/ ~/backup_dotfiles
 
+# Change shell to ZSH.
+chsh -s /usr/bin/zsh
+
 # Install plugins for VIM
 sh ./setup/configure_vim.sh
 # Install plugins for tmux.
@@ -50,10 +53,13 @@ sh ./setup/go_packages.sh
 sh ./setup/js_packages.sh
 sh ./setup/python_packages.sh
 
-python3 setup.py setup --source-shell-files ../setup/shell/ ~/.bashrc
+# Initial setup for ZSH.
+echo "typeset -U path" > ~/.zprofile
+
+python3 setup.py setup --source-shell-files ../setup/shell/ ~/.zprofile
 
 # Add this scripts folder to PATH.
-python3 setup.py setup --add-to-path . ~/.bashrc
+python3 setup.py setup --add-to-path . ~/.zprofile
 
 # Configure thefuck.
 fuck
