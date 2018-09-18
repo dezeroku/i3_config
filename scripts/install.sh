@@ -54,6 +54,11 @@ sh ./setup/js_packages.sh
 sh ./setup/python_packages.sh
 
 # Initial setup for ZSH.
+
+# Download and install oh-my-zsh.
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Source some stuff to zprofile.
 echo "typeset -U path" > ~/.zprofile
 
 python3 setup.py setup --source-shell-files ../setup/shell/ ~/.zprofile
@@ -70,3 +75,4 @@ sudo systemctl start vnstat
 sudo systemctl enable vnstat
 
 echo "Now add absolute path to resolution.py to your .xinitrc in home folder."
+echo "After this you will probably want to relog, so zsh will be run as main shell."
