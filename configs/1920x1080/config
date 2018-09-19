@@ -40,7 +40,7 @@ exec_always xset s off -dpms
         #screen backlight, needs changes in /etc/sudoers to work properly (you have to give NOPASSWD sudo acces to change_brightness file)
 
                 #screen backlight up, this path should be ~/.config/i3/scripts/change_brightness but it needs NOPASSWD changes
-                bindsym XF86MonBrightnessUp exec "sudo ~/bin/change_brightness +" 
+                bindsym XF86MonBrightnessUp exec "sudo $$HOME$$bin/change_brightness +" 
 
                 #screen backlight down, this path should be ~/.config/i3/scripts/change_brightness but it needs NOPASSWD changes
-                bindsym XF86MonBrightnessDown exec "sudo ~/bin/change_brightness -"
+                bindsym XF86MonBrightnessDown exec "sudo $$HOME$$bin/change_brightness -"
