@@ -87,7 +87,8 @@ class Runner:
         self.words_to_parse['BASE'] = config_folder_path
         self.words_to_parse['USERNAME'] = getpass.getuser()
         self.words_to_parse['HOME'] = (os.path.abspath(os.path.expanduser("~"))
-                                       + "/")
+                                      + "/")
+        self.words_to_parse['RESOLUTION'] = self.resolution
 
     def set_up_files(self):
         """Check for existence of all necessary files and add required

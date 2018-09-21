@@ -14,6 +14,8 @@
 #
 # $$BASE$$     - points to root directory of i3_config e.g. /home/d0ku/i3_config or /home/d0ku/.config/i3_config
 # $$USERNAME$$ - gets username that runs resolution.py
+# $$RESOLUTION$$ - your resolution as a string for example 1280x800 or 1920x1080
+# $$HOME$$ - home directory of user running resolution.py, e.g. /home/d0ku/
 
 # Set main button to Win
 set $mod Mod4
@@ -197,7 +199,10 @@ exec "nm-applet &"
 exec "dunst &"
 exec "redshift-gtk -l 51.10:17.0 &"
 exec "udiskie &"
-exec "compton -b --config $$BASE$$.config/compton.conf &"
+exec "compton -b --config $$HOME$$.config/compton.conf &"
+
+# Set wallpaper
+exec "feh --bg-scale $$BASE$$configs/$$RESOLUTION$$/wallpapers/0_wallpaper.png"
 
 # Set keyboard to polish.
 exec "setxkbmap pl"
