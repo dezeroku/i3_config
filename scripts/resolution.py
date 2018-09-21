@@ -56,6 +56,8 @@ class Locker:
         else:
             os.system("i3lock -c 000000")
 
+        # Wait a moment.
+        time.sleep(0.5)
         # Turn screen off.
         os.system("xset dpms force standby")
 
