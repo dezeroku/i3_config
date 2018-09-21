@@ -44,7 +44,8 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
              "mimeapps.list":"~/.config/mimeapps.list",
              "ycm_extra_conf.py":"~/.ycm_extra_conf.py",
              "zshrc":"~/.zshrc",
-             "tern-config":"~/.tern-config"}
+             "tern-config":"~/.tern-config",
+             "compton.conf":"~/.config/compton.conf"}
 
     for replace, original in files.items():
         original = os.path.expanduser(original)

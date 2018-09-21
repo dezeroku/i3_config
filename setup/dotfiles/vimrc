@@ -104,23 +104,23 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 au BufNewFile,BufRead *.py set colorcolumn=79
 
 " Similar but for webdev
-au BufNewFile,BufRead *.js set tabstop=2
-au BufNewFile,BufRead *.ts set tabstop=2
-au BufNewFile,BufRead *.html set tabstop=2
-au BufNewFile,BufRead *.css set tabstop=2
-au BufNewFile,BufRead *.scss set tabstop=2
+au BufNewFile,BufRead *.js set tabstop=4
+au BufNewFile,BufRead *.ts set tabstop=4
+au BufNewFile,BufRead *.html set tabstop=4
+au BufNewFile,BufRead *.css set tabstop=4
+au BufNewFile,BufRead *.scss set tabstop=4
 
-au BufNewFile,BufRead *.js set softtabstop=2
-au BufNewFile,BufRead *.ts set softtabstop=2
-au BufNewFile,BufRead *.html set softtabstop=2
-au BufNewFile,BufRead *.css set softtabstop=2
-au BufNewFile,BufRead *.scss set softtabstop=2
+au BufNewFile,BufRead *.js set softtabstop=4
+au BufNewFile,BufRead *.ts set softtabstop=4
+au BufNewFile,BufRead *.html set softtabstop=4
+au BufNewFile,BufRead *.css set softtabstop=4
+au BufNewFile,BufRead *.scss set softtabstop=4
 
-au BufNewFile,BufRead *.js set shiftwidth=2
-au BufNewFile,BufRead *.ts set shiftwidth=2
-au BufNewFile,BufRead *.html set shiftwidth=2
-au BufNewFile,BufRead *.css set shiftwidth=2
-au BufNewFile,BufRead *.scss set shiftwidth=2
+au BufNewFile,BufRead *.js set shiftwidth=4
+au BufNewFile,BufRead *.ts set shiftwidth=4
+au BufNewFile,BufRead *.html set shiftwidth=4
+au BufNewFile,BufRead *.css set shiftwidth=4
+au BufNewFile,BufRead *.scss set shiftwidth=4
 
 " Syntax Python
 let python_highlight_all=1

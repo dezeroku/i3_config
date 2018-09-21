@@ -8,7 +8,9 @@ rofi **runner**
 ponymix **volume control**
 playerctl **playback control**
 feh  **wallpapers and stuff**
-redshift  
+redshift
+compton **manage transparency and fading**
+transset-df **manually change transparency**
 ??
 
 $$AUDIO$$ 

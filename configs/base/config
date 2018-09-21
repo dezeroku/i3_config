@@ -197,6 +197,7 @@ exec "nm-applet &"
 exec "dunst &"
 exec "redshift-gtk -l 51.10:17.0 &"
 exec "udiskie &"
+exec "compton -b -c $$BASE$$.config/compton.conf &"
 
 # Set keyboard to polish.
 exec "setxkbmap pl"
