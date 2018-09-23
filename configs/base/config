@@ -194,11 +194,20 @@ bindsym --release Print exec "scrot -e 'mv $f ~/Pictures/screenshots'"
 bindsym --release Shift+Print exec "scrot -s -e 'mv $f ~/Pictures/screenshots'"
 
 #applets run codes
-
+# Network Manager
 exec "nm-applet &"
+# KDE Connect
+#   Daemon
+exec "/usr/lib/kdeconnectd &"
+#   Widget
+exec "indicator-kdeconnect &"
+# Dunst
 exec "dunst &"
+# Redshift
 exec "redshift-gtk -l 51.10:17.0 &"
+# Udiskie
 exec "udiskie &"
+# Compton
 exec "compton -b --config $$HOME$$.config/compton.conf &"
 
 # Set wallpaper
