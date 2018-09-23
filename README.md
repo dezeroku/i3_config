@@ -51,6 +51,8 @@ Of course you will have to decide what apps you want to install, press some Y's 
 ### Usage
 The easiest option to not mess up with paths is to add absolute path to resolution.py to your .xinitrc file, add scripts folder to PATH variable and whenever you want to run the app just call resolution.py from terminal.
 
+After successfull installation, remember to pair KDE Connect device, or disable daemon.
+
 ### Changes
 This repo had a big change 9/15/2018. If your repo master branch is older than that, easiest option to adapt is to remove your old stuff and work on new version directly.
 
