@@ -258,7 +258,7 @@ class Runner:
     def start_i3(self):
         """Start i3wm accordingly to parameters in config_folder_path"""
         self._create_config()
-        subprocess.run(["i3", "-c", self.current_config_file])
+        subprocess.run("i3 -c " + self.current_config_file, shell=True)
         #os.system("i3 -c " + self.current_config_file)
 
     def start_i3_debug(self):
