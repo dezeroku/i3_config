@@ -195,20 +195,19 @@ bindsym --release Shift+Print exec "scrot -s -e 'mv $f ~/Pictures/screenshots'"
 
 #applets run codes
 # Network Manager
-exec "nm-applet &"
+exec --no-startup-id "nm-applet &"
 # KDE Connect
-#   Daemon
+# Daemon and widget. Sleep is not perfect, but should give enough time for daemon to startup
 exec "/usr/lib/kdeconnectd &"
-#   Widget
-exec "indicator-kdeconnect &"
+exec "sleep 6; indicator-kdeconnect &"
 # Dunst
-exec "dunst &"
+exec --no-startup-id "dunst &"
 # Redshift
-exec "redshift-gtk -l 51.10:17.0 &"
+exec --no-startup-id "redshift-gtk -l 51.10:17.0 &"
 # Udiskie
-exec "udiskie &"
+exec --no-startup-id "udiskie &"
 # Compton
-exec "compton -b --config $$HOME$$.config/compton.conf &"
+exec --no-startup-id "compton -b --config $$HOME$$.config/compton.conf &"
 
 # Set wallpaper
 exec "feh --bg-scale $$BASE$$configs/$$RESOLUTION$$/wallpapers/0_wallpaper.png"

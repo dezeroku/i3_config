@@ -38,6 +38,26 @@ class CouldNotParseException(BaseException):
     """Is thrown when $$variable$$ can't be parsed in config file."""
     pass
 
+def lock_decorator(lock_func):
+    """Is executed before/after locking."""
+    def wrapper(self, image_number=-1):
+        # Suspend notifications.
+        subprocess.run(["pkill", "-u", getpass.getuser(), "-USR1", "dunst"])
+
+        process = lock_func(self, image_number)
+
+        time.sleep(0.5)
+        # Turn screen off.
+        subprocess.run(["xset", "dpms", "force", "standby"])
+
+        # Wait for lock to finish and restore notifications.
+        process.wait()
+
+        # Restore notifications.
+        subprocess.run(["pkill", "-u", getpass.getuser(), "-USR2", "dunst"])
+
+    return wrapper
+
 
 class Locker:
     """All methods arguments should be already parsed ints."""
@@ -46,30 +66,40 @@ class Locker:
     def __init__(self, lock_images_path):
         self.lock_images_path = lock_images_path
 
+    @lock_decorator
     def lock_now(self, image_number=-1):
         """Lock screen and blank display."""
         final_path = self.lock_images_path+str(image_number)+"_lock.png"
+        command = ["i3lock", "-n", "-c", "000000"]
         print(final_path)
         if (image_number != -1 and
                 os.path.exists(final_path)):
-            os.system("i3lock -c 000000 -i " + final_path)
-        else:
-            os.system("i3lock -c 000000")
+            command += ["-i", final_path]
 
-        # Wait a moment.
-        time.sleep(0.5)
-        # Turn screen off.
-        os.system("xset dpms force standby")
+        command += ["&"]
+
+        process = subprocess.Popen(command)
+
+        return process
 
     def enable_lock_daemon(self, image_number=-1):
         """Set screen to lock on user inactivity period or suspend."""
         final_path = self.lock_images_path+str(image_number)+"_lock.png"
         print(final_path)
+        base_command = ["xss-lock", "--",
+                        get_root_folder()+"scripts/resolution.py", "lock",
+                        "--lock-screen"]
+        print(base_command)
         if (image_number != -1 and
                 os.path.exists(final_path)):
-            os.system("xss-lock -- i3lock -c 000000 -i " + final_path + " &")
+            command = base_command
+            command += ["--lock-image-number", str(image_number)]
+
+            subprocess.run(command)
         else:
-            os.system("xss-lock -- i3lock -c 000000" + " &")
+            command = base_command 
+
+            subprocess.run(command)
 
 class Runner:
     """Manage starting and restarting i3wm and py3status configuration,
@@ -228,19 +258,19 @@ class Runner:
     def start_i3(self):
         """Start i3wm accordingly to parameters in config_folder_path"""
         self._create_config()
-        os.system("i3 -c " + self.current_config_file)
+        subprocess.run(["i3", "-c", self.current_config_file])
+        #os.system("i3 -c " + self.current_config_file)
 
     def start_i3_debug(self):
         """Start i3wm accordingly to parameters in config_folder_path (with
         debug options)."""
         self._create_config()
-        os.system("i3 -c " + self.current_config_file +
-                  " --shmlog-size=26214400")
+        subprocess.run(["i3", "-c", self.current_config_file, "--shmlog-size=26214400"])
 
     def restart_i3_config(self):
         """Recreate temporal config and force i3wm to use it."""
         self._create_config()
-        os.system("i3-msg -t command restart")
+        subprocess.run(["i3-msg", "-t", "command", "restart"])
 
     def start_py3status(self):
         """Start py3status status bar application, accordingly to parameters
@@ -248,6 +278,7 @@ class Runner:
         success = False
         status_config_folder = (self.config_folder_path + self.resolution +
                                 "/")
+        print(status_config_folder)
         if os.path.exists(status_config_folder):
             status_config_file = (status_config_folder +
                                   "i3status.conf")
@@ -262,8 +293,7 @@ class Runner:
                   file=sys.stderr)
             status_config_file = (self.config_folder_path + "base/i3status.conf")
 
-        os.system("py3status -c " + status_config_file)
-
+        subprocess.run(["py3status", "-c", status_config_file])
 
 def get_parser_locker(parser):
     """Fill parser for 'lock' subcommand."""
