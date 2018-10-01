@@ -39,4 +39,7 @@ c.tabs.last_close = "ignore"
 # Set up search engines.
 duckstr = "https://duckduckgo.com/?q={}"
 googlestr = "https://google.com/search?hl=en&q={}"
-c.url.searchengines = {"DEFAULT":duckstr, "ddg":duckstr,  "google":googlestr}
+# Translates english to polish by default, change to your like.
+translate_english_polish = "https://translate.google.com/#en/pl/{}"
+c.url.searchengines = {"DEFAULT":duckstr, "ddg":duckstr,  "google":googlestr,
+                       "translate":translate_english_polish}
