@@ -1,4 +1,5 @@
 [Default Applications]
+inode/directory=pcmanfm.desktop
 image/png=sxiv.desktop
 image/jpg=sxiv.desktop
 image/bmp=sxiv.desktop

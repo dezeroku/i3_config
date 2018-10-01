@@ -23,8 +23,6 @@ import shutil
 
 # Parsing apps list files.
 import file_parser
-# We are going to use it for linking.
-from base import get_root_folder
 
 def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
     """Symlink all files belows to correct locations (backing up previous
@@ -36,14 +34,18 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
     if not os.path.exists(backup_dir):
         os.makedirs(backup_dir)
 
-    files = {".Xresources":"~/.Xresources",
+    files = {"Xresources":"~/.Xresources",
              "rc.conf":"~/.config/ranger/rc.conf",
-             ".vimrc":"~/.vimrc",
-             ".tmux.conf":"~/.tmux.conf",
+             "vimrc":"~/.vimrc",
+             "tmux.conf":"~/.tmux.conf",
              "dunstrc":"~/.config/dunst/dunstrc",
              "rofi_config":"~/.config/rofi/config",
              "qute_config.py":"~/.config/qutebrowser/config.py",
-             "mimeapps.list":"~/.config/mimeapps.list"}
+             "mimeapps.list":"~/.config/mimeapps.list",
+             "ycm_extra_conf.py":"~/.ycm_extra_conf.py",
+             "zshrc":"~/.zshrc",
+             "tern-config":"~/.tern-config",
+             "compton.conf":"~/.config/compton.conf"}
 
     for replace, original in files.items():
         original = os.path.expanduser(original)
@@ -54,7 +56,7 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
             #print("Delinking: " + original)
         if os.path.exists(original):
             # If there is a file in final location, back it up.
-            shutil.move(original, backup_dir + replace)
+            shutil.move(original, backup_dir + "/" + replace)
             print("Backed up " + original + " in " + backup_dir + "/" + replace)
         try:
             os.symlink(dotfiles_dir  + replace, original)
@@ -83,7 +85,7 @@ def add_to_path(path, output_file="~/.bash_profile"):
 
 def setup_npm_stuff(dir_name):
     """Create directory in path provided by user and force npm to use it."""
-    npm_dir = os.path.expanduser(dir_name)
+    npm_dir = os.path.abspath(os.path.expanduser(dir_name))
     try:
         os.makedirs(npm_dir)
     except FileExistsError:

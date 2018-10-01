@@ -8,7 +8,9 @@ rofi **runner**
 ponymix **volume control**
 playerctl **playback control**
 feh  **wallpapers and stuff**
-redshift  
+redshift
+compton **manage transparency and fading**
+transset-df **manually change transparency**
 ??
 
 $$AUDIO$$ 
@@ -105,6 +107,7 @@ jdk10-openjdk
 nodejs
 npm
 go
+rust
 ghc
 php
 docker 
@@ -117,6 +120,7 @@ pacman-contrib
 thefuck
 udiskie
 ntfs-3g **write to NTFS**
+zsh
 ??
 
 $$UTILS$$
@@ -127,9 +131,15 @@ ncdu  **display disk usage by files/folder etc.**
 gparted
 ??
 
+
+$$STEAM$$
+steam *To ensure correct startup, all programs from this group have to be installed.*
+ttf-liberation *Arial font substitute*
+??
+
 $$MISC$$
-steam
 tmux
+exfat-utils
 ??
 
 $$VPN$$

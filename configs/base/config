@@ -14,6 +14,8 @@
 #
 # $$BASE$$     - points to root directory of i3_config e.g. /home/d0ku/i3_config or /home/d0ku/.config/i3_config
 # $$USERNAME$$ - gets username that runs resolution.py
+# $$RESOLUTION$$ - your resolution as a string for example 1280x800 or 1920x1080
+# $$HOME$$ - home directory of user running resolution.py, e.g. /home/d0ku/
 
 # Set main button to Win
 set $mod Mod4
@@ -108,25 +110,25 @@ bindsym $mod+a focus parent
 
 # set workspaces names
 	#monitor F30A
-		set $ws1 "1:main" 
+		set $ws1 "1:" 
 	#web F376	
-		set $ws2 "2:web"
+		set $ws2 "2:"
 	#notepad F227 
-		set $ws3 "3:work"
+		set $ws3 "3:"
 	#hash F319 
-		set $ws4 "4:term"
+		set $ws4 "4:"
 	#note F30C 
-		set $ws5 "5:media"
+		set $ws5 "5:"
 	#coffee cup F372 
-		set $ws6 "6:vm"
+		set $ws6 "6:"
 	#dots F23F 
-		set $ws7 "7:misc"
+		set $ws7 "7:"
 	#trashbin  F352 
-		set $ws8 "8:trash"
+		set $ws8 "8:"
 	#steam icon F40B OR F23B gamepad icon 
-		set $ws9 "9:games"
+		set $ws9 "9:"
 	#windows F24E 
-		set $ws10 "10:stuff" 
+		set $ws10 "10:" 
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -192,11 +194,23 @@ bindsym --release Print exec "scrot -e 'mv $f ~/Pictures/screenshots'"
 bindsym --release Shift+Print exec "scrot -s -e 'mv $f ~/Pictures/screenshots'"
 
 #applets run codes
+# Network Manager
+exec --no-startup-id "nm-applet &"
+# KDE Connect
+# Daemon and widget. Sleep is not perfect, but should give enough time for daemon to startup
+exec "/usr/lib/kdeconnectd &"
+exec "sleep 6; indicator-kdeconnect &"
+# Dunst
+exec --no-startup-id "dunst &"
+# Redshift
+exec --no-startup-id "redshift-gtk -l 51.10:17.0 &"
+# Udiskie
+exec --no-startup-id "udiskie &"
+# Compton
+exec --no-startup-id "compton -b --config $$HOME$$.config/compton.conf &"
 
-exec "nm-applet &"
-exec "dunst &"
-exec "redshift-gtk -l 51.10:17.0 &"
-exec "udiskie &"
+# Set wallpaper
+exec "feh --bg-scale $$BASE$$configs/$$RESOLUTION$$/wallpapers/0_wallpaper.png"
 
 # Set keyboard to polish.
 exec "setxkbmap pl"

@@ -10,8 +10,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 " Folding
 Plugin 'tmhedberg/SimpylFold'
-" Is this even necessary if i use youcompleteme? TODO:
-"Plugin 'davidhalter/jedi-vim'
 " db interface
 Plugin 'dbext.vim'
 " Indents for python
@@ -25,17 +23,14 @@ Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 " Sessions
 Plugin 'tpope/vim-obsession'
-" Beautify
-Plugin 'Chiel92/vim-autoformat'
-
-" This two can cause too long writes, turn off if this happens
+" Running checkers.
 Plugin 'vim-syntastic/syntastic'
-Plugin 'nvie/vim-flake8'
-
 " Pretty status bar 
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 " Autocompleting
 Plugin 'Valloric/YouCompleteMe'
+" Beautify on :Au.
+Plugin 'Chiel92/vim-autoformat'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -64,6 +59,9 @@ if has('syntax') && has('eval')
   packadd! matchit
 endif
 
+" Set encoding
+set encoding=utf-8
+
 " Add tab = 4 spaces (for ALL, some overwrites later)
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
@@ -76,29 +74,19 @@ nnoremap <C-H> <C-W><C-H>
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
+
 " Enable folding with the spacebar
 nnoremap <space> za
+
 " Docstring for folded code
 let g:SimpylFold_docstring_preview=1
-
-" Disable python autocomplete on dot vim-jedi
-" let g:jedi#popup_on_dot = 0
-" Disable vim-jedi for YouCompleteMe
-
-" YouCompleteMe configuration
-"let g:ycm_autoclose_preview_window_after_completion=0
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" TODO: You will probably want to disable YCM always-on and use it with
-" shortcut
 
 " set showcmd
 let mapleader = " "
 
 " find python binary for ycm
-let g:ycm_python_binary_path = 'python'
+let g:ycm_python_binary_path = 'python3'
 
-"let g:jedi#completions_enabled = 0
 " Python PEP8 standards
 au BufNewFile,BufRead *.py set tabstop=4
 au BufNewFile,BufRead *.py set softtabstop=4
@@ -111,23 +99,28 @@ au BufNewFile,BufRead *.py set fileformat=unix
 " Define BadWhitespace and mark as darkred in py files
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
 " Red line at 79-th line in .py files
 au BufNewFile,BufRead *.py set colorcolumn=79
 
 " Similar but for webdev
-au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2
-au BufNewFile,BufRead *.js, *.html, *.css set softtabstop=2
-au BufNewFile,BufRead *.js, *.html, *.css set shiftwidth=2
+au BufNewFile,BufRead *.js set tabstop=4
+au BufNewFile,BufRead *.ts set tabstop=4
+au BufNewFile,BufRead *.html set tabstop=4
+au BufNewFile,BufRead *.css set tabstop=4
+au BufNewFile,BufRead *.scss set tabstop=4
 
-" VirtualEnv support for python
-"py << EOF
-"import os
-"import sys
-"if 'VIRTUAL_ENV' in os.environ:
-"  project_base_dir = os.environ['VIRTUAL_ENV']
-"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"  execfile(activate_this, dict(__file__=activate_this))
-"EOF
+au BufNewFile,BufRead *.js set softtabstop=4
+au BufNewFile,BufRead *.ts set softtabstop=4
+au BufNewFile,BufRead *.html set softtabstop=4
+au BufNewFile,BufRead *.css set softtabstop=4
+au BufNewFile,BufRead *.scss set softtabstop=4
+
+au BufNewFile,BufRead *.js set shiftwidth=4
+au BufNewFile,BufRead *.ts set shiftwidth=4
+au BufNewFile,BufRead *.html set shiftwidth=4
+au BufNewFile,BufRead *.css set shiftwidth=4
+au BufNewFile,BufRead *.scss set shiftwidth=4
 
 " Syntax Python
 let python_highlight_all=1
@@ -140,9 +133,10 @@ if has('gui_running')
 else
   colorscheme zenburn
 endif
+
 " Lines numbering
 set nu
-" TODO: Indentation plugin, how to use it?
+
 " Latex live preview default pdf opener -> zathura
 let g:vimtex_view_general_viewer = 'zathura'
 
@@ -156,6 +150,8 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
+" vim-go setup
+
 " use goimports for formatting
 let g:go_fmt_command = "goimports"
 
@@ -166,16 +162,39 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
+" Syntastic
+
+" Display all checkers errors.
+" let g:syntastic_aggregate_errors = 1
+
 " Go syntax checkers
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+
+" Python syntax checkers
+let g:syntastic_python_checkers = ['mypy', 'pylint', 'flake8']
+
+" Javascript syntac checkers
+let g:syntastic_javascript_checkers = ['jslint']
+
+let g:syntastic_javascript_jslint_args = "--browser"
 
 " Beautify shortcut
 noremap <F3> :Autoformat<CR>
 
-" Set encoding
-set encoding=utf-8
+" YouCompleteMe configuration
 
-" Start YCM in python after 2 chars
+" Autoclose preview after match.
+let g:ycm_autoclose_preview_window_after_completion=1
+
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" Start YCM in python and go after 2 chars
 let g:ycm_semantic_triggers = {
-	\   'python': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
-	\ }
+            \   'python': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
+            \   'go': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
+            \   'javascript': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
+            \ }
+
+" Set global config file for YCM.
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+

@@ -37,8 +37,9 @@ sudo python3 setup.py install --install-from-file ../setup/apps_list/arch_repo_a
 python3 setup.py install --install-from-file ../setup/apps_list/arch_aur_apps --install-command S --package-manager yay --do-not-reinstall
 # Set up npm.
 python3 setup.py setup --set-up-npm-dir ~/npm_global
-# Symlink dotfiles.
-python3 setup.py setup --symlink-dotfiles ../setup/dotfiles/ ~/backup_dotfiles
+
+# Change shell to ZSH.
+chsh -s /usr/bin/zsh
 
 # Install plugins for VIM
 sh ./setup/configure_vim.sh
@@ -50,10 +51,21 @@ sh ./setup/go_packages.sh
 sh ./setup/js_packages.sh
 sh ./setup/python_packages.sh
 
-python3 setup.py setup --source-shell-files ../setup/shell/ ~/.bashrc
+# Initial setup for ZSH.
+
+# Download and install oh-my-zsh.
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Source some stuff to zprofile.
+echo "typeset -U path" > ~/.zprofile
+
+python3 setup.py setup --source-shell-files ../setup/shell/ ~/.zprofile
 
 # Add this scripts folder to PATH.
-python3 setup.py setup --add-to-path . ~/.bashrc
+python3 setup.py setup --add-to-path . ~/.zprofile
+
+# Symlink dotfiles.
+python3 setup.py setup --symlink-dotfiles ../setup/dotfiles/ ~/backup_dotfiles
 
 # Configure thefuck.
 fuck
@@ -64,3 +76,4 @@ sudo systemctl start vnstat
 sudo systemctl enable vnstat
 
 echo "Now add absolute path to resolution.py to your .xinitrc in home folder."
+echo "After this you will probably want to relog, so zsh will be run as main shell."
