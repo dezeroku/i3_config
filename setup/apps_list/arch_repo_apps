@@ -133,8 +133,8 @@ gparted
 
 
 $$STEAM$$
-steam *To ensure correct startup, all programs from this group have to be installed.*
-ttf-liberation *Arial font substitute*
+steam **To ensure correct startup, all programs from this group have to be installed.**
+ttf-liberation **Arial font substitute**
 ??
 
 $$MISC$$
@@ -142,7 +142,7 @@ tmux
 exfat-utils
 wget
 mesa-utils
-ttf-inconsolata *G751 status bar font*
+ttf-inconsolata **G751 status bar font**
 ??
 
 $$VPN$$
