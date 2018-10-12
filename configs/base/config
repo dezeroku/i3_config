@@ -199,7 +199,7 @@ exec --no-startup-id "nm-applet &"
 # KDE Connect
 # Daemon and widget. Sleep is not perfect, but should give enough time for daemon to startup
 exec "/usr/lib/kdeconnectd &"
-exec "sleep 6; indicator-kdeconnect &"
+exec "sleep 60; indicator-kdeconnect &"
 # Dunst
 exec --no-startup-id "dunst &"
 # Redshift
@@ -225,7 +225,7 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab exec "python3 $$BASE$$scripts/i3/i3_next_workspace.py "
 
 # set lock screen
-exec "$$BASE$$scripts/resolution.py lock --set-up-locker --lock-image-number 1"
+exec "$$BASE$$scripts/resolution.py lock --set-up-locker --lock-image-number 1 --lock-timeout 0"
 
 # lock screen 
 bindsym $mod+Control+l exec "$$BASE$$scripts/resolution.py lock --lock-screen --lock-image-number 1"
