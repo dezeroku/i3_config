@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # That is the file that should be run when you want to set up your shiny new Arch Linux install.
 # NOTICE: At this point you should be booted into Arch Linux directly, and have sudo set up and working.
 # It takes care of installing python, setting up some repos and calls python installer in the end.
@@ -7,6 +6,7 @@
 
 # !!! This file should be run from scripts folder directly (relative paths).
 
+# TODO: check at the beggining whether user is ROOT, if he is exit with 1 and info that this script has to be run as user (makepkg and generally safer)
 
 # Enable multilib pacman.
 echo '[multilib]' | sudo tee --append /etc/pacman.conf
@@ -41,6 +41,9 @@ python3 setup.py setup --set-up-npm-dir ~/npm_global
 # Change shell to ZSH.
 chsh -s /usr/bin/zsh
 
+# Symlink dotfiles.
+python3 setup.py setup --symlink-dotfiles ../setup/dotfiles/ ~/backup_dotfiles
+
 # Install plugins for VIM
 sh ./setup/configure_vim.sh
 # Install plugins for tmux.
@@ -64,7 +67,7 @@ python3 setup.py setup --source-shell-files ../setup/shell/ ~/.zprofile
 # Add this scripts folder to PATH.
 python3 setup.py setup --add-to-path . ~/.zprofile
 
-# Symlink dotfiles.
+# Symlink dotfiles (again, maybe someone overrode previous ones).
 python3 setup.py setup --symlink-dotfiles ../setup/dotfiles/ ~/backup_dotfiles
 
 # Configure thefuck.

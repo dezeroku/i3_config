@@ -61,7 +61,7 @@ gvim
 vim-spell-en
 vim-spell-pl
 vim-spell-de
-sublime-text 
+#sublime-text 
 ??
 
 $$OFFICE$$ 
@@ -141,6 +141,8 @@ $$MISC$$
 tmux
 exfat-utils
 wget
+mesa-utils
+ttf-inconsolata *G751 status bar font*
 ??
 
 $$VPN$$
