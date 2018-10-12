@@ -82,7 +82,7 @@ class Locker:
 
         return process
 
-    def enable_lock_daemon(self, image_number=-1):
+    def enable_lock_daemon(self, image_number=-1, timeout=0):
         """Set screen to lock on user inactivity period or suspend."""
         final_path = self.lock_images_path+str(image_number)+"_lock.png"
         print(final_path)
@@ -94,7 +94,7 @@ class Locker:
                 os.path.exists(final_path)):
             command = base_command
             command += ["--lock-image-number", str(image_number)]
-            command += ["--lock-timeout", str(0)]
+            command += ["--lock-timeout", str(timeout)]
 
             subprocess.run(command)
         else:
@@ -123,178 +123,178 @@ class Runner:
                                       + "/")
         self.words_to_parse['RESOLUTION'] = self.resolution
 
-def set_up_files(self):
-    """Check for existence of all necessary files and add required
-    variables."""
-    if not os.path.exists(self.config_folder_path):
-        print("Provided config_folder_path does not exist in a\
-              filesystem.", file=sys.stderr)
+    def set_up_files(self):
+        """Check for existence of all necessary files and add required
+        variables."""
+        if not os.path.exists(self.config_folder_path):
+            print("Provided config_folder_path does not exist in a\
+                  filesystem.", file=sys.stderr)
 
-    base_config_folder = self.config_folder_path + "base/"
+        base_config_folder = self.config_folder_path + "base/"
 
-    if not os.path.exists(base_config_folder):
-        print("Could not found 'base' folder containing base\
-                        configuration in config_folder_path (" +
-              self.config_folder_path + ") location.",
-              file=sys.stderr)
+        if not os.path.exists(base_config_folder):
+            print("Could not found 'base' folder containing base\
+                            configuration in config_folder_path (" +
+                  self.config_folder_path + ") location.",
+                  file=sys.stderr)
 
-    self.base_config_file = base_config_folder + "config"
+        self.base_config_file = base_config_folder + "config"
 
-    if not os.path.exists(self.base_config_file):
-        print("Could not found 'config' file containing base\
-                        configuration in config_folder_path/base/ (" +
-              self.config_folder_path + ") location.",
-              file=sys.stderr)
-
-
-    # Check for fallback config.
-    self.config_fallback_file = (self.config_folder_path +
-                                 "/base/config_fallback")
-    if not os.path.exists(self.config_fallback_file):
-        print("Exiting, could not find config fallback file at " +
-              self.config_fallback_file, file=sys.stderr)
-        sys.exit(1)
-
-    resolution_config_folder = self.config_folder_path + self.resolution + "/"
-
-    self.parse_resolution_file = False
-
-    if not os.path.exists(resolution_config_folder):
-        print("Could not locate resolution based config folder in\
-              config_folder_path (" + resolution_config_folder + ")\
-              location.", file=sys.stderr)
-    else:
-        self.resolution_config_file = (resolution_config_folder +
-                                       "config")
-        if not os.path.exists(self.resolution_config_file):
-            print("Could not locate resolution based config file in\
-                config_folder_path (" + self.resolution_config_file + ")\
-                location.", file=sys.stderr)
-        else:
-            # Everything went fine.
-            self.parse_resolution_file = True
+        if not os.path.exists(self.base_config_file):
+            print("Could not found 'config' file containing base\
+                            configuration in config_folder_path/base/ (" +
+                  self.config_folder_path + ") location.",
+                  file=sys.stderr)
 
 
-def set_up_files_current(self):
-    """Create current directory if not exists. Check for overwrite."""
-    current_config_path = self.config_folder_path + "current/"
-    if not os.path.exists(current_config_path):
-        print("Current config folder does not exist, creating as " +
-              current_config_path, file=sys.stderr)
-        os.makedirs(current_config_path)
-
-    self.current_config_file = current_config_path + "config"
-    if os.path.exists(self.current_config_file):
-        print("Current config file does already exist, overwriting " +
-              self.current_config_file, file=sys.stderr)
-
-def _create_config(self):
-    """Merges config files basing on self.config_folder_path and resolution
-    detected by get_resolution."""
-
-    self.set_up_files_current()
-
-    current_time_str = time.strftime("%b %d %Y %H:%M:%S", time.gmtime())
-    with open(self.current_config_file, "w") as current_config:
-        current_config.write("# Config file automatically generated by\
-                             Runner (" + current_time_str + ")\n")
-        current_config.write("# Don't edit this file, instead read\
-                             documentation at\
-                             https://github.com/d0ku/i3_config and edit\
-                             files accordingly.\n")
-        if self.parse_resolution_file:
-            current_config.write("# Merging with resolution file (" +
-                                 self.resolution + ")\n")
-        else:
-            current_config.write("# Could not read resolution file. Read\
-                                 log and fix that. Using fallback base\
-                                 config for now.\n")
-
-        try:
-            with open(self.base_config_file, "r") as base_config:
-                for line in base_config:
-                    current_config.write(self.parse_line(line))
-
-            current_config.write("\n\n\n")
-
-            if self.parse_resolution_file:
-                with open(self.resolution_config_file, "r") as res_config:
-                    for line in res_config:
-                        current_config.write(self.parse_line(line))
-            else:
-                with open(self.config_fallback_file, "r") as fall_config:
-                    for line in fall_config:
-                        current_config.write(self.parse_line(line))
-
-            print("Successfully written current config: " +
-                  self.current_config_file, file=sys.stderr)
-        except CouldNotParseException:
+        # Check for fallback config.
+        self.config_fallback_file = (self.config_folder_path +
+                                     "/base/config_fallback")
+        if not os.path.exists(self.config_fallback_file):
+            print("Exiting, could not find config fallback file at " +
+                  self.config_fallback_file, file=sys.stderr)
             sys.exit(1)
 
-def parse_line(self, line):
-    """Parses line of i3 config replacing all $$VARIABLE$$ alike words with
-    object dictionary value."""
-    # TODO: write some tests for this method.
-    # If line is commented, don't parse it.
-    if line[0] == "#":
+        resolution_config_folder = self.config_folder_path + self.resolution + "/"
+
+        self.parse_resolution_file = False
+
+        if not os.path.exists(resolution_config_folder):
+            print("Could not locate resolution based config folder in\
+                  config_folder_path (" + resolution_config_folder + ")\
+                  location.", file=sys.stderr)
+        else:
+            self.resolution_config_file = (resolution_config_folder +
+                                           "config")
+            if not os.path.exists(self.resolution_config_file):
+                print("Could not locate resolution based config file in\
+                    config_folder_path (" + self.resolution_config_file + ")\
+                    location.", file=sys.stderr)
+            else:
+                # Everything went fine.
+                self.parse_resolution_file = True
+
+
+    def set_up_files_current(self):
+        """Create current directory if not exists. Check for overwrite."""
+        current_config_path = self.config_folder_path + "current/"
+        if not os.path.exists(current_config_path):
+            print("Current config folder does not exist, creating as " +
+                  current_config_path, file=sys.stderr)
+            os.makedirs(current_config_path)
+
+        self.current_config_file = current_config_path + "config"
+        if os.path.exists(self.current_config_file):
+            print("Current config file does already exist, overwriting " +
+                  self.current_config_file, file=sys.stderr)
+
+    def _create_config(self):
+        """Merges config files basing on self.config_folder_path and resolution
+        detected by get_resolution."""
+
+        self.set_up_files_current()
+
+        current_time_str = time.strftime("%b %d %Y %H:%M:%S", time.gmtime())
+        with open(self.current_config_file, "w") as current_config:
+            current_config.write("# Config file automatically generated by\
+                                 Runner (" + current_time_str + ")\n")
+            current_config.write("# Don't edit this file, instead read\
+                                 documentation at\
+                                 https://github.com/d0ku/i3_config and edit\
+                                 files accordingly.\n")
+            if self.parse_resolution_file:
+                current_config.write("# Merging with resolution file (" +
+                                     self.resolution + ")\n")
+            else:
+                current_config.write("# Could not read resolution file. Read\
+                                     log and fix that. Using fallback base\
+                                     config for now.\n")
+
+            try:
+                with open(self.base_config_file, "r") as base_config:
+                    for line in base_config:
+                        current_config.write(self.parse_line(line))
+
+                current_config.write("\n\n\n")
+
+                if self.parse_resolution_file:
+                    with open(self.resolution_config_file, "r") as res_config:
+                        for line in res_config:
+                            current_config.write(self.parse_line(line))
+                else:
+                    with open(self.config_fallback_file, "r") as fall_config:
+                        for line in fall_config:
+                            current_config.write(self.parse_line(line))
+
+                print("Successfully written current config: " +
+                      self.current_config_file, file=sys.stderr)
+            except CouldNotParseException:
+                sys.exit(1)
+
+    def parse_line(self, line):
+        """Parses line of i3 config replacing all $$VARIABLE$$ alike words with
+        object dictionary value."""
+        # TODO: write some tests for this method.
+        # If line is commented, don't parse it.
+        if line[0] == "#":
+            return line
+
+        reg_str = "\\$\\$[^\\$]*\\$\\$"
+        reg = re.compile(reg_str)
+
+        variables = reg.findall(line)
+
+        for variable in variables:
+            var = variable[2:-2]
+            try:
+                line = line.replace(variable, self.words_to_parse[var])
+            except KeyError:
+                print("Could not match " + variable +" with any variable.",
+                      file=sys.stderr)
+                raise CouldNotParseException("Could not match " + variable +
+                                             " with any variable.")
+
         return line
 
-    reg_str = "\\$\\$[^\\$]*\\$\\$"
-    reg = re.compile(reg_str)
+    def start_i3(self):
+        """Start i3wm accordingly to parameters in config_folder_path"""
+        self._create_config()
+        subprocess.run("i3 -c " + self.current_config_file, shell=True)
+        #os.system("i3 -c " + self.current_config_file)
 
-    variables = reg.findall(line)
+    def start_i3_debug(self):
+        """Start i3wm accordingly to parameters in config_folder_path (with
+        debug options)."""
+        self._create_config()
+        subprocess.run(["i3", "-c", self.current_config_file, "--shmlog-size=26214400"])
 
-    for variable in variables:
-        var = variable[2:-2]
-        try:
-            line = line.replace(variable, self.words_to_parse[var])
-        except KeyError:
-            print("Could not match " + variable +" with any variable.",
+    def restart_i3_config(self):
+        """Recreate temporal config and force i3wm to use it."""
+        self._create_config()
+        subprocess.run(["i3-msg", "-t", "command", "restart"])
+
+    def start_py3status(self):
+        """Start py3status status bar application, accordingly to parameters
+        in config_folder_path."""
+        success = False
+        status_config_folder = (self.config_folder_path + self.resolution +
+                                "/")
+        print(status_config_folder)
+        if os.path.exists(status_config_folder):
+            status_config_file = (status_config_folder +
+                                  "i3status.conf")
+            if os.path.exists(status_config_file):
+                print("Successfully found resolution i3status.conf",
+                      file=sys.stderr)
+                success = True
+
+        if not success:
+            print("Could not load or run resolution i3status.conf, falling\
+                  back to default config_path/base/i3status.conf",
                   file=sys.stderr)
-            raise CouldNotParseException("Could not match " + variable +
-                                         " with any variable.")
+            status_config_file = (self.config_folder_path + "base/i3status.conf")
 
-    return line
-
-def start_i3(self):
-    """Start i3wm accordingly to parameters in config_folder_path"""
-    self._create_config()
-    subprocess.run("i3 -c " + self.current_config_file, shell=True)
-    #os.system("i3 -c " + self.current_config_file)
-
-def start_i3_debug(self):
-    """Start i3wm accordingly to parameters in config_folder_path (with
-    debug options)."""
-    self._create_config()
-    subprocess.run(["i3", "-c", self.current_config_file, "--shmlog-size=26214400"])
-
-def restart_i3_config(self):
-    """Recreate temporal config and force i3wm to use it."""
-    self._create_config()
-    subprocess.run(["i3-msg", "-t", "command", "restart"])
-
-def start_py3status(self):
-    """Start py3status status bar application, accordingly to parameters
-    in config_folder_path."""
-    success = False
-    status_config_folder = (self.config_folder_path + self.resolution +
-                            "/")
-    print(status_config_folder)
-    if os.path.exists(status_config_folder):
-        status_config_file = (status_config_folder +
-                              "i3status.conf")
-        if os.path.exists(status_config_file):
-            print("Successfully found resolution i3status.conf",
-                  file=sys.stderr)
-            success = True
-
-    if not success:
-        print("Could not load or run resolution i3status.conf, falling\
-              back to default config_path/base/i3status.conf",
-              file=sys.stderr)
-        status_config_file = (self.config_folder_path + "base/i3status.conf")
-
-    subprocess.run(["py3status", "-c", status_config_file])
+        subprocess.run(["py3status", "-c", status_config_file])
 
 def get_parser_locker(parser):
     """Fill parser for 'lock' subcommand."""
