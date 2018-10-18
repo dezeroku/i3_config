@@ -1,0 +1,67 @@
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (company-ycmd ycmd evil-org evil-tutor evil-magit julia-mode julia-repl smooth-scrolling evil zenburn-theme smooth-scrolling powerline))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; ViM ALIKE 
+    ;; Evil
+        ;; ViM like mode
+        (require 'evil)
+        (evil-mode 1)
+        ;; vim magit binds
+        (require 'evil-magit)
+        ;; vim tutor
+        (require 'evil-tutor)
+        ;; vim binds for org-mode
+        (require 'evil-org)
+    ;; Powerline look compliant with evil
+    (require 'powerline)
+    (powerline-center-evil-theme)
+    ;; Zenburn theme
+    (require 'zenburn-theme)
+    ;; more vim-like scrolling
+    (require 'smooth-scrolling)
+    (smooth-scrolling-mode 1)
+    (setq smooth-scroll-margin 5)
+    ;; YCMD and company-ycmd
+    (require 'ycmd)
+    (add-hook 'after-init-hook #'global-ycmd-mode)
+    (set-variable 'ycmd-server-command `("python" ,(file-truename "~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd/")))
+    (set-variable 'ycmd-global-config (file-truename "~/.ycm_extra_conf.py"))
+
+    (require 'company-ycmd)
+    (add-hook 'ycmd-mode-hook 'company-ycmd-setup)
+    
+    ;; Apply it everywhere.
+    (global-company-mode)
+    (global-ycmd-mode)
+
+    ;; Complete common part on TAB press.
+    (eval-after-load 'company
+      '(progn
+     (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)))
+
+;; GENERAL
+    ;; disable bell on every freakin action
+    (setq ring-bell-function 'ignore)
+    ;; display line numbers
+    (global-display-line-numbers-mode)
+
+;; JULIA
+    ;; add julia-mode and REPL
+    (require 'julia-mode)
+    (require 'julia-repl)

@@ -58,6 +58,7 @@ pcmanfm
 
 $$TEXT EDITORS$$
 gvim
+emacs
 vim-spell-en
 vim-spell-pl
 vim-spell-de
