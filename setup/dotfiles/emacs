@@ -8,7 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company-ycmd ycmd evil-org evil-tutor evil-magit julia-mode julia-repl smooth-scrolling evil zenburn-theme smooth-scrolling powerline))))
+    (flycheck flycheck-julia flycheck-mypy go-mode company-ycmd ycmd evil-org evil-tutor evil-magit julia-mode julia-repl smooth-scrolling evil zenburn-theme smooth-scrolling powerline))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -61,6 +61,10 @@
     ;; display line numbers
     (global-display-line-numbers-mode)
 
+;; FLYCHECK 
+    (add-hook 'after-init-hook #'global-flycheck-mode)
+;; GO
+    (require 'go-mode)
 ;; JULIA
     ;; add julia-mode and REPL
     (require 'julia-mode)
