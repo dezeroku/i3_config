@@ -10,7 +10,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (flycheck flycheck-julia flycheck-mypy go-mode company-ycmd ycmd evil-org evil-tutor evil-magit julia-mode julia-repl smooth-scrolling evil zenburn-theme smooth-scrolling powerline))))
+    (company-go flycheck flycheck-julia flycheck-mypy go-mode company-ycmd ycmd evil-org evil-tutor evil-magit julia-mode julia-repl smooth-scrolling evil zenburn-theme smooth-scrolling powerline))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -55,6 +55,7 @@
     (set-variable 'ycmd-server-command `("python" ,(file-truename "~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd/")))
     (set-variable 'ycmd-global-config (file-truename "~/.ycm_extra_conf.py"))
 
+    (require 'company)
     (require 'company-ycmd)
     (add-hook 'ycmd-mode-hook 'company-ycmd-setup)
     
@@ -91,7 +92,26 @@
                             (flycheck-select-checker 'python-mypy)
                             ))
 ;; GO
+    ;; TODO: look into autocompletion, whether it works or not.
+    ;; general mode for Go
     (require 'go-mode)
+    ;; backend for company autocompletion using gocode
+    (add-hook 'go-mode-hook (lambda ()
+                              ;; run goimports instead of fmt.
+                              (setq gofmt-command "goimports")
+                              ;; automatically run goimports on file save.
+                              (add-hook 'before-save-hook 'gofmt-before-save)
+                              ;; Customize compile command to run go build
+                              (if (not (string-match "go" compile-command))
+                                (set (make-local-variable 'compile-command)
+                                    "go build -v && go test -v && go vet"))
+
+                              (require 'company-go)
+                              (setq company-tooltip-limit 20)
+                              (setq company-idle-delay .3)
+                              (setq company-echo-delay 0)
+                              (setq company-begin-commands '(self-insert-command))
+                              ))
 ;; JULIA
     ;; add julia-mode and REPL
     (require 'julia-mode)
