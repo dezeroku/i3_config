@@ -160,7 +160,9 @@ Plugin 'altercation/vim-colors-solarized'
 " Sessions
 Plugin 'tpope/vim-obsession'
 " Running checkers.
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
+" Asynchrounous checkers.
+Plugin 'w0rp/ale'
 " Pretty status bar 
 Plugin 'vim-airline/vim-airline'
 " Autocompleting
