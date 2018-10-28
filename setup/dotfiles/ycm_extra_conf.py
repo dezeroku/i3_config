@@ -1,4 +1,4 @@
 def FlagsForFile(filename, **kwargs):
     return {
-        'flags':['-x', 'c', '-Wall', '-Wextra', '-Werror', '-pedantic'],
+        'flags':['-x', 'c++', '-Wall', '-Wextra', '-Werror', '-pedantic'],
     }
