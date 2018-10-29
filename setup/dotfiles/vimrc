@@ -236,8 +236,10 @@ au BufNewFile,BufRead *.py set fileformat=unix
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-" Red line at 79-th line in .py files
+" Red line at 79-th line in .py and .cpp files
 au BufNewFile,BufRead *.py set colorcolumn=79
+au BufNewFile,BufRead *.cpp set colorcolumn=79
+au BufNewFile,BufRead *.cpp highlight ColorColumn ctermbg=2
 
 " Similar but for webdev
 au BufNewFile,BufRead *.js set tabstop=4
