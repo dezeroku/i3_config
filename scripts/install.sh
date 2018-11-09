@@ -17,6 +17,8 @@ curl -O https://download.sublimetext.com/sublimehq-pub.gpg && sudo pacman-key --
 
 # Find fastest servers and use them with pacman.
 sudo pacman -Sy pacman-contrib
+
+echo "Choosing best mirrors for you, it may take some time..."
 rankmirrors -n 15 /etc/pacman.d/mirrorlist > mirrorlist
 sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist_backup
 sudo mv mirrorlist /etc/pacman.d/mirrorlist

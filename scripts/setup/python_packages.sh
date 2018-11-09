@@ -12,4 +12,4 @@ pip3 install pytest --user
 pip3 install powerline-status --user
 
 # For neovim python support (YCM etc.)
-pip3 instal neovim --user --upgrade
+pip3 install neovim --user --upgrade
