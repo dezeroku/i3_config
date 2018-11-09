@@ -208,6 +208,8 @@ exec --no-startup-id "redshift-gtk -l 51.10:17.0 &"
 exec --no-startup-id "udiskie &"
 # Compton
 exec --no-startup-id "compton -b --config $$HOME$$.config/compton.conf &"
+# Read Xresources
+exec --no-startup-id "xrdb ~/.Xresources"
 
 # Set wallpaper
 exec "feh --bg-scale $$BASE$$configs/$$RESOLUTION$$/wallpapers/0_wallpaper.png"
