@@ -248,6 +248,7 @@ bindsym $mod+Control+l exec "$$BASE$$scripts/resolution.py lock --lock-screen --
     assign [class="(?i)MellowPlayer"] $ws5
     assign [class="(?i)jetbrains-idea"] $ws3
     assign [class="(?i)VirtualBox Managerk"] $ws6
+    assign [class="(?i)discord"] $ws8
 
     # CS GO, and probably more OpenGL games
     assign [class="(?i)Linux"] $ws9 
