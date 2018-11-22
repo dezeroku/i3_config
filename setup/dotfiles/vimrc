@@ -159,6 +159,13 @@ Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 " Sessions
 Plugin 'tpope/vim-obsession'
+" Planutml previews on save
+" TODO: modify that plugin so it can support class-like declarations.
+" Plugin 'scrooloose/vim-slumlord'
+Plugin 'tyru/open-browser.vim'
+Plugin 'weirongxu/plantuml-previewer.vim'
+" Planuml syntax
+Plugin 'aklt/plantuml-syntax'
 " Running checkers.
 " Plugin 'vim-syntastic/syntastic'
 " Asynchrounous checkers.
