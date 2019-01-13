@@ -166,8 +166,6 @@ Plugin 'tyru/open-browser.vim'
 Plugin 'weirongxu/plantuml-previewer.vim'
 " Planuml syntax
 Plugin 'aklt/plantuml-syntax'
-" Running checkers.
-" Plugin 'vim-syntastic/syntastic'
 " Asynchrounous checkers.
 Plugin 'w0rp/ale'
 " Pretty status bar 
@@ -286,16 +284,6 @@ set nu
 " Latex live preview default pdf opener -> zathura
 let g:vimtex_view_general_viewer = 'zathura'
 
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
 " vim-go setup
 
 " use goimports for formatting
@@ -310,19 +298,6 @@ let g:go_highlight_build_constraints = 1
 
 " Syntastic
 
-" Display all checkers errors.
-" let g:syntastic_aggregate_errors = 1
-
-" Go syntax checkers
-let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
-
-" Python syntax checkers
-let g:syntastic_python_checkers = ['mypy', 'pylint', 'flake8']
-
-" Javascript syntac checkers
-let g:syntastic_javascript_checkers = ['jslint']
-
-let g:syntastic_javascript_jslint_args = "--browser"
 
 " Beautify shortcut
 noremap <F3> :Autoformat<CR>
@@ -337,10 +312,10 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " Start YCM in python and go after 2 chars
 let g:ycm_semantic_triggers = {
             \   'python': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
-            \   'go': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
             \   'javascript': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ]
             \ }
 
+  "          \   'go': [ 're!\w{2}', 're!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)' ],
 " Set global config file for YCM.
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
@@ -365,3 +340,20 @@ call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1
+
+" Enable specific linters only.
+let g:ale_linters = {
+\   'javascript': ['jslint'],
+\   'python'    : ['mypy', 'flake8'],
+\   'go'        : ['go', 'golint', 'errcheck']
+\}
+
+let g:ale_lint_on_text_changed = 'never'
+" You can disable this option too
+" if you don't want linters to run on opening a file
+" let g:ale_lint_on_enter = 0
+
+"let g:syntastic_javascript_jslint_args = "--browser"
