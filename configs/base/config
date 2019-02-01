@@ -212,7 +212,7 @@ exec --no-startup-id "compton -b --config $$HOME$$.config/compton.conf &"
 exec --no-startup-id "xrdb ~/.Xresources"
 
 # Set wallpaper
-exec "feh --bg-scale $$BASE$$configs/$$RESOLUTION$$/wallpapers/0_wallpaper.png"
+# exec "feh --bg-scale $$BASE$$configs/$$RESOLUTION$$/wallpapers/0_wallpaper.png"
 
 # Set keyboard to polish.
 exec "setxkbmap pl"
