@@ -182,6 +182,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 " Julia support.
 Plugin 'JuliaEditorSupport/julia-vim'
+" Markdown
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -348,7 +351,7 @@ let g:ale_linters_explicit = 1
 let g:ale_linters = {
 \   'javascript': ['jslint'],
 \   'python'    : ['mypy', 'flake8'],
-\   'go'        : ['go', 'golint', 'errcheck']
+\   'go'        : ['go', 'golint', 'govet', 'errcheck']
 \}
 
 let g:ale_lint_on_text_changed = 'never'
