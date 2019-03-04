@@ -47,7 +47,8 @@ def dotfiles_symlink(dotfiles_dir, backup_dir="~/backup_dotfiles"):
              "tern-config":"~/.tern-config",
              "compton.conf":"~/.config/compton.conf",
              "emacs":"~/.emacs",
-             "vimrc":"~/.config/nvim/init.vim"}
+             "vimrc":"~/.config/nvim/init.vim",
+             "ssh_config":"~/.ssh/config"}
 
     for replace, original in files.items():
         original = os.path.expanduser(original)

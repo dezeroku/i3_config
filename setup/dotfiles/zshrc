@@ -89,10 +89,10 @@ export PATH="/opt/GNAT/2018/bin:$PATH"
    export EDITOR='vim'
 fi
 
-# Run ssh-agent when X starts.
-alias startx='ssh-agent startx'
-
 source ~/i3_config/setup/shell/aliases
+
+# Take care of ssh keys.
+eval $(keychain --eval --quiet id_rsa)
 
 # Disable one history for all.
 unsetopt share_history

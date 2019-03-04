@@ -125,6 +125,7 @@ thefuck
 udiskie
 ntfs-3g **write to NTFS**
 zsh
+keychain **take care of ssh keys**
 ??
 
 $$UTILS$$
