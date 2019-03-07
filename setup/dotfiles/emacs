@@ -37,6 +37,11 @@
 ;; pop up with documentation
 (company-quickhelp-mode)
 
+;; Save whole undo tree, and do it in some nice place.
+(global-undo-tree-mode)
+(setq undo-tree-auto-save-history t)
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+
 
 ;; ViM ALIKE
 ;; Evil
@@ -141,6 +146,11 @@
                           (setq company-idle-delay .3)
                           (setq company-echo-delay 0)
                           (setq company-begin-commands '(self-insert-command))
+
+			  ;; flycheck go tool vet solution
+			  (let ((govet (flycheck-checker-get 'go-vet 'command)))
+			    (when (equal (cadr govet) "tool")
+			        (setf (cdr govet) (cddr govet))))
                           ))
 ;; JULIA
 ;; add julia-mode and REPL
