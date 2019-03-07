@@ -83,10 +83,11 @@ export PATH="/opt/GNAT/2018/bin:$PATH"
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='emac'
- else
+ if [[ -n "$SSH_CLIENT" ]]; then
+   export PS1="ssh ${PS1}"
    export EDITOR='vim'
+ else
+   export EDITOR='emac'
 fi
 
 source ~/i3_config/setup/shell/aliases
