@@ -90,10 +90,14 @@ export PATH="/opt/GNAT/2018/bin:$PATH"
    export EDITOR='emac'
 fi
 
+
 source ~/i3_config/setup/shell/aliases
 
 # Take care of ssh keys.
 eval $(keychain --eval --quiet id_rsa)
+
+# Take care of gpg passwords through ssh.
+export GPG_TTY=$(tty)
 
 # Disable one history for all.
 unsetopt share_history
