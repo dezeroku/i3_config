@@ -87,7 +87,7 @@ export PATH="$PATH:/opt/GNAT/2018/bin"
    export PS1="ssh ${PS1}"
    export EDITOR='vim'
  else
-   export EDITOR='emac'
+   export EDITOR='vim'
 fi
 
 
