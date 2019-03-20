@@ -76,17 +76,28 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+export PATH="$PATH:/opt/GNAT/2018/bin"
+# export PATH="$PATH:/opt/gps/bin"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
+ if [[ -n "$SSH_CLIENT" ]]; then
+   export PS1="ssh ${PS1}"
    export EDITOR='vim'
  else
-   export EDITOR='vim'
- fi
+   export EDITOR='emac'
+fi
+
+
+source ~/i3_config/setup/shell/aliases
+
+# Take care of ssh keys.
+eval $(keychain --eval --quiet id_rsa A4FBD9863016C28A47321074C704E9FFDF4A1717 --agents ssh,gpg)
+
+# Take care of gpg passwords through ssh.
+export GPG_TTY=$(tty)
 
 # Disable one history for all.
 unsetopt share_history

@@ -199,18 +199,20 @@ exec --no-startup-id "nm-applet &"
 # KDE Connect
 # Daemon and widget. Sleep is not perfect, but should give enough time for daemon to startup
 exec "/usr/lib/kdeconnectd &"
-exec "sleep 6; indicator-kdeconnect &"
+exec "sleep 60; indicator-kdeconnect &"
 # Dunst
 exec --no-startup-id "dunst &"
 # Redshift
-exec --no-startup-id "redshift-gtk -l 51.10:17.0 &"
+exec --no-startup-id "redshift-gtk -t 5200:2000 -l 51.10:17.0 &"
 # Udiskie
 exec --no-startup-id "udiskie &"
 # Compton
 exec --no-startup-id "compton -b --config $$HOME$$.config/compton.conf &"
+# Read Xresources
+exec --no-startup-id "xrdb ~/.Xresources"
 
 # Set wallpaper
-exec "feh --bg-scale $$BASE$$configs/$$RESOLUTION$$/wallpapers/0_wallpaper.png"
+# exec "feh --bg-scale $$BASE$$configs/$$RESOLUTION$$/wallpapers/0_wallpaper.png"
 
 # Set keyboard to polish.
 exec "setxkbmap pl"
@@ -225,7 +227,7 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab exec "python3 $$BASE$$scripts/i3/i3_next_workspace.py "
 
 # set lock screen
-exec "$$BASE$$scripts/resolution.py lock --set-up-locker --lock-image-number 1"
+exec "$$BASE$$scripts/resolution.py lock --set-up-locker --lock-image-number 1 --lock-timeout 0"
 
 # lock screen 
 bindsym $mod+Control+l exec "$$BASE$$scripts/resolution.py lock --lock-screen --lock-image-number 1"
@@ -245,7 +247,9 @@ bindsym $mod+Control+l exec "$$BASE$$scripts/resolution.py lock --lock-screen --
     assign [class="(?i)Spotify"] $ws5
     assign [class="(?i)MellowPlayer"] $ws5
     assign [class="(?i)jetbrains-idea"] $ws3
+    assign [class="(?i)jetbrains-studio"] $ws3
     assign [class="(?i)VirtualBox Managerk"] $ws6
+    assign [class="(?i)discord"] $ws8
 
     # CS GO, and probably more OpenGL games
     assign [class="(?i)Linux"] $ws9 

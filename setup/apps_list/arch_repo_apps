@@ -58,10 +58,12 @@ pcmanfm
 
 $$TEXT EDITORS$$
 gvim
+neovim **Sometimes just vim, sometimes I feel need to use nvim.**
+emacs
 vim-spell-en
 vim-spell-pl
 vim-spell-de
-sublime-text 
+#sublime-text 
 ??
 
 $$OFFICE$$ 
@@ -98,6 +100,8 @@ deluge
 
 $$PROGRAMMING STUFF$$
 clang
+gdb
+tk
 git
 hub
 python3 
@@ -121,6 +125,7 @@ thefuck
 udiskie
 ntfs-3g **write to NTFS**
 zsh
+keychain **take care of ssh keys**
 ??
 
 $$UTILS$$
@@ -133,13 +138,18 @@ gparted
 
 
 $$STEAM$$
-steam *To ensure correct startup, all programs from this group have to be installed.*
-ttf-liberation *Arial font substitute*
+steam **To ensure correct startup, all programs from this group have to be installed.**
+ttf-liberation **Arial font substitute**
 ??
 
 $$MISC$$
+sl
+cmatrix
 tmux
 exfat-utils
+wget
+mesa-demos
+ttf-inconsolata **G751 status bar font**
 ??
 
 $$VPN$$

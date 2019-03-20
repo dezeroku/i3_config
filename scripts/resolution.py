@@ -40,13 +40,13 @@ class CouldNotParseException(BaseException):
 
 def lock_decorator(lock_func):
     """Is executed before/after locking."""
-    def wrapper(self, image_number=-1):
+    def wrapper(self, image_number=-1, timeout=0.5):
         # Suspend notifications.
         subprocess.run(["pkill", "-u", getpass.getuser(), "-USR1", "dunst"])
 
         process = lock_func(self, image_number)
 
-        time.sleep(0.5)
+        time.sleep(timeout)
         # Turn screen off.
         subprocess.run(["xset", "dpms", "force", "standby"])
 
@@ -67,7 +67,7 @@ class Locker:
         self.lock_images_path = lock_images_path
 
     @lock_decorator
-    def lock_now(self, image_number=-1):
+    def lock_now(self, image_number=-1, timeout=0.5):
         """Lock screen and blank display."""
         final_path = self.lock_images_path+str(image_number)+"_lock.png"
         command = ["i3lock", "-n", "-c", "000000"]
@@ -82,7 +82,7 @@ class Locker:
 
         return process
 
-    def enable_lock_daemon(self, image_number=-1):
+    def enable_lock_daemon(self, image_number=-1, timeout=0):
         """Set screen to lock on user inactivity period or suspend."""
         final_path = self.lock_images_path+str(image_number)+"_lock.png"
         print(final_path)
@@ -94,6 +94,7 @@ class Locker:
                 os.path.exists(final_path)):
             command = base_command
             command += ["--lock-image-number", str(image_number)]
+            command += ["--lock-timeout", str(timeout)]
 
             subprocess.run(command)
         else:
@@ -319,6 +320,9 @@ def get_parser_locker(parser):
                         must be compliant with naming standards.", type=int,
                         default=0)
 
+    parser.add_argument("--lock-timeout", help="Time after which system will lock\
+                        and system will go blank.", type=float, default=0.5)
+
 def get_parser_runner(parser):
     """Fill parser for 'run' subcommand."""
     exclusive = parser.add_mutually_exclusive_group()
@@ -389,10 +393,11 @@ def locker(args):
     locker = Locker(args.lock_images_path)
     image_number = args.lock_image_number
 
+    timeout = args.lock_timeout
     if args.lock_screen:
-        locker.lock_now(image_number)
+        locker.lock_now(image_number, timeout)
     elif args.set_up_locker:
-        locker.enable_lock_daemon(image_number)
+        locker.enable_lock_daemon(image_number, timeout)
 
 def misc(args):
     """That function is run, when 'misc' subcommand was chosen."""

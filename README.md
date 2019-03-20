@@ -34,7 +34,7 @@ It contains:
 + README.MD
 
 ### Installation
-You should clone that repo, open scripts folder and run install.sh script. It should take care of everything.
+You should clone that repo, open scripts folder and run install.sh script (it should be run as normal user, sudo takes care of raising privileges). It should take care of everything.
 
 The best bet at this moment is to keep cloned repo folder, named i3\_config in your home directory (I am working on removing hardcoded paths, but it will take some time.).
 
