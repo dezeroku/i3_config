@@ -94,7 +94,7 @@ fi
 source ~/i3_config/setup/shell/aliases
 
 # Take care of ssh keys.
-eval $(keychain --eval --quiet id_rsa)
+eval $(keychain --eval --quiet id_rsa A4FBD9863016C28A47321074C704E9FFDF4A1717 --agents ssh,gpg)
 
 # Take care of gpg passwords through ssh.
 export GPG_TTY=$(tty)
