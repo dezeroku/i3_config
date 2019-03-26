@@ -6,7 +6,7 @@
   '(inhibit-startup-screen t)
   '(package-selected-packages
      (quote
-       (flycheck flycheck-julia flycheck-mypy go-mode company-ycmd ycmd evil-org evil-tutor evil-magit julia-mode julia-repl smooth-scrolling evil zenburn-theme smooth-scrolling powerline fill-column-indicator haskell-mode company-quickhelp go-guru gotest))))
+       (flycheck flycheck-julia flycheck-mypy go-mode company-ycmd ycmd evil-org evil-tutor evil-magit julia-mode julia-repl smooth-scrolling evil zenburn-theme smooth-scrolling powerline fill-column-indicator haskell-mode company-quickhelp go-guru gotest flymd))))
 
 
 ;; Auto install missing packages.
