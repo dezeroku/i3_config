@@ -13,7 +13,7 @@ def get_backlight():
 
 def get_max_backlight():
     with open("/sys/class/backlight/intel_backlight/max_brightness","r") as max_brightness_file:
-        max_brightness=int(max_brightness_file.read())
+        max_brightness = int(max_brightness_file.read())
     return max_brightness
 #usage change_brigthness -v value or change_brightness + or change_brightness -
 #works with intel_backlight brightness , can be easily adjusted
@@ -22,8 +22,8 @@ change_value=50
 brightness=get_backlight() #initial read
 max_brightness=get_max_backlight() #initial read
 
-if len(sys.argv)>1:
-    
+if len(sys.argv) > 1:
+
     if sys.argv[1]=="-h":
         print("Use change_brightness -v value , to set value as current brightness")
         print("Use change_brightness + , to increase brightness")
@@ -34,24 +34,24 @@ if len(sys.argv)>1:
             set_backlight(brightness)
     else:
         if sys.argv[1]=="+":
-            if brightness+ change_value<max_brightness:
-                brightness+=change_value
-        elif sys.argv[1]=="-":
+            if brightness + change_value < max_brightness:
+                brightness += change_value
+        elif sys.argv[1] == "-":
             if brightness>change_value:
                 brightness-=change_value
             else:
                 brightness=0
         set_backlight(brightness)
 
-elif len(sys.argv)==1:
-    max_brightness=get_max_backlight()
+else:
+    max_brightness = get_max_backlight()
 
     print("max = "+str(max_brightness))
     print("min = zero but remember, if you enter too low value your screen will literally go black ;) ")
 
-    brightness=int(input("What is your preferred brightness? "))
+    brightness = int(input("What is your preferred brightness? "))
 
-    if brightness<=int(max_brightness):
+    if brightness <= int(max_brightness):
         set_backlight(brightness)
     else:
         print("Please enter value in range min-max")
