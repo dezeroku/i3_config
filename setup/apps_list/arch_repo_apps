@@ -150,6 +150,8 @@ exfat-utils
 wget
 mesa-demos
 ttf-inconsolata **G751 status bar font**
+tldr **more concise example-driven man**
+figlet **Draw ascii-like characters**
 ??
 
 $$VPN$$

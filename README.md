@@ -1,3 +1,6 @@
+# In maintenance mode 
+As of April 2019, this repo goes into maintenance mode, no things will be added. This repo's content is converted to Ansible version and will be probably published soon.
+
 ## About
 That repository contains scripts and files that I use to set up new Arch Linux installs.
 
